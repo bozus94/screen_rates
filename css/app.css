@@ -1,0 +1,310 @@
+/* ============================================
+   G&SENVIOS - PANTALLA.CSS
+   Bordes coherentes, sutiles y consistentes
+   Ligero redondeo en cards (4px)
+   ============================================ */
+
+/* ========== LAYOUT PRINCIPAL ========== */
+.main-layout {
+    display: grid;
+    grid-template-rows:
+        7rem
+        /* header (85px) */
+        2fr
+        /* países */
+        3rem
+        /* divisor (50px) */
+        0.6fr
+        /* divisas */
+        1.5rem;
+    /* espacio inferior (25px) */
+    width: 100%;
+    height: 100vh;
+    padding: 1.6rem 4.8rem 0 4.8rem;
+    background: radial-gradient(ellipse at 30% 20%, var(--blue-main) 0%, var(--blue-dark) 100%);
+}
+
+/* ========== HEADER ========== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.2rem;
+    border-bottom: 0.2rem solid var(--yellow);
+    margin-bottom: 2rem;
+}
+
+.logo {
+    height: 5.2rem;
+    width: auto;
+}
+
+#logo-text {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+#current-date {
+    font-size: 4.2rem;
+    font-weight: 800;
+    color: var(--yellow);
+    letter-spacing: 0.1rem;
+    text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+}
+
+/* ========== GRID PAÍSES ========== */
+.countries-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-content: center;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+/* Tarjetas de países - BORDE SUTIL Y CONSISTENTE */
+.country-card {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+    padding: 1.8rem 2.2rem;
+    background: linear-gradient(135deg, rgba(10, 47, 114, 0.95) 0%, rgba(7, 31, 74, 0.95) 100%);
+    backdrop-filter: blur(0.2rem);
+
+    /* 🔥 BORDE SUTIL - mismo estilo en todas las cards */
+    border: 0.1rem solid rgba(30, 95, 188, 0.4);
+    border-left: 0.4rem solid var(--yellow);
+    /* Identidad amarilla */
+    border-radius: 0.8rem;
+    /* 🔥 Redondeo ligero (8px) */
+
+    box-shadow: var(--shadow-lg);
+    transition: all 0.25s ease;
+}
+
+.country-card:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: var(--shadow-xl);
+    background: linear-gradient(135deg, var(--blue-card) 0%, var(--blue-dark) 100%);
+    border-color: rgba(30, 95, 188, 0.7);
+    border-left-color: var(--yellow-dark);
+}
+
+/* Bandera redondeada */
+.country-flag {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.2rem solid var(--yellow);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Fallback redondeado */
+.flag-fallback {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-main), var(--blue-deep));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--yellow);
+    border: 0.2rem solid var(--yellow);
+}
+
+.country-info {
+    flex: 1;
+}
+
+.country-name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--gray-light);
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+}
+
+.country-value {
+    font-size: 4.2rem;
+    font-weight: 800;
+    color: var(--yellow);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.country-value.disabled {
+    font-size: 2rem;
+    color: var(--gray);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ========== DIVISOR ========== */
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.4rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3rem;
+    color: var(--gray-light);
+    text-transform: uppercase;
+}
+
+.section-divider::before,
+.section-divider::after {
+    content: '';
+    flex: 1;
+    height: 0.15rem;
+    /* Más sutil: 1.5px */
+    background: linear-gradient(90deg, transparent, var(--blue-border), var(--yellow), var(--blue-border), transparent);
+}
+
+/* ========== SECCIÓN DIVISAS ========== */
+.currencies-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-content: center;
+    overflow: hidden;
+}
+
+/* Tarjetas de divisas - MISMO ESTILO DE BORDE */
+.currency-card {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    padding: 1.4rem 2rem;
+    background: linear-gradient(135deg, rgba(10, 47, 114, 0.9) 0%, rgba(7, 31, 74, 0.9) 100%);
+    backdrop-filter: blur(0.2rem);
+
+    /* 🔥 BORDE SUTIL - consistente con país */
+    border: 0.1rem solid rgba(30, 95, 188, 0.4);
+    border-bottom: 0.3rem solid var(--yellow);
+    /* Identidad amarilla abajo */
+    border-radius: 0.8rem;
+    /* 🔥 Mismo redondeo */
+
+    box-shadow: var(--shadow-md);
+    transition: all 0.25s ease;
+}
+
+.currency-card:hover {
+    transform: translateY(-0.2rem);
+    background: linear-gradient(135deg, var(--blue-card) 0%, var(--blue-dark) 100%);
+    border-color: rgba(30, 95, 188, 0.7);
+    border-bottom-color: var(--yellow-dark);
+}
+
+.currency-card .country-flag {
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+}
+
+.currency-info {
+    flex: 1;
+}
+
+.currency-name {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--gray);
+    margin-bottom: 0.4rem;
+}
+
+.currency-value {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--yellow);
+    line-height: 1;
+}
+
+.currency-value.disabled {
+    font-size: 1.8rem;
+    color: var(--gray);
+}
+
+/* ========== LOGO FALLBACK (texto alternativo) ========== */
+
+.logo-fallback {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.4rem;
+    /* 24px */
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.15rem;
+    /* 1.5px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.2rem;
+    /* Misma altura que el logo */
+    white-space: nowrap;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 1600px) {
+    .country-value {
+        font-size: 3.6rem;
+    }
+
+    .currency-value {
+        font-size: 2.4rem;
+    }
+
+    #current-date {
+        font-size: 2.5rem;
+    }
+
+    .country-flag {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .flag-fallback {
+        width: 6rem;
+        height: 6rem;
+        font-size: 2.4rem;
+    }
+}
+
+@media (max-width: 1366px) {
+    .main-layout {
+        padding: 1.2rem 3.2rem 0 3.2rem;
+    }
+
+    .country-value {
+        font-size: 3.2rem;
+    }
+
+    .country-name {
+        font-size: 1.6rem;
+    }
+
+    .header {
+        margin-bottom: 1.5rem;
+    }
+
+    .logo-fallback {
+        font-size: 2.5rem;
+        height: 4.8rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    html {
+        font-size: 55%;
+    }
+
+    .logo-fallback {
+        font-size: 1.8rem;
+        letter-spacing: 0.1rem;
+    }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>G&SENVIOS - Pantalla Principal</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/carrousel.css">
+</head>
+
+<body>
+    <div class="main-layout">
+        <header class="header">
+            <div class="header-left">
+                <!-- Logo imagen -->
+                <img src="assets/logo/logo.svg" class="logo" alt="G&SENVIOS"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+
+                <!-- Fallback texto (se muestra si la imagen falla) -->
+                <div class="logo-fallback" style="display: none;">
+                    G&SENVIOS
+                </div>
+            </div>
+
+            <div id="current-date" class="header-right"></div>
+        </header>
+
+        <section class="countries-grid" id="rates-grid"></section>
+
+        <div class="section-divider">DIVISAS / EXCHANGE</div>
+
+        <section class="currencies-section" id="currencies"></section>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/carrousel.js"></script>
+</body>
+
+</html>

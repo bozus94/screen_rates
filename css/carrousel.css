@@ -1,0 +1,158 @@
+/* Contenedor del carrusel */
+.currencies-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    grid-row: 4;
+    padding: 0.5rem 0;
+}
+
+/* Track del carrusel - animación continua */
+.currencies-track {
+    display: flex;
+    gap: 1.5rem;
+    will-change: transform;
+}
+
+/* Animación para scroll continuo */
+.currencies-track.auto-scroll {
+    animation: scrollContinuous 30s linear infinite;
+}
+
+.currencies-track.auto-scroll:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scrollContinuous {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Tarjetas de divisas - ancho fijo */
+.currency-card {
+    flex: 0 0 280px;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    padding: 1.4rem 2rem;
+    background: linear-gradient(135deg, rgba(10, 47, 114, 0.9) 0%, rgba(7, 31, 74, 0.9) 100%);
+    backdrop-filter: blur(0.2rem);
+    border: 0.1rem solid rgba(30, 95, 188, 0.4);
+    border-bottom: 0.4rem solid var(--yellow);
+    border-radius: 0.8rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.currency-card:hover {
+    transform: translateY(-0.2rem);
+    background: linear-gradient(135deg, var(--blue-card) 0%, var(--blue-dark) 100%);
+    border-bottom-color: var(--yellow-dark);
+}
+
+/* Botones de control (opcionales - aparecen al hacer hover) */
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.currencies-carousel:hover .carousel-controls {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.carousel-btn {
+    background: rgba(13, 59, 142, 0.9);
+    border: 0.1rem solid var(--yellow);
+    color: var(--yellow);
+    font-size: 2rem;
+    font-weight: bold;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(0.4rem);
+}
+
+.carousel-btn:hover {
+    background: var(--yellow);
+    color: var(--blue-dark);
+    transform: scale(1.05);
+}
+
+/* Indicadores de página */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    grid-row: 5;
+    padding-bottom: 0.5rem;
+}
+
+.dot {
+    width: 1rem;
+    height: 1rem;
+    background: var(--gray);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dot.active {
+    background: var(--yellow);
+    width: 2rem;
+    border-radius: 1rem;
+}
+
+/* Pausa al hacer hover sobre el carrusel */
+.currencies-carousel:hover .currencies-track.auto-scroll {
+    animation-play-state: paused;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .currency-card {
+        flex: 0 0 240px;
+        padding: 1.2rem 1.6rem;
+    }
+
+    .currency-value {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .currency-card {
+        flex: 0 0 200px;
+        padding: 1rem 1.4rem;
+    }
+
+    .currency-name {
+        font-size: 1.2rem;
+    }
+
+    .currency-value {
+        font-size: 1.8rem;
+    }
+}
