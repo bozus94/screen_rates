@@ -1,29 +1,48 @@
 <!doctype html>
-<html>
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Test MagicInfo</title>
-		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				flex-direction: column;
-				background: #0d3b8e;
-				color: white;
-				font-family: Arial;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-			}
-		</style>
+		<title>G&SENVIOS - Pantalla Principal</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="/css/main.css" />
+		<link rel="stylesheet" href="/css/app.css" />
+		<link rel="stylesheet" href="/css/carrousel.css" />
 	</head>
+
 	<body>
-		<h1>G&SENVIOS - Test</h1>
-		<p id="status">Cargando...</p>
-		<script>
-			document.getElementById("status").textContent = "JavaScript funciona correctamente";
-			console.log("Test exitoso");
-		</script>
+		<div class="main-layout">
+			<header class="header">
+				<div class="header-left">
+					<!-- Logo imagen -->
+					<img
+						src="assets/logo/logo.svg"
+						class="logo"
+						alt="G&SENVIOS"
+						onerror="
+							this.style.display = 'none';
+							this.nextElementSibling.style.display = 'flex';
+						"
+					/>
+
+					<!-- Fallback texto (se muestra si la imagen falla) -->
+					<div class="logo-fallback" style="display: none">G&SENVIOS</div>
+				</div>
+
+				<div id="current-date" class="header-right"></div>
+			</header>
+
+			<section class="countries-grid" id="rates-grid"></section>
+
+			<div class="section-divider">DIVISAS / EXCHANGE</div>
+
+			<section class="currencies-section" id="currencies"></section>
+		</div>
+
+		<script src="/js/data.js"></script>
+		<script src="/js/app.js"></script>
+		<script src="/js/carrousel.js"></script>
 	</body>
 </html>
