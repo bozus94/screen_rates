@@ -2,47 +2,398 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<title>G&SENVIOS - Pantalla Principal</title>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="css/main.css" />
-		<link rel="stylesheet" href="css/app.css" />
-		<link rel="stylesheet" href="css/carrousel.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>G&SENVIOS - Tasas de Cambio</title>
+		<style>
+			/* ========== ESTILOS COMPLETOS (pantalla.css incrustado) ========== */
+			:root {
+				--blue-deep: #040f28;
+				--blue-dark: #071f4a;
+				--blue-main: #0d3b8e;
+				--blue-card: #0a2f72;
+				--blue-border: #1e5fbc;
+				--yellow: #f2b705;
+				--yellow-dark: #d9a404;
+				--white: #ffffff;
+				--gray: #d1d5db;
+				--gray-dark: #9ca3af;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				width: 100%;
+				height: 100vh;
+				overflow: hidden;
+				font-family: "Segoe UI", "Arial", sans-serif;
+				background: radial-gradient(circle at 20% 10%, #0a2f72 0%, #040f28 100%);
+				color: var(--white);
+			}
+			.main-layout {
+				display: flex;
+				flex-direction: column;
+				height: 100vh;
+				padding: 20px 40px 30px 40px;
+			}
+			@supports (display: grid) {
+				.main-layout {
+					display: grid;
+					grid-template-rows: 100px 1fr 50px auto 30px;
+					padding: 20px 48px 20px 48px;
+				}
+			}
+			.header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-end;
+				padding-bottom: 15px;
+				border-bottom: 3px solid var(--yellow);
+				margin-bottom: 20px;
+			}
+			.logo {
+				height: 60px;
+				width: auto;
+			}
+			.logo-fallback {
+				font-size: 28px;
+				font-weight: bold;
+				color: var(--white);
+			}
+			#current-date {
+				font-size: 40px;
+				font-weight: bold;
+				color: var(--yellow);
+			}
+			.countries-grid,
+			.currencies-section {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 20px;
+				margin: 15px 0;
+			}
+			@supports (display: grid) {
+				.countries-grid,
+				.currencies-section {
+					display: grid;
+					grid-template-columns: repeat(3, 1fr);
+					gap: 20px;
+				}
+			}
+			.country-card,
+			.currency-card {
+				display: flex;
+				align-items: center;
+				gap: 18px;
+				padding: 15px 20px;
+				background: linear-gradient(135deg, #0d3b8e, #0a2f72);
+				border: 1px solid rgba(30, 95, 188, 0.5);
+				border-left: 5px solid var(--yellow);
+				border-radius: 16px;
+				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+			}
+			.country-card {
+				flex: 1 1 calc(33.333% - 20px);
+				min-width: 250px;
+			}
+			.currency-card {
+				flex: 1 1 calc(33.333% - 20px);
+				min-width: 200px;
+				border-left: none;
+				border-bottom: 4px solid var(--yellow);
+			}
+			.country-flag,
+			.flag-fallback {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+			}
+			.country-flag {
+				object-fit: cover;
+				border: 2px solid var(--yellow);
+			}
+			.flag-fallback {
+				background: var(--blue-dark);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 24px;
+				font-weight: bold;
+				color: var(--yellow);
+			}
+			.country-info,
+			.currency-info {
+				display: flex;
+				flex-direction: column;
+				flex: 1;
+			}
+			.country-name,
+			.currency-name {
+				font-size: 18px;
+				font-weight: 600;
+				text-transform: uppercase;
+				margin-bottom: 5px;
+				color: var(--gray);
+			}
+			.country-value {
+				font-size: 38px;
+				font-weight: 800;
+				color: var(--yellow);
+				line-height: 1;
+			}
+			.currency-value {
+				font-size: 28px;
+				font-weight: 800;
+				color: var(--yellow);
+			}
+			.country-value.disabled {
+				font-size: 20px;
+				color: var(--gray);
+			}
+			.section-divider {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 20px;
+				font-size: 18px;
+				font-weight: bold;
+				color: var(--gray);
+				text-transform: uppercase;
+				margin: 20px 0;
+			}
+			.section-divider::before,
+			.section-divider::after {
+				content: "";
+				flex: 1;
+				height: 2px;
+				background: linear-gradient(90deg, transparent, #1e5fbc, #f2b705, #1e5fbc, transparent);
+			}
+			@media (max-width: 1200px) {
+				.country-value {
+					font-size: 30px;
+				}
+				.currency-value {
+					font-size: 24px;
+				}
+				.country-name,
+				.currency-name {
+					font-size: 16px;
+				}
+				.country-flag,
+				.flag-fallback {
+					width: 60px;
+					height: 60px;
+				}
+			}
+		</style>
 	</head>
-
 	<body>
 		<div class="main-layout">
 			<header class="header">
 				<div class="header-left">
-					<!-- Logo imagen -->
 					<img
 						src="assets/logo/logo.svg"
 						class="logo"
 						alt="G&SENVIOS"
 						onerror="
 							this.style.display = 'none';
-							this.nextElementSibling.style.display = 'flex';
+							this.nextElementSibling.style.display = 'block';
 						"
 					/>
-
-					<!-- Fallback texto (se muestra si la imagen falla) -->
 					<div class="logo-fallback" style="display: none">G&SENVIOS</div>
 				</div>
-
 				<div id="current-date" class="header-right"></div>
 			</header>
-
 			<section class="countries-grid" id="rates-grid"></section>
-
-			<div class="section-divider">DIVISAS / EXCHANGE</div>
-
+			<div class="section-divider">TIPO DE CAMBIO</div>
 			<section class="currencies-section" id="currencies"></section>
 		</div>
 
-		<script src="js/data.js"></script>
-		<script src="js/app.js"></script>
-		<script src="js/carrousel.js"></script>
+		<script>
+			// ========== JAVASCRIPT COMPLETO (pantalla.js incrustado) ==========
+			(function () {
+				// Configuración
+				var USE_MOCK = true; // Cambia a false cuando tengas CSV real
+				var REFRESH_INTERVAL = 60000;
+				var isLoading = false;
+				var previousData = {};
+
+				// Datos de ejemplo con los valores de la imagen original
+				var MOCK_DATA = [
+					{ type: "country", code: "HN", name: "Honduras", value: "24.50 HNL", order: 1, active: true },
+					{ type: "country", code: "CO", name: "Colombia", value: "6,545 COP", order: 2, active: true },
+					{ type: "country", code: "DO", name: "Rep. Dominicana", value: "58.20 DOP", order: 3, active: true },
+					{ type: "country", code: "US", name: "Estados Unidos", value: "1.05 USD", order: 4, active: true },
+					{ type: "country", code: "BO", name: "Bolivia", value: "No disponible", order: 5, active: true },
+					{ type: "currency", code: "USD", name: "Dólar Americano", value: "1.05 USD", order: 1, active: true },
+					{ type: "currency", code: "GBP", name: "Libra Esterlina", value: "0.94 GBP", order: 2, active: true },
+					{ type: "currency", code: "CHF", name: "Franco Suizo", value: "1.02 CHF", order: 3, active: true },
+				];
+
+				var FLAG_MAP = {
+					HN: "assets/flags/hn.png",
+					CO: "assets/flags/co.png",
+					DO: "assets/flags/do.png",
+					US: "assets/flags/us.png",
+					BO: "assets/flags/bo.png",
+					USD: "assets/flags/us.png",
+					GBP: "assets/flags/gb.png",
+					CHF: "assets/flags/ch.png",
+				};
+
+				function itemKey(item) {
+					return item.type + "-" + item.code;
+				}
+
+				function createFlagHTML(item) {
+					var flag = FLAG_MAP[item.code];
+					if (flag) {
+						return (
+							'<img class="country-flag" src="' +
+							flag +
+							"\" onerror=\"this.style.display='none';this.nextElementSibling.style.display='flex';\">" +
+							'<div class="flag-fallback" style="display:none;">' +
+							item.code +
+							"</div>"
+						);
+					}
+					return '<div class="flag-fallback">' + item.code + "</div>";
+				}
+
+				function updateDate() {
+					var el = document.getElementById("current-date");
+					if (!el) return;
+					var now = new Date();
+					var days = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
+					var months = [
+						"ENERO",
+						"FEBRERO",
+						"MARZO",
+						"ABRIL",
+						"MAYO",
+						"JUNIO",
+						"JULIO",
+						"AGOSTO",
+						"SEPTIEMBRE",
+						"OCTUBRE",
+						"NOVIEMBRE",
+						"DICIEMBRE",
+					];
+					var dateStr =
+						days[now.getDay()] + " " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
+					var timeStr = now.getHours().toString().padStart(2, "0") + ":" + now.getMinutes().toString().padStart(2, "0");
+					el.textContent = dateStr + " · " + timeStr;
+				}
+
+				function renderCountries(data, changes) {
+					var container = document.getElementById("rates-grid");
+					if (!container) return;
+					container.innerHTML = "";
+					data.sort(function (a, b) {
+						return a.order - b.order;
+					});
+					for (var i = 0; i < data.length; i++) {
+						var item = data[i];
+						var card = document.createElement("div");
+						card.className = "country-card";
+						if (changes && changes[itemKey(item)]) card.classList.add("highlight");
+						var isDisabled = item.value === "0" || item.value === "0.00" || item.value === "No disponible";
+						var displayValue = isDisabled ? "No disponible" : item.value;
+						var valueClass = "country-value" + (isDisabled ? " disabled" : "");
+						card.innerHTML =
+							createFlagHTML(item) +
+							'<div class="country-info">' +
+							'<div class="country-name">' +
+							item.name +
+							"</div>" +
+							'<div class="' +
+							valueClass +
+							'">' +
+							displayValue +
+							"</div>" +
+							"</div>";
+						container.appendChild(card);
+					}
+				}
+
+				function renderCurrencies(data, changes) {
+					var container = document.getElementById("currencies");
+					if (!container) return;
+					container.innerHTML = "";
+					data.sort(function (a, b) {
+						return a.order - b.order;
+					});
+					for (var i = 0; i < data.length; i++) {
+						var item = data[i];
+						var card = document.createElement("div");
+						card.className = "currency-card";
+						if (changes && changes[itemKey(item)]) card.classList.add("highlight");
+						card.innerHTML =
+							createFlagHTML(item) +
+							'<div class="currency-info">' +
+							'<div class="currency-name">' +
+							item.name +
+							"</div>" +
+							'<div class="currency-value">' +
+							item.value +
+							"</div>" +
+							"</div>";
+						container.appendChild(card);
+					}
+				}
+
+				function getData(callback) {
+					if (USE_MOCK) {
+						callback(null, MOCK_DATA);
+						return;
+					}
+					// Aquí iría la lógica con XMLHttpRequest si tuvieras CSV
+					callback(null, MOCK_DATA); // fallback
+				}
+
+				function loadData() {
+					if (isLoading) return;
+					isLoading = true;
+					getData(function (err, data) {
+						if (err || !data || data.length === 0) {
+							isLoading = false;
+							return;
+						}
+						var changes = {};
+						for (var i = 0; i < data.length; i++) {
+							var key = itemKey(data[i]);
+							var prev = previousData[key];
+							if (!prev || prev.value !== data[i].value) changes[key] = true;
+							previousData[key] = { value: data[i].value };
+						}
+						var countries = [],
+							currencies = [];
+						for (var j = 0; j < data.length; j++) {
+							if (data[j].type === "country" && data[j].active) countries.push(data[j]);
+							if (data[j].type === "currency" && data[j].active) currencies.push(data[j]);
+						}
+						renderCountries(countries, changes);
+						renderCurrencies(currencies, changes);
+						updateDate();
+						isLoading = false;
+					});
+				}
+
+				function init() {
+					updateDate();
+					loadData();
+					setInterval(loadData, REFRESH_INTERVAL);
+				}
+
+				// Escuchar varios eventos de carga para asegurar
+				if (document.readyState === "loading") {
+					document.addEventListener("DOMContentLoaded", init);
+					window.addEventListener("load", init);
+				} else {
+					init();
+				}
+			})();
+		</script>
 	</body>
 </html>
