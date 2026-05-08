@@ -1,209 +1,327 @@
-// pantalla.js  -  Compatible con MagicInfo (Chromium 56 / ES5)
+/* ============================================================
+   CONSTANTES
+   ============================================================ */
 
-(function () {
-	// ========== CONSTANTES ==========
-	var CSV_URL = "AQUI_TU_URL";
-	var USE_MOCK = true;
-	var REFRESH_INTERVAL = 60000;
-	var isLoading = false;
-	var previousData = {};
+const CSV_URL = "AQUI_TU_URL";
+const USE_MOCK = true;
+const REFRESH_INTERVAL = 60_000; // ms — un solo lugar para cambiar el intervalo
 
-	// Datos de ejemplo mock (con los valores de tu imagen)
-	var MOCK_DATA = [
-		{ type: "country", code: "HN", name: "Honduras", value: "24.50 HNL", order: 1, active: true },
-		{ type: "country", code: "CO", name: "Colombia", value: "6,545 COP", order: 2, active: true },
-		{ type: "country", code: "DO", name: "Rep. Dominicana", value: "58.20 DOP", order: 3, active: true },
-		{ type: "country", code: "US", name: "Estados Unidos", value: "1.05 USD", order: 4, active: true },
-		{ type: "country", code: "BO", name: "Bolivia", value: "No disponible", order: 5, active: true },
-		{ type: "currency", code: "USD", name: "Dólar Americano", value: "1.05 USD", order: 1, active: true },
-		{ type: "currency", code: "GBP", name: "Libra Esterlina", value: "0.94 GBP", order: 2, active: true },
-		{ type: "currency", code: "CHF", name: "Franco Suizo", value: "1.02 CHF", order: 3, active: true },
-	];
+const MOCK_DATA = [
+    // — RATES
+    { type: "country", code: "EC", name: "Ecuador", value: "1.05 USD", order: 2, active: true },
+    { type: "country", code: "HN", name: "Honduras", value: "24.50 HNL", order: 1, active: true },
+    { type: "country", code: "DO", name: "Rep. Dominicana", value: "58.20 DOP", order: 3, active: true },
+    { type: "country", code: "EC", name: "Ecuador", value: "1.05 USD", order: 5, active: true },
+    { type: "country", code: "BO", name: "Bolivia", value: "No disponible", order: 0, active: true },
+    { type: "country", code: "CO", name: "Colombia", value: "6,545 COP", order: 5, active: true },
+    { type: "country", code: "CO", name: "Colombia", value: "6,545 COP", order: 2, active: true },
+    { type: "country", code: "BO", name: "Bolivia", value: "No disponible", order: 8 , active: true },
+ 
+    // — DIVISES
+    { type: "currency", code: "USD", name: "Dólar Americano", value: "1.05 USD", order: 1, active: true },
+    { type: "currency", code: "GBP", name: "Libra Esterlina", value: "0.94 GBP", order: 2, active: true },
+    { type: "currency", code: "CHF", name: "Franco Suizo", value: "1.02 CHF", order: 3, active: true },
+    { type: "currency", code: "USD", name: "Dólar Americano", value: "1.05 USD", order: 1, active: true },
+    { type: "currency", code: "GBP", name: "Libra Esterlina", value: "0.94 GBP", order: 2, active: true },
+    { type: "currency", code: "CHF", name: "Franco Suizo", value: "1.02 CHF", order: 3, active: true },
+]; 
 
-	var FLAG_MAP = {
-		HN: "assets/flags/hn.png",
-		CO: "assets/flags/co.png",
-		DO: "assets/flags/do.png",
-		US: "assets/flags/us.png",
-		BO: "assets/flags/bo.png",
-		USD: "assets/flags/us.png",
-		GBP: "assets/flags/gb.png",
-		CHF: "assets/flags/ch.png",
-	};
+const FLAG_MAP = {
 
-	// ========== FUNCIONES AUXILIARES ==========
-	function itemKey(item) {
-		return item.type + "-" + item.code;
-	}
+    /* rates */
+    HN:  "assets/flags/hn.png",   // Honduras
+    CO:  "assets/flags/co.png",   // Colombia
+    DO:  "assets/flags/do.png",   // República Dominicana
+    EC:  "assets/flags/ec.png",   // Estados Unidos
+    BO: "assets/flags/bo.png",   // Bolivia
+    
+    /* divises */
+    USD: "assets/flags/us.png",
+    GBP: "assets/flags/gb.png",
+    CHF: "assets/flags/ch.png",
+};
 
-	function createFlagHTML(item) {
-		var flag = FLAG_MAP[item.code];
-		if (flag) {
-			return (
-				'<img class="country-flag" src="' +
-				flag +
-				"\" onerror=\"this.style.display='none';this.nextElementSibling.style.display='flex';\">" +
-				'<div class="flag-fallback" style="display:none;">' +
-				item.code +
-				"</div>"
-			);
-		}
-		return '<div class="flag-fallback">' + item.code + "</div>";
-	}
+let previousData = {};
+let isLoading = false;
 
-	function updateDate() {
-		var el = document.getElementById("current-date");
-		if (!el) return;
-		var now = new Date();
-		var days = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
-		var months = [
-			"ENERO",
-			"FEBRERO",
-			"MARZO",
-			"ABRIL",
-			"MAYO",
-			"JUNIO",
-			"JULIO",
-			"AGOSTO",
-			"SEPTIEMBRE",
-			"OCTUBRE",
-			"NOVIEMBRE",
-			"DICIEMBRE",
-		];
-		var dateString = days[now.getDay()] + " " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
-		var timeString = now.getHours().toString().padStart(2, "0") + ":" + now.getMinutes().toString().padStart(2, "0");
-		el.textContent = dateString + " · " + timeString;
-	}
 
-	// ========== RENDERIZADO ==========
-	function renderCountries(data, changes) {
-		var container = document.getElementById("rates-grid");
-		if (!container) return;
-		container.innerHTML = "";
-		data.sort(function (a, b) {
-			return a.order - b.order;
-		});
-		for (var i = 0; i < data.length; i++) {
-			var item = data[i];
-			var card = document.createElement("div");
-			card.className = "country-card";
-			if (changes && changes[itemKey(item)]) card.classList.add("highlight");
-			var isDisabled = item.value === "0" || item.value === "0.00" || item.value === "No disponible";
-			var displayValue = isDisabled ? "No disponible" : item.value;
-			var valueClass = "country-value" + (isDisabled ? " disabled" : "");
-			card.innerHTML =
-				createFlagHTML(item) +
-				'<div class="country-info">' +
-				'<div class="country-name">' +
-				item.name +
-				"</div>" +
-				'<div class="' +
-				valueClass +
-				'">' +
-				displayValue +
-				"</div>" +
-				"</div>";
-			container.appendChild(card);
-		}
-	}
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
 
-	function renderCurrencies(data, changes) {
-		var container = document.getElementById("currencies");
-		if (!container) return;
-		container.innerHTML = "";
-		data.sort(function (a, b) {
-			return a.order - b.order;
-		});
-		for (var i = 0; i < data.length; i++) {
-			var item = data[i];
-			var card = document.createElement("div");
-			card.className = "currency-card";
-			if (changes && changes[itemKey(item)]) card.classList.add("highlight");
-			card.innerHTML =
-				createFlagHTML(item) +
-				'<div class="currency-info">' +
-				'<div class="currency-name">' +
-				item.name +
-				"</div>" +
-				'<div class="currency-value">' +
-				item.value +
-				"</div>" +
-				"</div>";
-			container.appendChild(card);
-		}
-	}
+/**
+ * Clave única por item para evitar colisiones entre países y divisas
+ */
+function itemKey(item) {
+    return `${item.type}-${item.code}`;
+}
 
-	// ========== LÓGICA DE DATOS (ES5 COMPATIBLE) ==========
-	function getData(callback) {
-		if (USE_MOCK) {
-			callback(null, MOCK_DATA);
-			return;
-		}
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", CSV_URL + "?nocache=" + Date.now(), true);
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState === 4) {
-				if (xhr.status === 200) {
-					// Parseo CSV SIMPLE
-					var lines = xhr.responseText.trim().split("\n");
-					var result = [];
-					for (var i = 1; i < lines.length; i++) {
-						var parts = lines[i].split(",");
-						if (parts.length >= 6) {
-							result.push({
-								type: parts[0],
-								code: parts[1],
-								name: parts[2],
-								value: parts[3],
-								order: parseInt(parts[4]) || 0,
-								active: parts[5] === "TRUE",
-							});
-						}
-					}
-					callback(null, result);
-				} else {
-					var cached = localStorage.getItem("rates_cache");
-					if (cached) callback(null, JSON.parse(cached));
-					else callback(new Error("No data"), null);
-				}
-			}
-		};
-		xhr.send();
-	}
+/**
+ * Genera el HTML de la bandera
+ */
+function createFlagHTML(item) {
+    const flag = FLAG_MAP[item.code];
+    if (flag) {
+        return `
+            <img class="country-flag" src="${flag}"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="flag-fallback" style="display:none;">${item.code}</div>`;
+    }
+    return `<div class="flag-fallback">${item.code}</div>`;
+}
 
-	function loadData() {
-		if (isLoading) return;
-		isLoading = true;
-		getData(function (err, data) {
-			if (err || !data || data.length === 0) {
-				isLoading = false;
-				return;
-			}
-			var changes = {};
-			for (var i = 0; i < data.length; i++) {
-				var item = data[i];
-				var key = itemKey(item);
-				var prev = previousData[key];
-				if (!prev || prev.value !== item.value) changes[key] = true;
-				previousData[key] = { value: item.value };
-			}
-			var countries = [],
-				currencies = [];
-			for (var j = 0; j < data.length; j++) {
-				if (data[j].type === "country" && data[j].active) countries.push(data[j]);
-				if (data[j].type === "currency" && data[j].active) currencies.push(data[j]);
-			}
-			renderCountries(countries, changes);
-			renderCurrencies(currencies, changes);
-			updateDate();
-			isLoading = false;
-		});
-	}
 
-	// ========== INICIALIZACIÓN ==========
-	window.addEventListener("load", function () {
-		updateDate();
-		loadData();
-		setInterval(loadData, REFRESH_INTERVAL);
-	});
-})();
+/* ============================================================
+   FECHA
+   ============================================================ */
+
+function updateDate() {
+    const el = document.getElementById("current-date");
+    if (!el) return;
+    
+    const now = new Date();
+    const days = ['DOMINGO', 'LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
+    const months = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
+    
+    const dayName = days[now.getDay()];
+    const day = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    
+    el.textContent = `${dayName} ${day} ${month} ${year}`;
+}
+
+
+/* ============================================================
+   FETCH
+   ============================================================ */
+
+async function fetchCSV() {
+    const res = await fetch(`${CSV_URL}?nocache=${Date.now()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.text();
+}
+
+
+/* ============================================================
+   PARSE
+   ============================================================ */
+
+function parseCSVLine(line) {
+    const fields = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (const char of line) {
+        if (char === '"') {
+            inQuotes = !inQuotes;
+        } else if (char === "," && !inQuotes) {
+            fields.push(current.trim());
+            current = "";
+        } else {
+            current += char;
+        }
+    }
+    fields.push(current.trim());
+    return fields;
+}
+
+function parseCSV(csv) {
+    const lines = csv.trim().split("\n");
+    const headers = parseCSVLine(lines[0]);
+
+    return lines.slice(1)
+        .filter(line => line.trim())
+        .map(line => {
+            const values = parseCSVLine(line);
+            const obj = {};
+            headers.forEach((h, i) => {
+                obj[h] = values[i] ?? "";
+            });
+            return obj;
+        });
+}
+
+
+/* ============================================================
+   NORMALIZE
+   ============================================================ */
+
+function normalize(data) {
+    return data.map(item => ({
+        ...item,
+        order:  Number(item.order),
+        active: item.active === "TRUE",
+    }));
+}
+
+
+/* ============================================================
+   SPLIT
+   ============================================================ */
+
+function splitData(data) {
+    return {
+        countries:  data.filter(i => i.type === "country"  && i.active),
+        currencies: data.filter(i => i.type === "currency" && i.active),
+    };
+}
+
+
+/* ============================================================
+   DETECT CHANGES
+   ============================================================ */
+
+function detectChanges(data) {
+    const changes = {};
+    data.forEach(item => {
+        const key  = itemKey(item);
+        const prev = previousData[key];
+        if (!prev || prev.value !== item.value) {
+            changes[key] = true;
+        }
+    });
+    return changes;
+}
+
+
+/* ============================================================
+   RENDER PAÍSES
+   ============================================================ */
+
+function renderCountries(data, changes = {}) {
+    const container = document.getElementById("rates-grid");
+    if (!container) return;
+    container.innerHTML = "";
+
+    [...data]
+        .sort((a, b) => a.order - b.order)
+        .forEach(item => {
+            const card = document.createElement("div");
+            card.className = "country-card";
+
+            if (changes[itemKey(item)]) card.classList.add("highlight");
+            if (item.value === "0" || item.value === "0.00" || item.value === "No disponible") {
+                card.style.opacity = "0.6";
+            }
+
+            card.innerHTML = `
+                ${createFlagHTML(item)}
+                <div class="country-info">
+                    <div class="country-name">${item.name}</div>
+                    <div class="country-value">${item.value}</div>
+                </div>`;
+
+            container.appendChild(card);
+        });
+}
+
+
+/* ============================================================
+   RENDER DIVISAS
+   ============================================================ */
+
+function renderCurrencies(data, changes = {}) {
+    const container = document.getElementById("currencies");
+    if (!container) return;
+    container.innerHTML = "";
+
+    [...data]
+        .sort((a, b) => a.order - b.order)
+        .forEach(item => {
+            const card = document.createElement("div");
+            card.className = "currency-card";
+
+            if (changes[itemKey(item)]) card.classList.add("highlight");
+
+            card.innerHTML = `
+                ${createFlagHTML(item)}
+                <div class="currency-info">
+                    <div class="currency-name">${item.name}</div>
+                    <div class="currency-value">${item.value}</div>
+                </div>`;
+
+            container.appendChild(card);
+        });
+}
+
+
+/* ============================================================
+   UPDATE STATE
+   ============================================================ */
+
+function updatePrevious(data) {
+    previousData = {};
+    data.forEach(item => {
+        previousData[itemKey(item)] = item;
+    });
+}
+
+
+/* ============================================================
+   GET DATA
+   ============================================================ */
+
+async function getData() {
+    if (USE_MOCK) return MOCK_DATA;
+
+    try {
+        const csv        = await fetchCSV();
+        const parsed     = parseCSV(csv);
+        const normalized = normalize(parsed);
+        localStorage.setItem("rates_cache", JSON.stringify(normalized));
+        return normalized;
+
+    } catch (e) {
+        console.warn("Fetch falló, usando cache:", e.message);
+        const cached = localStorage.getItem("rates_cache");
+        if (cached) return JSON.parse(cached);
+
+        console.error("Sin cache disponible.");
+        return [];
+    }
+}
+
+
+/* ============================================================
+   LOAD DATA
+   ============================================================ */
+
+async function loadData() {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        const data = await getData();
+
+        if (!data || data.length === 0) {
+            console.warn("Sin datos disponibles.");
+            return;
+        }
+
+        const changes = detectChanges(data);
+        const { countries, currencies } = splitData(data);
+
+        renderCountries(countries, changes);
+        renderCurrencies(currencies, changes);
+        updatePrevious(data);
+        updateDate();
+
+    } catch (e) {
+        console.error("Error crítico en loadData:", e);
+
+    } finally {
+        isLoading = false;
+    }
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+window.renderCurrencies = renderCurrencies;
+window.loadData = loadData;
+updateDate();
+loadData();
+setInterval(loadData, REFRESH_INTERVAL);

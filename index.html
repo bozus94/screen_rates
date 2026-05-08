@@ -1,162 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>G&SENVIOS - Tasas de Cambio (Estático)</title>
-    <!-- Meta refresh opcional: recarga cada 300 segundos (5 minutos). 
-         Comentar o eliminar si la pantalla tiene problemas con refresh. -->
-    <meta http-equiv="refresh" content="300">
+    <title>G&SENVIOS - Pantalla Principal</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/carrousel.css">
 </head>
-<body bgcolor="#040F28" text="#FFFFFF" link="#F2B705" vlink="#F2B705" alink="#F2B705">
-    <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-        <!-- ------------------------------------------------------------------ -->
-        <!-- HEADER -->
-        <!-- ------------------------------------------------------------------ -->
-        <tr>
-            <!-- Fondo azul corporativo -->
-            <td bgcolor="#0D3B8E" height="90" valign="bottom">
-                <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <!-- Logo / texto -->
-                        <td width="50%" align="left" valign="bottom">
-                            <font size="6" face="Arial, Helvetica, sans-serif" color="#FFFFFF"><b>G&amp;SENVIOS</b></font>
-                        </td>
-                        <!-- Fecha / hora -->
-                        <td width="50%" align="right" valign="bottom">
-                            <font size="5" face="Arial, Helvetica, sans-serif" color="#F2B705"><b>MARTES 13 MAYO 2025 · 15:30</b></font>
-                        </td>
-                    </table>
-                </table>
-                <!-- Línea decorativa amarilla -->
-                <hr size="3" color="#F2B705" width="100%" noshade>
-            </td>
-        </tr>
 
-        <!-- ------------------------------------------------------------------ -->
-        <!-- CUERPO PRINCIPAL: PAÍSES (grid 3x3 con tablas) -->
-        <!-- ------------------------------------------------------------------ -->
-        <tr>
-            <td valign="top" bgcolor="#040F28">
-                <!-- Tabla exterior para el grid de países -->
-                <table width="100%" cellpadding="12" cellspacing="0" border="0">
-                    <!-- Fila 1 de países -->
-                    <tr>
-                        <!-- Honduras -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC; border-left: 5px solid #F2B705;">
-                            <table width="100%" cellpadding="8">
-                                <tr><td width="75" align="center">
-                                    <!-- Bandera simulada con texto (por si no hay imagen) -->
-                                    <font size="5" face="Arial" color="#F2B705"><b>🇭🇳</b></font>
-                                 </td>
-                                 <td>
-                                    <font size="4" face="Arial" color="#D1D5DB"><b>HONDURAS</b></font><br>
-                                    <font size="6" face="Arial" color="#F2B705"><b>24,50 HNL</b></font>
-                                 </td>
-                            </table>
-                        </td>
-                        <!-- Colombia -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC; border-left: 5px solid #F2B705;">
-                            <table width="100%" cellpadding="8">
-                                <td><td width="75" align="center"><font size="5" color="#F2B705"><b>🇨🇴</b></font></td>
-                                 <td>
-                                    <font size="4" color="#D1D5DB"><b>COLOMBIA</b></font><br>
-                                    <font size="6" color="#F2B705"><b>6.545 COP</b></font>
-                                 </td>
-                            </table>
-                         </td>
-                        <!-- República Dominicana -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC; border-left: 5px solid #F2B705;">
-                            <table width="100%" cellpadding="8">
-                                <td><td width="75" align="center"><font size="5" color="#F2B705"><b>🇩🇴</b></font></td>
-                                 <td>
-                                    <font size="4" color="#D1D5DB"><b>REP. DOMINICANA</b></font><br>
-                                    <font size="6" color="#F2B705"><b>58,20 DOP</b></font>
-                                 </td>
-                            </table>
-                         </td>
-                    </tr>
+<body>
+    <div class="main-layout">
+        <header class="header">
+            <div class="header-left">
+                <!-- Logo imagen -->
+                <img src="assets/logo/logo.svg" class="logo" alt="G&SENVIOS"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
 
-                    <!-- Fila 2 de países -->
-                    <tr>
-                        <!-- Estados Unidos -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC; border-left: 5px solid #F2B705;">
-                            <table width="100%" cellpadding="8">
-                                <tr><td width="75" align="center"><font size="5" color="#F2B705"><b>🇺🇸</b></font></td>
-                                 <td>
-                                    <font size="4" color="#D1D5DB"><b>ESTADOS UNIDOS</b></font><br>
-                                    <font size="6" color="#F2B705"><b>1,05 USD</b></font>
-                                 </td>
-                            </table>
-                         </td>
-                        <!-- Bolivia (servicio no disponible) -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC; border-left: 5px solid #F2B705;">
-                            <table width="100%" cellpadding="8">
-                                <tr><td width="75" align="center"><font size="5" color="#F2B705"><b>🇧🇴</b></font></td>
-                                 <td>
-                                    <font size="4" color="#D1D5DB"><b>BOLIVIA</b></font><br>
-                                    <font size="5" color="#D1D5DB"><b>No disponible</b></font>
-                                 </td>
-                            </table>
-                         </td>
-                        <!-- Celda vacía (opcional) -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC;">
-                            &nbsp;
-                         </td>
-                    </tr>
-                </table>
+                <!-- Fallback texto (se muestra si la imagen falla) -->
+                <div class="logo-fallback" style="display: none;">
+                    G&SENVIOS
+                </div>
+            </div>
 
-                <!-- Divisor decorativo -->
-                <hr width="40%" size="2" color="#F2B705" noshade>
+            <div id="current-date" class="header-right"></div>
+        </header>
 
-                <!-- ------------------------------------------------------------------ -->
-                <!-- SECCIÓN TIPO DE CAMBIO (divisas) -->
-                <!-- ------------------------------------------------------------------ -->
-                <table width="100%" cellpadding="15" cellspacing="0" border="0">
-                    <!-- Fila de divisas -->
-                    <tr>
-                        <!-- Dólar Americano -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC; border-bottom: 4px solid #F2B705;">
-                            <table width="100%" cellpadding="6">
-                                <tr><td width="65" align="center"><font size="5" color="#F2B705"><b>USD</b></font></td>
-                                 <td>
-                                    <font size="4" color="#D1D5DB"><b>Dólar Americano</b></font><br>
-                                    <font size="5" color="#F2B705"><b>1,05 USD</b></font>
-                                 </td>
-                            </table>
-                         </td>
-                        <!-- Libra Esterlina -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC; border-bottom: 4px solid #F2B705;">
-                            <table width="100%" cellpadding="6">
-                                <tr><td width="65" align="center"><font size="5" color="#F2B705"><b>GBP</b></font></td>
-                                 <td>
-                                    <font size="4" color="#D1D5DB"><b>Libra Esterlina</b></font><br>
-                                    <font size="5" color="#F2B705"><b>0,94 GBP</b></font>
-                                 </td>
-                            </table>
-                         </td>
-                        <!-- Franco Suizo -->
-                        <td width="33%" bgcolor="#0A2F72" style="border: 1px solid #1E5FBC; border-bottom: 4px solid #F2B705;">
-                            <table width="100%" cellpadding="6">
-                                <tr><td width="65" align="center"><font size="5" color="#F2B705"><b>CHF</b></font></td>
-                                 <td>
-                                    <font size="4" color="#D1D5DB"><b>Franco Suizo</b></font><br>
-                                    <font size="5" color="#F2B705"><b>1,02 CHF</b></font>
-                                 </td>
-                            </table>
-                         </td>
-                    </tr>
-                </table>
+        <section class="countries-grid" id="rates-grid"></section>
 
-                <!-- Nota aclaratoria -->
-                <table width="100%" cellpadding="10">
-                    <tr><td align="center" bgcolor="#071F4A">
-                        <font size="2" face="Arial" color="#9CA3AF">
-                            Tasa de cambio sujeta a variación. Aplica términos y condiciones.
-                        </font>
-                     </td></tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+        <div class="section-divider">DIVISAS / EXCHANGE</div>
+
+        <section class="currencies-section" id="currencies"></section>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/carrousel.js"></script>
 </body>
+
 </html>
