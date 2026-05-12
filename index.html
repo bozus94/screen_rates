@@ -2,47 +2,909 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<title>G&SENVIOS - Pantalla Principal</title>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="css/main.css" />
-		<link rel="stylesheet" href="css/app.css" />
-		<link rel="stylesheet" href="css/carrousel.css" />
+		<meta http-equiv="refresh" content="1200" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>G&SENVIOS - Tasas de Cambio</title>
+		<style>
+			/* ============================================================ */
+			/* G&SENVIOS - LEGACY VERSION                                   */
+			/* Compatible Chromium 49+ / Samsung MagicInfo                  */
+			/* Slider FADE Legacy Compatible                                */
+			/* ============================================================ */
+
+			/* ========================= */
+			/* RESET                     */
+			/* ========================= */
+
+			* {
+				margin: 0;
+				padding: 0;
+
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+			}
+
+			body {
+				overflow: hidden;
+
+				font-family: Arial, Helvetica, sans-serif;
+
+				color: #ffffff;
+
+				background: #040f28;
+
+				background: -webkit-radial-gradient(20% 10%, circle, #0a2f72 0%, #040f28 100%);
+
+				background: radial-gradient(circle at 20% 10%, #0a2f72 0%, #040f28 100%);
+			}
+
+			/* ========================= */
+			/* CLEARFIX                  */
+			/* ========================= */
+
+			.clearfix:before,
+			.clearfix:after,
+			.header:before,
+			.header:after,
+			.country-card:before,
+			.country-card:after,
+			.currency-item:before,
+			.currency-item:after,
+			.countries-grid:before,
+			.countries-grid:after {
+				content: "";
+				display: table;
+			}
+
+			.clearfix:after,
+			.header:after,
+			.country-card:after,
+			.currency-item:after,
+			.countries-grid:after {
+				clear: both;
+			}
+
+			/* ========================= */
+			/* MAIN                      */
+			/* ========================= */
+
+			.main-layout {
+				width: 100%;
+				height: 100%;
+
+				padding: 25px 35px;
+
+				overflow-y: auto;
+				overflow-x: hidden;
+			}
+
+			/* ========================= */
+			/* HEADER                    */
+			/* ========================= */
+
+			.header {
+				position: relative;
+
+				padding-bottom: 18px;
+				margin-bottom: 28px;
+
+				border-bottom: 3px solid #f2b705;
+			}
+
+			.header-left {
+				float: left;
+			}
+
+			.logo {
+				display: block;
+				height: 55px;
+			}
+
+			.logo-fallback {
+				display: none;
+
+				font-size: 28px;
+				font-weight: bold;
+				line-height: 55px;
+
+				color: #ffffff;
+			}
+
+			.header-center {
+				position: absolute;
+
+				top: 50%;
+				left: 50%;
+
+				font-size: 50px;
+				font-weight: bold;
+				letter-spacing: 3px;
+				text-transform: uppercase;
+
+				color: #f2b705;
+
+				white-space: nowrap;
+
+				-webkit-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+			}
+
+			.header-right {
+				float: right;
+
+				font-size: 28px;
+				font-weight: bold;
+				line-height: 55px;
+
+				color: #f2b705;
+			}
+
+			/* ========================= */
+			/* PAISES                    */
+			/* ========================= */
+
+			.countries-grid {
+				width: 100%;
+			}
+
+			.country-card {
+				position: relative;
+
+				float: left;
+
+				width: 32%;
+				height: 140px;
+
+				margin-right: 2%;
+				margin-bottom: 22px;
+
+				padding: 22px;
+
+				background: #0a2f72;
+
+				background: -webkit-linear-gradient(135deg, #0d3b8e, #0a2f72);
+
+				background: linear-gradient(135deg, #0d3b8e, #0a2f72);
+
+				border-left: 6px solid #f2b705;
+				border-radius: 18px;
+
+				overflow: hidden;
+
+				-webkit-box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+				box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+			}
+
+			.country-card:nth-child(3n) {
+				margin-right: 0;
+			}
+
+			/* ========================= */
+			/* BANDERAS                  */
+			/* ========================= */
+
+			.country-flag,
+			.flag-fallback {
+				position: relative;
+
+				float: left;
+
+				width: 85px;
+				height: 85px;
+
+				margin-right: 18px;
+
+				border-radius: 50%;
+				border: 3px solid #f2b705;
+
+				overflow: hidden;
+			}
+
+			.country-flag {
+				object-fit: cover;
+			}
+
+			.flag-fallback,
+			.currency-flag-fallback {
+				position: relative;
+
+				background: #0a2f72;
+
+				background: -webkit-linear-gradient(135deg, #0d3b8e, #040f28);
+
+				background: linear-gradient(135deg, #0d3b8e, #040f28);
+
+				color: #f2b705;
+
+				font-weight: bold;
+
+				text-align: center;
+			}
+
+			.flag-fallback span,
+			.currency-flag-fallback span {
+				position: absolute;
+
+				top: 50%;
+				left: 50%;
+
+				width: 100%;
+
+				text-align: center;
+
+				-webkit-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+			}
+
+			.flag-fallback span {
+				font-size: 30px;
+			}
+
+			/* ========================= */
+			/* INFO PAISES               */
+			/* ========================= */
+
+			.country-info {
+				overflow: hidden;
+				padding-top: 5px;
+			}
+
+			.country-name {
+				margin-bottom: 10px;
+
+				font-size: 20px;
+				font-weight: bold;
+				text-transform: uppercase;
+
+				color: #ffffff;
+			}
+
+			.country-value {
+				font-size: 34px;
+				font-weight: bold;
+
+				color: #f2b705;
+			}
+
+			.country-value.disabled {
+				font-size: 22px;
+				color: #d1d5db;
+			}
+
+			/* ========================= */
+			/* DIVIDER                   */
+			/* ========================= */
+
+			.section-divider {
+				position: relative;
+
+				margin: 30px 0 24px 0;
+
+				text-align: center;
+
+				font-size: 17px;
+				font-weight: bold;
+				letter-spacing: 4px;
+
+				color: #d1d5db;
+			}
+
+			.section-divider:before,
+			.section-divider:after {
+				content: "";
+
+				position: absolute;
+				top: 50%;
+
+				width: 32%;
+				height: 4px;
+
+				margin-top: -2px;
+			}
+
+			.section-divider:before {
+				left: 0;
+
+				background: -webkit-linear-gradient(left, transparent, #1e5fbc, #f2b705);
+
+				background: linear-gradient(to right, transparent, #1e5fbc, #f2b705);
+			}
+
+			.section-divider:after {
+				right: 0;
+
+				background: -webkit-linear-gradient(left, #f2b705, #1e5fbc, transparent);
+
+				background: linear-gradient(to right, #f2b705, #1e5fbc, transparent);
+			}
+
+			/* ========================= */
+			/* SLIDER LEGACY             */
+			/* ========================= */
+
+			.slider-wrapper {
+				position: relative;
+
+				width: 100%;
+				height: 260px;
+
+				overflow: hidden;
+			}
+
+			.slider-slide {
+				position: absolute;
+
+				top: 0;
+				left: 0;
+
+				width: 100%;
+
+				opacity: 0;
+				visibility: hidden;
+
+				-webkit-transition: opacity 0.8s ease;
+				transition: opacity 0.8s ease;
+			}
+
+			.slider-slide.active {
+				opacity: 1;
+				visibility: visible;
+				z-index: 2;
+			}
+
+			/* ========================= */
+			/* DIVISAS                   */
+			/* ========================= */
+
+			.currencies-slide {
+				width: 100%;
+			}
+
+			.currency-item {
+				position: relative;
+
+				float: left;
+
+				width: 23.5%;
+				height: 112px;
+
+				margin-right: 2%;
+				margin-bottom: 18px;
+
+				padding: 16px 15px;
+
+				background: #0a2f72;
+
+				background: -webkit-linear-gradient(135deg, #0d3b8e, #0a2f72);
+
+				background: linear-gradient(135deg, #0d3b8e, #0a2f72);
+
+				border: 1px solid #1e5fbc;
+				border-bottom: 5px solid #f2b705;
+				border-radius: 16px;
+
+				overflow: hidden;
+
+				-webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+			}
+
+			.currency-item:nth-child(4n) {
+				margin-right: 0;
+			}
+
+			/* ========================= */
+			/* BANDERAS DIVISAS          */
+			/* ========================= */
+
+			.currency-flag,
+			.currency-flag-fallback {
+				position: relative;
+
+				float: left;
+
+				width: 52px;
+				height: 52px;
+
+				margin-right: 14px;
+
+				border-radius: 50%;
+				border: 2px solid #f2b705;
+
+				overflow: hidden;
+			}
+
+			.currency-flag {
+				object-fit: cover;
+			}
+
+			.currency-flag-fallback span {
+				font-size: 12px;
+			}
+
+			/* ========================= */
+			/* INFO DIVISAS              */
+			/* ========================= */
+
+			.currency-info {
+				overflow: hidden;
+				padding-top: 2px;
+			}
+
+			.currency-value {
+				margin-bottom: 8px;
+
+				font-size: 28px;
+				font-weight: bold;
+				line-height: 1;
+
+				color: #f2b705;
+
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.currency-name {
+				font-size: 15px;
+				font-weight: bold;
+				line-height: 1.35;
+
+				color: #ffffff;
+
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			/* ========================= */
+			/* RESPONSIVE                */
+			/* ========================= */
+
+			@media screen and (max-width: 1300px) {
+				.country-card {
+					width: 49%;
+					margin-right: 2%;
+				}
+
+				.country-card:nth-child(3n) {
+					margin-right: 2%;
+				}
+
+				.country-card:nth-child(2n) {
+					margin-right: 0;
+				}
+
+				.currency-item {
+					width: 32%;
+				}
+
+				.currency-item:nth-child(4n) {
+					margin-right: 2%;
+				}
+
+				.currency-item:nth-child(3n) {
+					margin-right: 0;
+				}
+			}
+
+			@media screen and (max-width: 900px) {
+				.country-card {
+					width: 100%;
+					margin-right: 0;
+				}
+
+				.currency-item {
+					width: 49%;
+				}
+
+				.currency-item:nth-child(3n) {
+					margin-right: 2%;
+				}
+
+				.currency-item:nth-child(2n) {
+					margin-right: 0;
+				}
+
+				.header-center {
+					position: static;
+
+					display: block;
+
+					width: 100%;
+
+					margin-top: 12px;
+
+					text-align: center;
+
+					-webkit-transform: none;
+					transform: none;
+				}
+			}
+
+			@media screen and (max-width: 650px) {
+				.main-layout {
+					padding: 18px;
+				}
+
+				.header-left,
+				.header-right {
+					float: none;
+					text-align: center;
+				}
+
+				.header-right {
+					margin-top: 10px;
+				}
+
+				.header-center {
+					font-size: 18px;
+					letter-spacing: 2px;
+				}
+
+				.currency-item {
+					width: 100%;
+					margin-right: 0;
+				}
+
+				.country-card {
+					height: auto;
+					min-height: 120px;
+				}
+			}
+
+			/* ========================= */
+			/* SCROLLBAR                 */
+			/* ========================= */
+
+			::-webkit-scrollbar {
+				width: 6px;
+			}
+
+			::-webkit-scrollbar-track {
+				background: #071f4a;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background: #f2b705;
+			}
+		</style>
 	</head>
 
 	<body>
 		<div class="main-layout">
-			<header class="header">
+			<!-- HEADER -->
+
+			<div class="header clearfix">
 				<div class="header-left">
-					<!-- Logo imagen -->
 					<img
 						src="assets/logo/logo.svg"
 						class="logo"
 						alt="G&SENVIOS"
 						onerror="
 							this.style.display = 'none';
-							this.nextElementSibling.style.display = 'flex';
+							document.getElementById('logo-fallback').style.display = 'block';
 						"
 					/>
 
-					<!-- Fallback texto (se muestra si la imagen falla) -->
-					<div class="logo-fallback" style="display: none">G&SENVIOS</div>
+					<div id="logo-fallback" class="logo-fallback">G&amp;SENVIOS</div>
 				</div>
 
-				<div id="current-date" class="header-right"></div>
-			</header>
+				<div class="header-center">ESTO ES UNA PRUEBA</div>
 
-			<section class="countries-grid" id="rates-grid"></section>
+				<div id="current-date" class="header-right">CARGANDO...</div>
+			</div>
 
-			<div class="section-divider">DIVISAS / EXCHANGE</div>
+			<!-- PAISES -->
 
-			<section class="currencies-section" id="currencies"></section>
+			<div id="rates-grid" class="countries-grid clearfix"></div>
+
+			<!-- DIVIDER -->
+
+			<div class="section-divider">TIPO DE CAMBIO</div>
+
+			<!-- SLIDER -->
+
+			<div id="slider-wrapper" class="slider-wrapper"></div>
 		</div>
 
-		<script src="js/data.js"></script>
-		<script src="js/app.js"></script>
-		<script src="js/carrousel.js"></script>
+		<script>
+			(function () {
+				var currentSlide = 0;
+
+				var SLIDER_INTERVAL = 5000;
+
+				var sliderTimer = null;
+
+				var MOCK_DATA = [
+					{
+						code: "HN",
+						name: "Honduras",
+						value: "24.50 HNL",
+					},
+
+					{
+						code: "CO",
+						name: "Colombia",
+						value: "6,545 COP",
+					},
+					{
+						code: "HN",
+						name: "Honduras",
+						value: "24.50 HNL",
+					},
+
+					{
+						code: "CO",
+						name: "Colombia",
+						value: "6,545 COP",
+					},
+
+					{
+						code: "DO",
+						name: "Rep. Dominicana",
+						value: "58.20 DOP",
+					},
+
+					{
+						code: "US",
+						name: "Estados Unidos",
+						value: "1.05 USD",
+					},
+					{
+						code: "DO",
+						name: "Rep. Dominicana",
+						value: "58.20 DOP",
+					},
+
+					{
+						code: "US",
+						name: "Estados Unidos",
+						value: "1.05 USD",
+					},
+
+					{
+						code: "BO",
+						name: "Bolivia",
+						value: "No disponible",
+					},
+				];
+
+				var DIVISAS = [
+					[
+						{
+							code: "USD",
+							name: "Dólar Americano",
+							value: "1.05 USD",
+						},
+
+						{
+							code: "EUR",
+							name: "Euro",
+							value: "1.00 EUR",
+						},
+
+						{
+							code: "GBP",
+							name: "Libra Esterlina",
+							value: "0.94 GBP",
+						},
+
+						{
+							code: "CHF",
+							name: "Franco Suizo",
+							value: "1.02 CHF",
+						},
+					],
+
+					[
+						{
+							code: "JPY",
+							name: "Yen Japonés",
+							value: "158.50 JPY",
+						},
+
+						{
+							code: "CAD",
+							name: "Dólar Canadiense",
+							value: "1.43 CAD",
+						},
+
+						{
+							code: "MXN",
+							name: "Peso Mexicano",
+							value: "18.20 MXN",
+						},
+
+						{
+							code: "BRL",
+							name: "Real Brasileño",
+							value: "5.15 BRL",
+						},
+					],
+				];
+
+				var FLAG_MAP = {
+					HN: "assets/flags/hn.png",
+					CO: "assets/flags/co.png",
+					DO: "assets/flags/do.png",
+					US: "assets/flags/us.png",
+					BO: "assets/flags/bo.png",
+
+					USD: "assets/flags/us.png",
+					EUR: "assets/flags/eu.png",
+					GBP: "assets/flags/gb.png",
+					CHF: "assets/flags/ch.png",
+					JPY: "assets/flags/jp.png",
+					CAD: "assets/flags/ca.png",
+					MXN: "assets/flags/mx.png",
+					BRL: "assets/flags/br.png",
+				};
+
+				function createCountryFlag(code) {
+					var src = FLAG_MAP[code];
+
+					return (
+						'<img class="country-flag" src="' +
+						src +
+						"\" onerror=\"this.style.display='none';this.nextSibling.style.display='block';\">" +
+						'<div class="flag-fallback" style="display:none;">' +
+						"<span>" +
+						code +
+						"</span>" +
+						"</div>"
+					);
+				}
+
+				function createCurrencyFlag(code) {
+					var src = FLAG_MAP[code];
+
+					return (
+						'<img class="currency-flag" src="' +
+						src +
+						"\" onerror=\"this.style.display='none';this.nextSibling.style.display='block';\">" +
+						'<div class="currency-flag-fallback" style="display:none;">' +
+						"<span>" +
+						code +
+						"</span>" +
+						"</div>"
+					);
+				}
+
+				function renderCountries() {
+					var container = document.getElementById("rates-grid");
+
+					var html = "";
+
+					for (var i = 0; i < MOCK_DATA.length; i++) {
+						var item = MOCK_DATA[i];
+
+						var disabled = item.value === "No disponible" ? " disabled" : "";
+
+						html +=
+							'<div class="country-card">' +
+							createCountryFlag(item.code) +
+							'<div class="country-info">' +
+							'<div class="country-name">' +
+							item.name +
+							"</div>" +
+							'<div class="country-value' +
+							disabled +
+							'">' +
+							item.value +
+							"</div>" +
+							"</div>" +
+							"</div>";
+					}
+
+					container.innerHTML = html;
+				}
+
+				function renderSlider() {
+					var wrapper = document.getElementById("slider-wrapper");
+
+					var html = "";
+
+					for (var s = 0; s < DIVISAS.length; s++) {
+						var active = s === 0 ? " active" : "";
+
+						html += '<div class="slider-slide' + active + '" id="slide-' + s + '">';
+
+						html += '<div class="currencies-slide clearfix">';
+
+						for (var i = 0; i < DIVISAS[s].length; i++) {
+							var item = DIVISAS[s][i];
+
+							html +=
+								'<div class="currency-item">' +
+								createCurrencyFlag(item.code) +
+								'<div class="currency-info">' +
+								'<div class="currency-value">' +
+								item.value +
+								"</div>" +
+								'<div class="currency-name">' +
+								item.name +
+								"</div>" +
+								"</div>" +
+								"</div>";
+						}
+
+						html += "</div>";
+						html += "</div>";
+					}
+
+					wrapper.innerHTML = html;
+				}
+
+				function nextSlide() {
+					var slides = document.getElementsByClassName("slider-slide");
+
+					slides[currentSlide].className = "slider-slide";
+
+					currentSlide++;
+
+					if (currentSlide >= slides.length) {
+						currentSlide = 0;
+					}
+
+					slides[currentSlide].className = "slider-slide active";
+				}
+
+				function startSlider() {
+					sliderTimer = setInterval(nextSlide, SLIDER_INTERVAL);
+				}
+
+				function updateDate() {
+					var el = document.getElementById("current-date");
+
+					var now = new Date();
+
+					var days = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
+
+					var months = [
+						"ENERO",
+						"FEBRERO",
+						"MARZO",
+						"ABRIL",
+						"MAYO",
+						"JUNIO",
+						"JULIO",
+						"AGOSTO",
+						"SEPTIEMBRE",
+						"OCTUBRE",
+						"NOVIEMBRE",
+						"DICIEMBRE",
+					];
+
+					el.innerHTML =
+						days[now.getDay()] + " " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
+				}
+
+				function init() {
+					updateDate();
+
+					renderCountries();
+
+					renderSlider();
+
+					startSlider();
+
+					setInterval(updateDate, 60000);
+				}
+
+				if (document.readyState === "loading") {
+					document.addEventListener("DOMContentLoaded", init);
+				} else {
+					init();
+				}
+			})();
+		</script>
 	</body>
 </html>
