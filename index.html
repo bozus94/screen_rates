@@ -713,7 +713,7 @@
 					var countryDollars = ["NI", "EC"];
 					var i;
 					for (i = 0; i < countryDollars.length; i++) {
-						if (countryDollars[i] === code) return formatNumber(num, 4) + " " + code;
+						if (countryDollars[i] === code) return formatNumber(num, 4);
 					}
 					return num >= 1000 ? formatNumber(num, 0) : formatNumber(num, 2);
 				}
