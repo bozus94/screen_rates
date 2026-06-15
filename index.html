@@ -2,26 +2,22 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="refresh" content="1200" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>G&SENVIOS - Tasas de Cambio</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<title>G&amp;SENVIOS - Tasas de Cambio</title>
+		<meta http-equiv="refresh" content="14400" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
 		<style>
-			/* ============================================================ */
-			/* G&SENVIOS - LEGACY VERSION                                   */
-			/* Compatible Chromium 49+ / Samsung MagicInfo                  */
-			/* Slider FADE Legacy Compatible                                */
-			/* ============================================================ */
+			@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-			/* ========================= */
-			/* RESET                     */
-			/* ========================= */
-
+			/* ========== RESET ========== */
 			* {
 				margin: 0;
 				padding: 0;
-
-				-webkit-box-sizing: border-box;
-				-moz-box-sizing: border-box;
 				box-sizing: border-box;
 			}
 
@@ -29,845 +25,630 @@
 			body {
 				width: 100%;
 				height: 100%;
+				overflow: hidden;
 			}
 
 			body {
-				overflow: hidden;
-
-				font-family: Arial, Helvetica, sans-serif;
-
-				color: #ffffff;
-
-				background: #040f28;
-
+				font-family: "Montserrat", "Segoe UI", Arial, Helvetica, sans-serif;
 				background: -webkit-radial-gradient(20% 10%, circle, #0a2f72 0%, #040f28 100%);
-
 				background: radial-gradient(circle at 20% 10%, #0a2f72 0%, #040f28 100%);
+				color: #ffffff;
 			}
 
-			/* ========================= */
-			/* CLEARFIX                  */
-			/* ========================= */
-
-			.clearfix:before,
-			.clearfix:after,
-			.header:before,
-			.header:after,
-			.country-card:before,
-			.country-card:after,
-			.currency-item:before,
-			.currency-item:after,
-			.countries-grid:before,
-			.countries-grid:after {
+			/* ========== CLEARFIX (IE + Chromium) ========== */
+			.cf:after {
 				content: "";
 				display: table;
-			}
-
-			.clearfix:after,
-			.header:after,
-			.country-card:after,
-			.currency-item:after,
-			.countries-grid:after {
 				clear: both;
 			}
+			.cf {
+				zoom: 1;
+			}
 
-			/* ========================= */
-			/* MAIN                      */
-			/* ========================= */
-
+			/* ============================================================
+   LAYOUT PRINCIPAL
+   Padding generoso en los lados, compacto arriba/abajo
+   para que el contenido llene el viewport sin overflow.
+   ============================================================ */
 			.main-layout {
 				width: 100%;
 				height: 100%;
-
-				padding: 25px 35px;
-
-				overflow-y: auto;
-				overflow-x: hidden;
+				padding: 22px 36px 14px 36px;
+				overflow: hidden;
 			}
 
-			/* ========================= */
-			/* HEADER                    */
-			/* ========================= */
-
+			/* ============================================================
+   HEADER
+   Tres columnas (logo | agencia | fecha).
+   Altura total ~110px a 1080p.
+   Fuentes grandes para visibilidad a distancia.
+   ============================================================ */
 			.header {
-				position: relative;
-
+				width: 100%;
 				padding-bottom: 18px;
+				border-bottom: 5px solid #f2b705;
 				margin-bottom: 28px;
-
-				border-bottom: 3px solid #f2b705;
+				overflow: hidden;
+				zoom: 1;
 			}
 
 			.header-left {
 				float: left;
-			}
-
-			.logo {
-				display: block;
-				height: 55px;
-			}
-
-			.logo-fallback {
-				display: none;
-
-				font-size: 28px;
-				font-weight: bold;
-				line-height: 55px;
-
-				color: #ffffff;
+				width: 28%;
+				text-align: left;
+				font-size: 30px;
 			}
 
 			.header-center {
-				position: absolute;
-
-				top: 50%;
-				left: 50%;
-
-				font-size: 50px;
-				font-weight: bold;
+				float: left;
+				width: 44%;
+				text-align: center;
+				font-size: 30px;
+				font-weight: 800;
+				color: #ffffff;
 				letter-spacing: 3px;
 				text-transform: uppercase;
-
-				color: #f2b705;
-
+				padding-top: 14px;
 				white-space: nowrap;
-
-				-webkit-transform: translate(-50%, -50%);
-				transform: translate(-50%, -50%);
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.header-right {
 				float: right;
-
-				font-size: 28px;
-				font-weight: bold;
-				line-height: 55px;
-
+				width: 28%;
+				text-align: right;
+				font-size: 25px;
+				font-weight: 700;
 				color: #f2b705;
+				letter-spacing: 1px;
+				white-space: nowrap;
+				padding-top: 16px;
+				line-height: 1.3;
 			}
 
-			/* ========================= */
-			/* PAISES                    */
-			/* ========================= */
+			.logo {
+				height: 32px;
+				width: auto;
+				float: left;
+				margin-top: 14px;
+				margin-right: 14px;
+				display: block;
+			}
 
+			.logo-fallback {
+				font-size: 30px;
+				font-weight: 800;
+				color: #ffffff;
+				letter-spacing: 3px;
+				float: left;
+				padding-top: 10px;
+				display: none;
+			}
+
+			/* ============================================================
+   CONTENEDOR PRINCIPAL — display:table
+   ============================================================ */
+			.content-container {
+				width: 100%;
+				height: 89%;
+				display: table;
+				table-layout: fixed;
+			}
+
+			.shipments-row {
+				display: table-row;
+				height: 70%;
+			}
+
+			.shipments-cell {
+				display: table-cell;
+				vertical-align: top;
+			}
+
+			.divider-row {
+				display: table-row;
+				height: 62px;
+			}
+
+			.divider-cell {
+				display: table-cell;
+				vertical-align: middle;
+			}
+
+			.carousel-row {
+				display: table-row;
+				height: 26%;
+			}
+
+			.carousel-cell {
+				display: table-cell;
+				vertical-align: top;
+				padding-top: 12px;
+			}
+
+			/* ============================================================
+   TARJETAS DE ENVIO — 3 columnas
+   ============================================================ */
 			.countries-grid {
 				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				zoom: 1;
 			}
 
 			.country-card {
-				position: relative;
-
 				float: left;
-
-				width: 32%;
-				height: 140px;
-
-				margin-right: 2%;
-				margin-bottom: 22px;
-
-				padding: 22px;
-
+				width: 31.5%;
+				margin-right: 2.75%;
+				margin-bottom: 2%;
 				background: #0a2f72;
-
 				background: -webkit-linear-gradient(135deg, #0d3b8e, #0a2f72);
-
 				background: linear-gradient(135deg, #0d3b8e, #0a2f72);
-
-				border-left: 6px solid #f2b705;
-				border-radius: 18px;
-
-				overflow: hidden;
-
 				-webkit-box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 				box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+				border: 1px solid #1e5fbc;
+				border-left: 10px solid #f2b705;
+				border-radius: 18px;
+				padding: 26px 22px;
+				overflow: hidden;
+				zoom: 1;
 			}
 
-			.country-card:nth-child(3n) {
+			.country-card.last-in-row {
 				margin-right: 0;
 			}
 
-			/* ========================= */
-			/* BANDERAS                  */
-			/* ========================= */
-
-			.country-flag,
-			.flag-fallback {
-				position: relative;
-
-				float: left;
-
-				width: 85px;
-				height: 85px;
-
-				margin-right: 18px;
-
-				border-radius: 50%;
-				border: 3px solid #f2b705;
-
-				overflow: hidden;
-			}
-
 			.country-flag {
+				float: left;
+				width: 88px;
+				height: 88px;
+				border-radius: 50%;
+				border: 4px solid #f2b705;
+				margin-right: 20px;
+				display: block;
 				object-fit: cover;
+				object-position: center center;
 			}
 
-			.flag-fallback,
-			.currency-flag-fallback {
-				position: relative;
-
-				background: #0a2f72;
-
-				background: -webkit-linear-gradient(135deg, #0d3b8e, #040f28);
-
-				background: linear-gradient(135deg, #0d3b8e, #040f28);
-
+			/* Fallback cuando no hay imagen */
+			.flag-fallback {
+				float: left;
+				width: 88px;
+				height: 88px;
+				border-radius: 50%;
+				background: #071f4a;
+				text-align: center;
+				line-height: 88px;
+				font-size: 28px;
+				font-weight: 800;
 				color: #f2b705;
-
-				font-weight: bold;
-
-				text-align: center;
+				border: 4px solid #f2b705;
+				margin-right: 20px;
+				display: none;
 			}
-
-			.flag-fallback span,
-			.currency-flag-fallback span {
-				position: absolute;
-
-				top: 50%;
-				left: 50%;
-
-				width: 100%;
-
-				text-align: center;
-
-				-webkit-transform: translate(-50%, -50%);
-				transform: translate(-50%, -50%);
-			}
-
-			.flag-fallback span {
-				font-size: 30px;
-			}
-
-			/* ========================= */
-			/* INFO PAISES               */
-			/* ========================= */
 
 			.country-info {
-				overflow: hidden;
-				padding-top: 5px;
+				float: left;
+				width: 71%;
+				text-align: left;
+				padding-top: 6px;
 			}
 
 			.country-name {
-				margin-bottom: 10px;
-
-				font-size: 20px;
-				font-weight: bold;
+				font-size: 22px;
+				font-weight: 700;
 				text-transform: uppercase;
-
+				margin-bottom: 8px;
 				color: #ffffff;
+				letter-spacing: 1px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.country-value {
-				font-size: 34px;
-				font-weight: bold;
-
+				font-size: 42px;
+				font-weight: 800;
 				color: #f2b705;
+				line-height: 1.1;
+				letter-spacing: 1px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.country-value.disabled {
-				font-size: 22px;
-				color: #d1d5db;
+				font-size: 20px;
+				color: #9ca3af;
+				white-space: normal;
+				font-weight: 600;
 			}
 
-			/* ========================= */
-			/* DIVIDER                   */
-			/* ========================= */
-
+			/* ============================================================
+   DIVISOR "TIPO DE CAMBIO"
+   Líneas laterales con <span> reales (sin ::before/::after)
+   ============================================================ */
 			.section-divider {
-				position: relative;
-
-				margin: 30px 0 24px 0;
-
 				text-align: center;
-
-				font-size: 17px;
-				font-weight: bold;
-				letter-spacing: 4px;
-
+				font-size: 22px;
+				font-weight: 700;
+				letter-spacing: 6px;
 				color: #d1d5db;
+				text-transform: uppercase;
 			}
 
-			.section-divider:before,
-			.section-divider:after {
-				content: "";
-
-				position: absolute;
-				top: 50%;
-
-				width: 32%;
-				height: 4px;
-
-				margin-top: -2px;
+			.section-divider-line {
+				display: inline-block;
+				width: 29%;
+				height: 2px;
+				background: #f2b705;
+				vertical-align: middle;
+				margin: 0 16px;
 			}
 
-			.section-divider:before {
-				left: 0;
-
-				background: -webkit-linear-gradient(left, transparent, #1e5fbc, #f2b705);
-
-				background: linear-gradient(to right, transparent, #1e5fbc, #f2b705);
+			.section-divider-text {
+				font-size: 25px;
+				display: inline-block;
+				vertical-align: middle;
 			}
 
-			.section-divider:after {
-				right: 0;
-
-				background: -webkit-linear-gradient(left, #f2b705, #1e5fbc, transparent);
-
-				background: linear-gradient(to right, #f2b705, #1e5fbc, transparent);
-			}
-
-			/* ========================= */
-			/* SLIDER LEGACY             */
-			/* ========================= */
-
-			.slider-wrapper {
-				position: relative;
-
-				width: 100%;
-				height: 260px;
-
-				overflow: hidden;
-			}
-
-			.slider-slide {
-				position: absolute;
-
-				top: 0;
-				left: 0;
-
-				width: 100%;
-
-				opacity: 0;
-				visibility: hidden;
-
-				-webkit-transition: opacity 0.8s ease;
-				transition: opacity 0.8s ease;
-			}
-
-			.slider-slide.active {
-				opacity: 1;
-				visibility: visible;
-				z-index: 2;
-			}
-
-			/* ========================= */
-			/* DIVISAS                   */
-			/* ========================= */
-
+			/* ============================================================
+   CARRUSEL DE DIVISAS — 4 cards por slide
+   Ancho por item: 23.25% con margen 2.33% entre ellos
+   Bandera + nombre + valor en fila
+   Valores grandes para pantalla
+   ============================================================ */
 			.currencies-slide {
 				width: 100%;
+				overflow: hidden;
+				zoom: 1;
 			}
 
 			.currency-item {
-				position: relative;
-
 				float: left;
-
-				width: 23.5%;
-				height: 112px;
-
-				margin-right: 2%;
-				margin-bottom: 18px;
-
-				padding: 16px 15px;
-
+				width: 24%;
+				margin-right: 1.33%;
 				background: #0a2f72;
-
 				background: -webkit-linear-gradient(135deg, #0d3b8e, #0a2f72);
-
 				background: linear-gradient(135deg, #0d3b8e, #0a2f72);
-
 				border: 1px solid #1e5fbc;
-				border-bottom: 5px solid #f2b705;
+				border-bottom: 6px solid #f2b705;
 				border-radius: 16px;
-
+				padding: 20px 16px;
 				overflow: hidden;
-
+				zoom: 1;
 				-webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
 				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
 			}
 
-			.currency-item:nth-child(4n) {
+			.currency-item.last-in-row {
 				margin-right: 0;
 			}
 
-			/* ========================= */
-			/* BANDERAS DIVISAS          */
-			/* ========================= */
-
-			.currency-flag,
-			.currency-flag-fallback {
-				position: relative;
-
-				float: left;
-
-				width: 52px;
-				height: 52px;
-
-				margin-right: 14px;
-
-				border-radius: 50%;
-				border: 2px solid #f2b705;
-
-				overflow: hidden;
-			}
-
 			.currency-flag {
+				float: left;
+				width: 64px;
+				height: 64px;
+				border-radius: 50%;
+				border: 3px solid #f2b705;
+				margin-right: 16px;
+				display: block;
 				object-fit: cover;
+				object-position: center center;
 			}
 
-			.currency-flag-fallback span {
-				font-size: 12px;
+			.currency-flag-fallback {
+				float: left;
+				width: 64px;
+				height: 64px;
+				border-radius: 50%;
+				background: #071f4a;
+				text-align: center;
+				line-height: 64px;
+				font-size: 18px;
+				font-weight: 800;
+				color: #f2b705;
+				border: 3px solid #f2b705;
+				margin-right: 16px;
+				display: none;
 			}
-
-			/* ========================= */
-			/* INFO DIVISAS              */
-			/* ========================= */
 
 			.currency-info {
-				overflow: hidden;
-				padding-top: 2px;
-			}
-
-			.currency-value {
-				margin-bottom: 8px;
-
-				font-size: 28px;
-				font-weight: bold;
-				line-height: 1;
-
-				color: #f2b705;
-
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
+				float: left;
+				width: 65%;
+				text-align: left;
+				padding-top: 4px;
 			}
 
 			.currency-name {
-				font-size: 15px;
-				font-weight: bold;
-				line-height: 1.35;
-
+				font-size: 20px;
+				font-weight: 700;
 				color: #ffffff;
-
+				margin-bottom: 8px;
+				letter-spacing: 0.5px;
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
 
-			/* ========================= */
-			/* RESPONSIVE                */
-			/* ========================= */
+			.currency-value {
+				font-size: 28px;
+				font-weight: 800;
+				color: #f2b705;
+				letter-spacing: 0.5px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 
-			@media screen and (max-width: 1300px) {
-				.country-card {
-					width: 49%;
-					margin-right: 2%;
+			/* ============================================================
+			LOADER - CON EFECTO FADE Y TEXTO ANIMADO
+
+			============================================================ */
+			.loader-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: #071f4a;
+				z-index: 9999;
+				opacity: 1;
+				display: table;
+				transition: opacity 0.5s ease;
+			}
+
+			.loader-overlay.hidden {
+				opacity: 0;
+				visibility: hidden;
+				transition:
+					opacity 0.5s ease,
+					visibility 0s 0.5s;
+			}
+
+			.loader-container {
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+			}
+
+			.loader-text {
+				color: #f2b705;
+				font-size: 28px;
+				font-weight: 700;
+				letter-spacing: 4px;
+				text-transform: uppercase;
+				background: #071f4a;
+				padding: 20px 40px;
+				display: inline-block;
+				animation: textPulse 1.5s ease-in-out infinite;
+			}
+
+			@keyframes textPulse {
+				0% {
+					opacity: 0.5;
 				}
-
-				.country-card:nth-child(3n) {
-					margin-right: 2%;
+				50% {
+					opacity: 1;
 				}
-
-				.country-card:nth-child(2n) {
-					margin-right: 0;
-				}
-
-				.currency-item {
-					width: 32%;
-				}
-
-				.currency-item:nth-child(4n) {
-					margin-right: 2%;
-				}
-
-				.currency-item:nth-child(3n) {
-					margin-right: 0;
+				100% {
+					opacity: 0.5;
 				}
 			}
 
-			@media screen and (max-width: 900px) {
-				.country-card {
-					width: 100%;
-					margin-right: 0;
-				}
-
-				.currency-item {
-					width: 49%;
-				}
-
-				.currency-item:nth-child(3n) {
-					margin-right: 2%;
-				}
-
-				.currency-item:nth-child(2n) {
-					margin-right: 0;
-				}
-
-				.header-center {
-					position: static;
-
-					display: block;
-
-					width: 100%;
-
-					margin-top: 12px;
-
-					text-align: center;
-
-					-webkit-transform: none;
-					transform: none;
-				}
+			.loader-spinner {
+				display: none;
 			}
 
-			@media screen and (max-width: 650px) {
-				.main-layout {
-					padding: 18px;
-				}
-
-				.header-left,
-				.header-right {
-					float: none;
-					text-align: center;
-				}
-
-				.header-right {
-					margin-top: 10px;
-				}
-
-				.header-center {
-					font-size: 18px;
-					letter-spacing: 2px;
-				}
-
-				.currency-item {
-					width: 100%;
-					margin-right: 0;
-				}
-
-				.country-card {
-					height: auto;
-					min-height: 120px;
-				}
-			}
-
-			/* ========================= */
-			/* SCROLLBAR                 */
-			/* ========================= */
-
+			/* ========== SCROLLBAR WEBKIT ========== */
 			::-webkit-scrollbar {
-				width: 6px;
+				width: 5px;
 			}
-
 			::-webkit-scrollbar-track {
 				background: #071f4a;
+				border-radius: 3px;
 			}
-
 			::-webkit-scrollbar-thumb {
 				background: #f2b705;
+				border-radius: 3px;
 			}
 		</style>
 	</head>
-
 	<body>
 		<div class="main-layout">
 			<!-- HEADER -->
-
-			<div class="header clearfix">
+			<div class="header cf">
 				<div class="header-left">
-					<img
-						src="assets/logo/logo.svg"
-						class="logo"
-						alt="G&SENVIOS"
-						onerror="
-							this.style.display = 'none';
-							document.getElementById('logo-fallback').style.display = 'block';
-						"
-					/>
-
+					<img id="main-logo" src="assets/logo/logo_claro.svg" class="logo" alt="G&amp;SENVIOS" />
 					<div id="logo-fallback" class="logo-fallback">G&amp;SENVIOS</div>
 				</div>
-
-				<div class="header-center">ESTO ES UNA PRUEBA</div>
-
+				<div id="agency-name" class="header-center">OFICINA PRINCIPAL</div>
 				<div id="current-date" class="header-right">CARGANDO...</div>
 			</div>
 
-			<!-- PAISES -->
+			<div class="content-container">
+				<!-- ENVIOS -->
+				<div class="shipments-row">
+					<div class="shipments-cell">
+						<div id="rates-grid" class="countries-grid cf"></div>
+					</div>
+				</div>
 
-			<div id="rates-grid" class="countries-grid clearfix"></div>
+				<!-- DIVISOR -->
+				<div class="divider-row">
+					<div class="divider-cell">
+						<div class="section-divider">
+							<span class="section-divider-line"></span>
+							<span class="section-divider-text">DIVISAS</span>
+							<span class="section-divider-line"></span>
+						</div>
+					</div>
+				</div>
 
-			<!-- DIVIDER -->
+				<!-- CARRUSEL DIVISAS -->
+				<div class="carousel-row">
+					<div class="carousel-cell">
+						<div id="currencies-slide" class="currencies-slide cf"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-			<div class="section-divider">TIPO DE CAMBIO</div>
-
-			<!-- SLIDER -->
-
-			<div id="slider-wrapper" class="slider-wrapper"></div>
+		<!-- LOADER -->
+		<div id="loader-overlay" class="loader-overlay">
+			<div class="loader-container">
+				<div class="loader-spinner"></div>
+				<div class="loader-text">Cargando tasas de cambio...</div>
+			</div>
 		</div>
 
 		<script>
 			(function () {
+				/* ========== LOGGER SEGURO ========== */
+				var log =
+					typeof console !== "undefined" && console.log
+						? function (msg) {
+								console.log(msg);
+							}
+						: function () {};
+
+				/* ========== CONFIGURACION ========== */
+				var USE_MOCK = false;
+				var REFRESH_INTERVAL = 14400000; /* 4 horas */
+				var CAROUSEL_INTERVAL = 10000;
+
+				/* ========== ESTADO ========== */
+				var isLoading = false;
 				var currentSlide = 0;
+				var slideTimer = null;
+				var shipmentsData = [];
+				var currenciesData = [];
+				var currenciesCarousel = [];
 
-				var SLIDER_INTERVAL = 5000;
-
-				var sliderTimer = null;
-
-				var MOCK_DATA = [
-					{
-						code: "HN",
-						name: "Honduras",
-						value: "24.50 HNL",
+				/* ========== AGENCIAS ========== */
+				var agencyList = {
+					default: {
+						name: "",
+						url: "https://script.google.com/macros/s/AKfycbwmNgg2V8PzcWHrOXSD8mNA4MALz46u50xb9Ol15Svj5D5A1bDOvKxLUs2krySTT8Behg/exec",
 					},
-
-					{
-						code: "CO",
-						name: "Colombia",
-						value: "6,545 COP",
-					},
-					{
-						code: "HN",
-						name: "Honduras",
-						value: "24.50 HNL",
-					},
-
-					{
-						code: "CO",
-						name: "Colombia",
-						value: "6,545 COP",
-					},
-
-					{
-						code: "DO",
-						name: "Rep. Dominicana",
-						value: "58.20 DOP",
-					},
-
-					{
-						code: "US",
-						name: "Estados Unidos",
-						value: "1.05 USD",
-					},
-					{
-						code: "DO",
-						name: "Rep. Dominicana",
-						value: "58.20 DOP",
-					},
-
-					{
-						code: "US",
-						name: "Estados Unidos",
-						value: "1.05 USD",
-					},
-
-					{
-						code: "BO",
-						name: "Bolivia",
-						value: "No disponible",
-					},
-				];
-
-				var DIVISAS = [
-					[
-						{
-							code: "USD",
-							name: "Dólar Americano",
-							value: "1.05 USD",
-						},
-
-						{
-							code: "EUR",
-							name: "Euro",
-							value: "1.00 EUR",
-						},
-
-						{
-							code: "GBP",
-							name: "Libra Esterlina",
-							value: "0.94 GBP",
-						},
-
-						{
-							code: "CHF",
-							name: "Franco Suizo",
-							value: "1.02 CHF",
-						},
-					],
-
-					[
-						{
-							code: "JPY",
-							name: "Yen Japonés",
-							value: "158.50 JPY",
-						},
-
-						{
-							code: "CAD",
-							name: "Dólar Canadiense",
-							value: "1.43 CAD",
-						},
-
-						{
-							code: "MXN",
-							name: "Peso Mexicano",
-							value: "18.20 MXN",
-						},
-
-						{
-							code: "BRL",
-							name: "Real Brasileño",
-							value: "5.15 BRL",
-						},
-					],
-				];
-
-				var FLAG_MAP = {
-					HN: "assets/flags/hn.png",
-					CO: "assets/flags/co.png",
-					DO: "assets/flags/do.png",
-					US: "assets/flags/us.png",
-					BO: "assets/flags/bo.png",
-
-					USD: "assets/flags/us.png",
-					EUR: "assets/flags/eu.png",
-					GBP: "assets/flags/gb.png",
-					CHF: "assets/flags/ch.png",
-					JPY: "assets/flags/jp.png",
-					CAD: "assets/flags/ca.png",
-					MXN: "assets/flags/mx.png",
-					BRL: "assets/flags/br.png",
+					casal: { name: "CASAL", url: "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" },
+					sucursal1: { name: "SUCURSAL CENTRO", url: "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" },
+					sucursal2: { name: "SUCURSAL NORTE", url: "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" },
 				};
 
-				function createCountryFlag(code) {
-					var src = FLAG_MAP[code];
+				/* ========== BANDERAS ========== */
+				var flagMap = {
+					HN: "assets/flags/hn.svg",
+					CO: "assets/flags/co.svg",
+					DO: "assets/flags/do.svg",
+					BO: "assets/flags/bo.svg",
+					DO: "assets/flags/do.svg",
+					EC: "assets/flags/ec.svg",
+					NI: "assets/flags/ni.svg",
+					PY: "assets/flags/py.svg",
+					PE: "assets/flags/pe.svg",
+					MA: "assets/flags/ma.svg",
+					PK: "assets/flags/pk.svg",
+					BR: "assets/flags/br.svg",
+					PH: "assets/flags/ph.svg",
+					USD: "assets/flags/us.svg",
+					GBP: "assets/flags/gb.svg",
+					CHF: "assets/flags/ch.svg",
+					JPY: "assets/flags/jp.svg",
+					CAD: "assets/flags/ca.svg",
+					AUD: "assets/flags/au.svg",
+					MXN: "assets/flags/mx.svg",
+					KRW: "assets/flags/kr.svg",
+					CNY: "assets/flags/cn.svg",
+					MAD: "assets/flags/ma.svg",
+					DOP: "assets/flags/do.svg",
+					HKD: "assets/flags/hk.svg",
+				};
 
-					return (
-						'<img class="country-flag" src="' +
-						src +
-						"\" onerror=\"this.style.display='none';this.nextSibling.style.display='block';\">" +
-						'<div class="flag-fallback" style="display:none;">' +
-						"<span>" +
-						code +
-						"</span>" +
-						"</div>"
-					);
+				/* ========== MOCK ========== */
+				var MOCK_DATA = [
+					{ type: "shipment", code: "HN", name: "Honduras", value: "30.86", order: 1, active: true },
+					{ type: "shipment", code: "CO", name: "Colombia", value: "4136", order: 2, active: true },
+					{ type: "shipment", code: "DO", name: "R. Dominicana", value: "68.07", order: 3, active: true },
+					{ type: "shipment", code: "EC", name: "Ecuador", value: "1.154", order: 4, active: true },
+					{ type: "shipment", code: "BO", name: "Bolivia", value: "11.36", order: 5, active: true },
+					{ type: "shipment", code: "PY", name: "Paraguay", value: "7108", order: 6, active: true },
+					{ type: "currency", code: "USD", name: "Dolar Americano", value: "1.0512", order: 1, active: true },
+					{ type: "currency", code: "GBP", name: "Libra Esterlina", value: "0.9421", order: 2, active: true },
+					{ type: "currency", code: "CHF", name: "Franco Suizo", value: "1.0234", order: 3, active: true },
+				];
+
+				/* ========== UTILIDADES ========== */
+				function $id(id) {
+					return document.getElementById(id);
 				}
 
-				function createCurrencyFlag(code) {
-					var src = FLAG_MAP[code];
-
-					return (
-						'<img class="currency-flag" src="' +
-						src +
-						"\" onerror=\"this.style.display='none';this.nextSibling.style.display='block';\">" +
-						'<div class="currency-flag-fallback" style="display:none;">' +
-						"<span>" +
-						code +
-						"</span>" +
-						"</div>"
-					);
+				function trim(str) {
+					return str.replace(/^\s+|\s+$/g, "");
 				}
 
-				function renderCountries() {
-					var container = document.getElementById("rates-grid");
-
-					var html = "";
-
-					for (var i = 0; i < MOCK_DATA.length; i++) {
-						var item = MOCK_DATA[i];
-
-						var disabled = item.value === "No disponible" ? " disabled" : "";
-
-						html +=
-							'<div class="country-card">' +
-							createCountryFlag(item.code) +
-							'<div class="country-info">' +
-							'<div class="country-name">' +
-							item.name +
-							"</div>" +
-							'<div class="country-value' +
-							disabled +
-							'">' +
-							item.value +
-							"</div>" +
-							"</div>" +
-							"</div>";
-					}
-
-					container.innerHTML = html;
+				function cleanValue(str) {
+					if (str === undefined || str === null) return "";
+					return trim(str.toString());
 				}
 
-				function renderSlider() {
-					var wrapper = document.getElementById("slider-wrapper");
+				/* ========== LOADER ========== */
+				/* [FIX 2] className directo en lugar de classList */
+				function showLoader() {
+					var el = $id("loader-overlay");
+					if (el) el.className = "loader-overlay";
+				}
+				function hideLoader() {
+					var el = $id("loader-overlay");
+					if (el) el.className = "loader-overlay hidden";
+				}
 
-					var html = "";
+				/* ========== LOGO FALLBACK ========== */
+				function initLogoFallback() {
+					var logo = $id("main-logo");
+					var fallback = $id("logo-fallback");
+					if (!logo) return;
+					logo.onerror = function () {
+						logo.style.display = "none";
+						if (fallback) fallback.style.display = "inline-block";
+					};
+				}
 
-					for (var s = 0; s < DIVISAS.length; s++) {
-						var active = s === 0 ? " active" : "";
-
-						html += '<div class="slider-slide' + active + '" id="slide-' + s + '">';
-
-						html += '<div class="currencies-slide clearfix">';
-
-						for (var i = 0; i < DIVISAS[s].length; i++) {
-							var item = DIVISAS[s][i];
-
-							html +=
-								'<div class="currency-item">' +
-								createCurrencyFlag(item.code) +
-								'<div class="currency-info">' +
-								'<div class="currency-value">' +
-								item.value +
-								"</div>" +
-								'<div class="currency-name">' +
-								item.name +
-								"</div>" +
-								"</div>" +
-								"</div>";
+				/* ========== AGENCIA DESDE URL ========== */
+				function getAgencyFromURL() {
+					var search = window.location.search;
+					if (!search || search.length < 2) return "default";
+					var pairs = search.substring(1).split("&");
+					var i;
+					for (i = 0; i < pairs.length; i++) {
+						var pair = pairs[i].split("=");
+						if (pair[0] === "agency" && pair[1] && agencyList[pair[1]]) {
+							return pair[1];
 						}
-
-						html += "</div>";
-						html += "</div>";
 					}
-
-					wrapper.innerHTML = html;
+					return "default";
 				}
 
-				function nextSlide() {
-					var slides = document.getElementsByClassName("slider-slide");
-
-					slides[currentSlide].className = "slider-slide";
-
-					currentSlide++;
-
-					if (currentSlide >= slides.length) {
-						currentSlide = 0;
-					}
-
-					slides[currentSlide].className = "slider-slide active";
+				function setAgencyName() {
+					var agency = getAgencyFromURL();
+					var name = USE_MOCK ? "PRUEBA" : agencyList[agency].name;
+					var el = $id("agency-name");
+					if (el) el.innerHTML = name;
+					return agency;
 				}
 
-				function startSlider() {
-					sliderTimer = setInterval(nextSlide, SLIDER_INTERVAL);
+				function getCsvUrl() {
+					var agency = getAgencyFromURL();
+					return agencyList[agency].url;
 				}
 
+				/* ========== RELOJ ========== */
 				function updateDate() {
-					var el = document.getElementById("current-date");
-
+					var el = $id("current-date");
+					if (!el) return;
 					var now = new Date();
-
-					var days = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
-
+					var days = ["DOMINGO", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO"];
 					var months = [
 						"ENERO",
 						"FEBRERO",
@@ -882,27 +663,404 @@
 						"NOVIEMBRE",
 						"DICIEMBRE",
 					];
-
+					var h = now.getHours();
+					var m = now.getMinutes();
+					var hs = h < 10 ? "0" + h : "" + h;
+					var ms = m < 10 ? "0" + m : "" + m;
 					el.innerHTML =
-						days[now.getDay()] + " " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
+						days[now.getDay()] +
+						" " +
+						now.getDate() +
+						" " +
+						months[now.getMonth()] +
+						" " +
+						now.getFullYear() +
+						" &middot; " +
+						hs +
+						":" +
+						ms;
 				}
 
-				function init() {
+				function startClock() {
 					updateDate();
-
-					renderCountries();
-
-					renderSlider();
-
-					startSlider();
-
 					setInterval(updateDate, 60000);
 				}
 
-				if (document.readyState === "loading") {
-					document.addEventListener("DOMContentLoaded", init);
+				/* ========== FORMATEO NUMERICO PROPIO ========== */
+				function formatNumber(num, decimals) {
+					var mult = Math.pow(10, decimals);
+					var rounded = Math.round(num * mult) / mult;
+					var str = rounded.toFixed(decimals);
+					var parts = str.split(".");
+					var intPart = parts[0];
+					var decPart = parts.length > 1 ? parts[1] : "";
+					var result = "";
+					var count = 0;
+					var i;
+					for (i = intPart.length - 1; i >= 0; i--) {
+						if (count > 0 && count % 3 === 0) result = "." + result;
+						result = intPart[i] + result;
+						count++;
+					}
+					if (decimals > 0 && decPart) result = result + "," + decPart;
+					return result;
+				}
+
+				function formatShipmentValue(value, code) {
+					if (!value || value === "") return "No disponible";
+					var num = parseFloat(value.toString().replace(/,/g, "."));
+					if (isNaN(num) || num === 0) return "No disponible";
+					var countryDollars = ["NI", "EC"];
+					var i;
+					for (i = 0; i < countryDollars.length; i++) {
+						if (countryDollars[i] === code) return formatNumber(num, 4) + " " + code;
+					}
+					return num >= 1000 ? formatNumber(num, 0) : formatNumber(num, 2);
+				}
+
+				function formatCurrencyValue(value, code) {
+					if (!value || value === "") return "No disponible";
+
+					if (value.toString().indexOf(code) !== -1) return value;
+					var num = parseFloat(value.toString().replace(/,/g, "."));
+					if (isNaN(num) || num === 0) return "No disponible";
+					/* 		var noDecimals = ["COP", "PYG", "KRW", "VND"];
+		var i;
+		for (i = 0; i < noDecimals.length; i++) {
+			if (noDecimals[i] === code) return formatNumber(num, 0) + " " + code;
+		} */
+					return formatNumber(num, 4) + " " + code;
+				}
+
+				/* ========== HTML BANDERAS ========== */
+				function createFlagHTML(code, cls, fbCls) {
+					var src = flagMap[code] || "";
+					if (src) {
+						return (
+							'<img class="' +
+							cls +
+							'" src="' +
+							src +
+							'" alt="' +
+							code +
+							'" ' +
+							"onerror=\"this.style.display='none';" +
+							"var n=this.nextSibling;if(n)n.style.display='block';\">" +
+							'<span class="' +
+							fbCls +
+							'">' +
+							code +
+							"</span>"
+						);
+					}
+					return '<span class="' + fbCls + '" style="display:block;">' + code + "</span>";
+				}
+
+				/* ========== RENDER ENVIOS ========== */
+				function renderShipments() {
+					var container = $id("rates-grid");
+					if (!container) return;
+					container.innerHTML = "";
+
+					if (!shipmentsData || shipmentsData.length === 0) {
+						container.innerHTML =
+							'<div style="text-align:center;padding:40px;color:#9CA3AF;">Sin datos de envios</div>';
+						return;
+					}
+
+					var i;
+					for (i = 0; i < shipmentsData.length; i++) {
+						var item = shipmentsData[i];
+						var card = document.createElement("div");
+						var isLast = (i + 1) % 3 === 0;
+						var disabled = item.value === "No disponible" ? " disabled" : "";
+
+						card.className = "country-card" + (isLast ? " last-in-row" : "");
+						card.innerHTML =
+							createFlagHTML(item.code, "country-flag", "flag-fallback") +
+							'<div class="country-info">' +
+							'<div class="country-name">' +
+							item.name +
+							"</div>" +
+							'<div class="country-value' +
+							disabled +
+							'">' +
+							item.value +
+							"</div>" +
+							"</div>" +
+							'<div style="clear:both;"></div>';
+						container.appendChild(card);
+					}
+					log("Envios renderizados: " + shipmentsData.length);
+				}
+
+				/* ========== CARRUSEL ========== */
+				function buildCarouselPages() {
+					currenciesCarousel = [];
+					var i, j, page;
+					for (i = 0; i < currenciesData.length; i += 4) {
+						page = [];
+						for (j = i; j < i + 4 && j < currenciesData.length; j++) {
+							page.push(currenciesData[j]);
+						}
+						currenciesCarousel.push(page);
+					}
+				}
+
+				function renderCarouselSlide(index) {
+					var container = $id("currencies-slide");
+					if (!container) return;
+					if (!currenciesCarousel || currenciesCarousel.length === 0) {
+						container.innerHTML = '<div style="color:#9CA3AF;padding:20px;">Sin divisas disponibles</div>';
+						return;
+					}
+					var page = currenciesCarousel[index];
+					if (!page) return;
+					var html = "";
+					var i;
+					for (i = 0; i < page.length; i++) {
+						var curr = page[i];
+						var isLast = (i + 1) % 4 === 0;
+						html +=
+							'<div class="currency-item' +
+							(isLast ? " last-in-row" : "") +
+							'">' +
+							createFlagHTML(curr.code, "currency-flag", "currency-flag-fallback") +
+							'<div class="currency-info">' +
+							'<div class="currency-name">' +
+							curr.name +
+							"</div>" +
+							'<div class="currency-value">' +
+							curr.value +
+							"</div>" +
+							"</div>" +
+							'<div style="clear:both;"></div>' +
+							"</div>";
+					}
+					container.innerHTML = html;
+				}
+
+				function nextSlide() {
+					if (currenciesCarousel.length <= 1) return;
+					currentSlide = (currentSlide + 1) % currenciesCarousel.length;
+					renderCarouselSlide(currentSlide);
+				}
+
+				function resetCarouselTimer() {
+					if (slideTimer) clearInterval(slideTimer);
+					if (currenciesCarousel.length > 1) {
+						slideTimer = setInterval(nextSlide, CAROUSEL_INTERVAL);
+					}
+				}
+
+				function initCarousel() {
+					if (currenciesCarousel.length === 0) return;
+					currentSlide = 0;
+					renderCarouselSlide(0);
+					resetCarouselTimer();
+				}
+
+				/* ========== PARSEO CSV ========== */
+				function parseCSV(csvText) {
+					/* Normalizar saltos de línea Windows/Linux */
+					var lines = csvText.replace(/\r/g, "").split("\n");
+					if (lines.length < 2) return { shipments: [], currencies: [] };
+
+					/* Headers → siempre minúsculas para comparación uniforme */
+					var rawHeaders = lines[0].split(",");
+					var headers = [];
+					var h;
+					for (h = 0; h < rawHeaders.length; h++) {
+						headers.push(trim(rawHeaders[h]).toLowerCase());
+					}
+					log("Headers CSV: " + headers.join(", "));
+
+					var shipmentsTemp = [];
+					var currenciesTemp = [];
+					var i;
+
+					for (i = 1; i < lines.length; i++) {
+						var line = trim(lines[i]);
+						if (!line) continue;
+
+						/* Parser CSV con soporte de comillas */
+						var values = [];
+						var inQuote = false;
+						var current = "";
+						var c;
+						for (c = 0; c < line.length; c++) {
+							var chr = line.charAt(c);
+							if (chr === '"') {
+								inQuote = !inQuote;
+							} else if (chr === "," && !inQuote) {
+								values.push(trim(current));
+								current = "";
+							} else {
+								current += chr;
+							}
+						}
+						values.push(trim(current));
+
+						var obj = {};
+						var j;
+						for (j = 0; j < headers.length; j++) {
+							obj[headers[j]] = values[j] || "";
+						}
+
+						/* Tipo: normalizar a minúsculas antes de comparar */
+						var typeRaw = (obj.tipo || obj.type || "").toLowerCase();
+						var isShipment = typeRaw === "envio" || typeRaw === "envios" || typeRaw === "shipment";
+						var isCurrency = typeRaw === "divisa" || typeRaw === "divisas" || typeRaw === "currency";
+						if (!isShipment && !isCurrency) continue;
+
+						var code = (obj.codigo || obj.code || "").toUpperCase();
+						var name = cleanValue(obj.nombre || obj.name || "");
+						var valueRaw = cleanValue(obj.valor || obj.value || "");
+						/* Activo: normalizar a minúsculas antes de comparar */
+						var activeRaw = (obj.activo || obj.active || "").toLowerCase();
+						var active = activeRaw === "si" || activeRaw === "sí" || activeRaw === "true" || activeRaw === "1";
+						/* [FIX 6] parseInt con radix 10 */
+						var order = parseInt(obj.orden || obj.order || "999", 10);
+						if (isNaN(order)) order = 999;
+
+						if (!active) continue;
+
+						var formatted = isShipment ? formatShipmentValue(valueRaw, code) : formatCurrencyValue(valueRaw, code);
+
+						var record = { code: code, name: name, value: formatted, order: order };
+						if (isShipment) shipmentsTemp.push(record);
+						else currenciesTemp.push(record);
+					}
+
+					shipmentsTemp.sort(function (a, b) {
+						return a.order - b.order;
+					});
+					currenciesTemp.sort(function (a, b) {
+						return a.order - b.order;
+					});
+
+					log("Envios: " + shipmentsTemp.length + " | Divisas: " + currenciesTemp.length);
+					return { shipments: shipmentsTemp, currencies: currenciesTemp };
+				}
+
+				/* ========== XHR ========== */
+				function createXHR() {
+					if (window.XMLHttpRequest) return new XMLHttpRequest();
+					try {
+						return new ActiveXObject("Msxml2.XMLHTTP.6.0");
+					} catch (e) {}
+					try {
+						return new ActiveXObject("Microsoft.XMLHTTP");
+					} catch (e) {}
+					return null;
+				}
+
+				function loadCSV(callback) {
+					var xhr = createXHR();
+					if (!xhr) {
+						callback(new Error("XHR no disponible"), null);
+						return;
+					}
+					var url = getCsvUrl() + "?nocache=" + new Date().getTime();
+					xhr.open("GET", url, true);
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState === 4) {
+							if (xhr.status === 200) {
+								callback(null, xhr.responseText);
+							} else {
+								callback(new Error("HTTP " + xhr.status), null);
+							}
+						}
+					};
+					xhr.onerror = function () {
+						callback(new Error("Error de red"), null);
+					};
+					xhr.send();
+				}
+
+				/* ========== PROCESAR MOCK ========== */
+				function processMock() {
+					var shipments = [];
+					var currencies = [];
+					var i;
+					for (i = 0; i < MOCK_DATA.length; i++) {
+						var item = MOCK_DATA[i];
+						if (!item.active) continue;
+						var rec = {
+							code: item.code,
+							name: item.name,
+							value:
+								item.type === "shipment"
+									? formatShipmentValue(item.value.item.code)
+									: formatCurrencyValue(item.value, item.code),
+							order: item.order,
+						};
+						if (item.type === "shipment") shipments.push(rec);
+						else currencies.push(rec);
+					}
+					return { shipments: shipments, currencies: currencies };
+				}
+
+				/* ========== CARGA DATOS ========== */
+				function loadDataFromSource(callback) {
+					if (USE_MOCK) {
+						callback(null, processMock());
+						return;
+					}
+					loadCSV(function (err, csvText) {
+						if (err || !csvText) {
+							log("Error CSV, usando MOCK: " + (err ? err.message : "sin texto"));
+							callback(null, processMock());
+							return;
+						}
+						var parsed = parseCSV(csvText);
+						if (parsed.shipments.length === 0 && parsed.currencies.length === 0) {
+							log("CSV vacio o sin datos validos, usando MOCK");
+							callback(null, processMock());
+							return;
+						}
+						callback(null, parsed);
+					});
+				}
+
+				/* ========== REFRESCO PRINCIPAL ========== */
+				function refreshData() {
+					if (isLoading) return;
+					isLoading = true;
+					showLoader();
+
+					loadDataFromSource(function (err, data) {
+						shipmentsData = data.shipments;
+						currenciesData = data.currencies;
+
+						renderShipments();
+						buildCarouselPages();
+						initCarousel();
+
+						isLoading = false;
+						hideLoader();
+					});
+				}
+
+				/* ========== INICIALIZACION ========== */
+				function init() {
+					log("G&SENVIOS iniciado. Modo: " + (USE_MOCK ? "MOCK" : "CSV"));
+					initLogoFallback();
+					setAgencyName();
+					startClock();
+					refreshData();
+					setInterval(refreshData, REFRESH_INTERVAL);
+				}
+
+				/* Arranque compatible IE8+ y Chromium 56 */
+				if (document.addEventListener) {
+					document.addEventListener("DOMContentLoaded", init, false);
+				} else if (document.attachEvent) {
+					document.attachEvent("onreadystatechange", function () {
+						if (document.readyState === "complete") init();
+					});
 				} else {
-					init();
+					window.onload = init;
 				}
 			})();
 		</script>
