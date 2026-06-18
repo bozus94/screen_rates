@@ -46,10 +46,10 @@
 			}
 
 			/* ============================================================
-   LAYOUT PRINCIPAL
-   Padding generoso en los lados, compacto arriba/abajo
-   para que el contenido llene el viewport sin overflow.
-   ============================================================ */
+				LAYOUT PRINCIPAL
+				Padding generoso en los lados, compacto arriba/abajo
+				para que el contenido llene el viewport sin overflow.
+			============================================================ */
 			.main-layout {
 				width: 100%;
 				height: 100%;
@@ -58,11 +58,11 @@
 			}
 
 			/* ============================================================
-   HEADER
-   Tres columnas (logo | agencia | fecha).
-   Altura total ~110px a 1080p.
-   Fuentes grandes para visibilidad a distancia.
-   ============================================================ */
+				HEADER
+				Tres columnas (logo | agencia | fecha).
+				Altura total ~110px a 1080p.
+				Fuentes grandes para visibilidad a distancia.
+			============================================================ */
 			.header {
 				width: 100%;
 				padding-bottom: 18px;
@@ -127,8 +127,8 @@
 			}
 
 			/* ============================================================
-   CONTENEDOR PRINCIPAL — display:table
-   ============================================================ */
+				CONTENEDOR PRINCIPAL — display:table
+			============================================================ */
 			.content-container {
 				width: 100%;
 				height: 89%;
@@ -168,8 +168,8 @@
 			}
 
 			/* ============================================================
-   TARJETAS DE ENVIO — 3 columnas
-   ============================================================ */
+				TARJETAS DE ENVIO — 3 columnas
+			============================================================ */
 			.countries-grid {
 				width: 100%;
 				height: 100%;
@@ -207,8 +207,9 @@
 				border: 4px solid #f2b705;
 				margin-right: 20px;
 				display: block;
-				object-fit: cover;
-				object-position: center center;
+				background-size: cover;
+				background-position: center center;
+				background-repeat: no-repeat;
 			}
 
 			/* Fallback cuando no hay imagen */
@@ -334,8 +335,9 @@
 				border: 3px solid #f2b705;
 				margin-right: 16px;
 				display: block;
-				object-fit: cover;
-				object-position: center center;
+				background-size: cover;
+				background-position: center center;
+				background-repeat: no-repeat;
 			}
 
 			.currency-flag-fallback {
@@ -594,7 +596,6 @@
 				}
 
 				/* ========== LOADER ========== */
-				/* [FIX 2] className directo en lugar de classList */
 				function showLoader() {
 					var el = $id("loader-overlay");
 					if (el) el.className = "loader-overlay";
@@ -736,24 +737,21 @@
 				function createFlagHTML(code, cls, fbCls) {
 					var src = flagMap[code] || "";
 					if (src) {
+						// Usar div con background-image en lugar de img
 						return (
-							'<img class="' +
+							'<div class="' +
 							cls +
-							'" src="' +
+							'" style="background-image: url(\'' +
 							src +
-							'" alt="' +
-							code +
-							'" ' +
-							"onerror=\"this.style.display='none';" +
-							"var n=this.nextSibling;if(n)n.style.display='block';\">" +
-							'<span class="' +
+							"');\"></div>" +
+							'<div class="' +
 							fbCls +
-							'">' +
+							'" style="display:none;">' +
 							code +
-							"</span>"
+							"</div>"
 						);
 					}
-					return '<span class="' + fbCls + '" style="display:block;">' + code + "</span>";
+					return '<div class="' + fbCls + '">' + code + "</div>";
 				}
 
 				/* ========== RENDER ENVIOS ========== */
