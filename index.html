@@ -206,18 +206,22 @@
 				border-radius: 50%;
 				border: 4px solid #f2b705;
 				margin-right: 20px;
+				background-color: #071f4a;
+				background-repeat: no-repeat;
+				background-position: center center;
+				-webkit-background-size: cover;
+				background-size: cover;
 				display: block;
-				object-fit: cover;
-				object-position: center center;
 			}
 
 			/* Fallback cuando no hay imagen */
+
 			.flag-fallback {
 				float: left;
 				width: 88px;
 				height: 88px;
 				border-radius: 50%;
-				background: #071f4a;
+				background-color: #071f4a;
 				text-align: center;
 				line-height: 88px;
 				font-size: 28px;
@@ -225,7 +229,7 @@
 				color: #f2b705;
 				border: 4px solid #f2b705;
 				margin-right: 20px;
-				display: inline-block;
+				display: none;
 			}
 
 			.country-flag.loaded + .flag-fallback {
@@ -337,9 +341,12 @@
 				border-radius: 50%;
 				border: 3px solid #f2b705;
 				margin-right: 16px;
-				display: inline-block;
-				object-fit: cover;
-				object-position: center center;
+				background-color: #071f4a;
+				background-repeat: no-repeat;
+				background-position: center center;
+				-webkit-background-size: cover;
+				background-size: cover;
+				display: block;
 			}
 
 			.currency-flag-fallback {
@@ -347,7 +354,7 @@
 				width: 64px;
 				height: 64px;
 				border-radius: 50%;
-				background: #071f4a;
+				background-color: #071f4a;
 				text-align: center;
 				line-height: 64px;
 				font-size: 18px;
@@ -355,7 +362,7 @@
 				color: #f2b705;
 				border: 3px solid #f2b705;
 				margin-right: 16px;
-				display: inline-block;
+				display: none;
 			}
 
 			.currency-flag.loaded + .currency-flag-fallback {
@@ -741,25 +748,47 @@
 				/* ========== HTML BANDERAS ========== */
 				function createFlagHTML(code, cls, fbCls) {
 					var src = flagMap[code] || "";
-					if (src) {
-						// Usar img para tener eventos onload/onerror reales
-						return (
-							'<img class="' +
-							cls +
-							'" src="' +
-							src +
-							'" alt="' +
-							code +
-							'" ' +
-							"onload=\"this.classList.add('loaded'); this.nextSibling.style.display='none';\">" +
-							'<div class="' +
-							fbCls +
-							'">' +
-							code +
-							"</div>"
-						);
+					/* Siempre genera los dos divs; el probe JS decide cuál mostrar */
+					return (
+						'<div class="' +
+						cls +
+						'" id="flag-' +
+						cls +
+						"-" +
+						code +
+						"-" +
+						Math.floor(Math.random() * 99999) +
+						'"></div>' +
+						'<div class="' +
+						fbCls +
+						'" id="fb-' +
+						fbCls +
+						"-" +
+						code +
+						'">' +
+						code +
+						"</div>"
+					);
+				}
+
+				function probeFlagImage(flagEl, fallbackEl, src) {
+					if (!src || !flagEl) {
+						/* Sin URL: mostrar fallback directamente */
+						if (fallbackEl) fallbackEl.style.display = "block";
+						return;
 					}
-					return '<div class="' + fbCls + '">' + code + "</div>";
+					var probe = new Image();
+					probe.onload = function () {
+						/* Imagen OK: aplicar como background, ocultar fallback */
+						flagEl.style.backgroundImage = "url(" + src + ")";
+						if (fallbackEl) fallbackEl.style.display = "none";
+					};
+					probe.onerror = function () {
+						/* Imagen rota: ocultar div bandera, mostrar fallback */
+						flagEl.style.display = "none";
+						if (fallbackEl) fallbackEl.style.display = "block";
+					};
+					probe.src = src;
 				}
 
 				/* ========== RENDER ENVIOS ========== */
@@ -796,6 +825,9 @@
 							"</div>" +
 							'<div style="clear:both;"></div>';
 						container.appendChild(card);
+						var flagEl = card.getElementsByClassName("country-flag")[0];
+						var fbEl = card.getElementsByClassName("flag-fallback")[0];
+						probeFlagImage(flagEl, fbEl, flagMap[item.code] || "");
 					}
 					log("Envios renderizados: " + shipmentsData.length);
 				}
@@ -844,6 +876,16 @@
 							"</div>";
 					}
 					container.innerHTML = html;
+					var items = container.getElementsByClassName("currency-item");
+					var k;
+					for (k = 0; k < items.length; k++) {
+						var fEl = items[k].getElementsByClassName("currency-flag")[0];
+						var fbEl = items[k].getElementsByClassName("currency-flag-fallback")[0];
+						var codeEl = items[k].getElementsByClassName("currency-name")[0];
+						/* Recuperar el code del fallback que siempre tiene el texto del código */
+						var codeText = fbEl ? fbEl.innerHTML : "";
+						probeFlagImage(fEl, fbEl, flagMap[codeText] || "");
+					}
 					log("Divisas renderizados: " + currenciesCarousel.length + 1);
 				}
 
