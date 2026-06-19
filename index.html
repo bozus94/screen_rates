@@ -1030,7 +1030,11 @@
 				xhr.onerror = function () {
 					callback(new Error("Error de red"), null);
 				};
-				xhr.send();
+				try {
+					xhr.send();
+				} catch (e) {
+					finish(new Error('Excepcion al enviar XHR: ' + e.message), null);
+				}
 			}
 
 			/* ========== PROCESAR MOCK ========== */
@@ -1079,27 +1083,27 @@
 			}
 
 			/* ========== REFRESCO PRINCIPAL ========== */
-			function refreshData(silent = true) {
+			function refreshData(silent) {
+				if (silent === undefined) silent = true;
 
-				if (!silent) {
-					if (isLoading) return;
-					isLoading = true;
-					showLoader();
-				}
+				if (isLoading) return;
+				isLoading = true;
+
+				if (!silent) showLoader();
 
 				loadDataFromSource(function (err, data) {
-					shipmentsData = data.shipments;
-					currenciesData = data.currencies;
-
-					renderShipments();
-					buildCarouselPages();
-					initCarousel();
-
-					if (!silent) {
-						isLoading = false;
-						hideLoader();
+					try {
+						shipmentsData = data.shipments;
+						currenciesData = data.currencies;
+						renderShipments();
+						buildCarouselPages();
+						initCarousel();
+					} catch (e) {
+						log('Error al renderizar: ' + e.message);
 					}
 
+					isLoading = false;
+					if (!silent) hideLoader();
 				});
 			}
 
