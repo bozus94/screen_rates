@@ -18,6 +18,7 @@
 		}
 
 		body {
+			min-width: 500px;
 			min-height: 100vh;
 			display: flex;
 			align-items: center;
@@ -48,7 +49,8 @@
 			letter-spacing: 0.5px;
 			transition: all 0.2s ease;
 			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-			min-width: 240px;
+			width: 540px;
+			max-width: 100%;
 			appearance: none;
 			-webkit-appearance: none;
 			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F2B705' stroke-width='2' fill='none'/%3E%3C/svg%3E");
@@ -74,14 +76,15 @@
 			font-weight: 500;
 		}
 
-		/* ========== TARJETA ========== */
+		/* ========== TARJETA - TAMAÑO FIJO ========== */
 		.exchange-card {
 			width: 540px;
-			max-width: 100%;
+			min-width: 540px;
 			background: #FFFFFF;
 			box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35);
 			overflow: hidden;
 			transition: transform 0.2s ease;
+			flex-shrink: 0;
 		}
 
 		/* ========== HEADER ========== */
@@ -112,18 +115,20 @@
 			margin-top: 2px;
 		}
 
-		/* ========== CONTENIDO ========== */
+		/* ========== CONTENIDO - TAMAÑOS FIJOS ========== */
 		.card-content {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			padding: 32px 28px 24px 28px;
 			gap: 24px;
+			min-height: 200px;
+			min-width: 540px;
 		}
 
 		.card-left {
 			flex: 1;
-			min-width: 40%;
+			min-width: 200px;
 		}
 
 		.country-title {
@@ -136,16 +141,16 @@
 		}
 
 		.country-divider {
-			width: 60px;
+			width: 160px;
 			height: 4px;
 			background: linear-gradient(90deg, #F2B705, #D9A404, #F2B705);
-			margin: 12px 0 14px 0;
 			border-radius: 4px;
-			box-shadow: 0 2px 8px rgba(242, 183, 5, 0.25);
+			margin: 12px 0;
+			display: block;
 		}
 
 		.country-rate {
-			font-size: 65px;
+			font-size: 70px;
 			font-weight: 900;
 			color: #F2B705;
 			line-height: 1;
@@ -153,7 +158,7 @@
 		}
 
 		.country-rate .currency-code {
-			font-size: 20px;
+			font-size: 18px;
 			font-weight: 700;
 			color: #9CA3AF;
 			margin-left: 4px;
@@ -165,14 +170,16 @@
 			color: #9CA3AF;
 		}
 
-		/* ========== IMAGEN ========== */
+		/* ========== IMAGEN - TAMAÑO FIJO ========== */
 		.card-right {
-			flex-shrink: 1;
+			flex: 0 0 240px;
+			width: 260px;
+			min-width: 260px;
+			flex-shrink: 0;
 		}
 
 		.visual-circle {
-			width: 100%;
-			height: 100%;
+			width: 260px;
 			background: #F2F6FA;
 			display: flex;
 			align-items: center;
@@ -181,9 +188,10 @@
 		}
 
 		.country-visual {
-			width: 100%;
-			height: 100%;
+			width: 260px;
 			object-fit: cover;
+			display: block;
+			flex-shrink: 0;
 		}
 
 		/* ========== DISCLAIMER ========== */
@@ -234,8 +242,8 @@
 			transition: all 0.2s ease;
 			letter-spacing: 1.5px;
 			box-shadow: 0 4px 16px rgba(242, 183, 5, 0.3);
-			width: 100%;
-			max-width: 540px;
+			width: 540px;
+			max-width: 100%;
 			text-transform: uppercase;
 		}
 
@@ -283,20 +291,24 @@
 			}
 		}
 
-		/* ========== RESPONSIVE ========== */
-		@media (max-width: 580px) {
-			.exchange-card {
-				width: 95%;
+		/* ========== RESPONSIVE - ESCALA TODO ========== */
+/* 		@media (max-width: 580px) {
+
+			.exchange-card,
+			.btn-download,
+			.country-selector {
+				width: 100%;
+				max-width: 100%;
 			}
 
 			.card-content {
 				flex-direction: column;
 				text-align: center;
-				padding: 24px 20px 18px 20px;
+				padding: 24px 20px;
 			}
 
 			.country-divider {
-				margin: 10px auto 12px auto;
+				margin: 12px auto 14px auto;
 			}
 
 			.country-title {
@@ -307,33 +319,30 @@
 				font-size: 36px;
 			}
 
-			.country-rate .currency-code {
-				font-size: 18px;
-			}
-
-			.visual-circle {
+			.card-right {
+				flex: 0 0 120px;
 				width: 120px;
 				height: 120px;
 			}
-
-			.card-left {
-				text-align: center;
-			}
-
-			.btn-download {
-				max-width: 95%;
-				font-size: 13px;
-				padding: 14px 24px;
-			}
-
-			.country-selector {
-				width: 95%;
-				min-width: auto;
-				text-align: center;
-			}
 		}
 
-		@media (max-width: 380px) {
+		@media (max-width: 400px) {
+			.card-right {
+				flex: 0 0 100px;
+				width: 100px;
+				height: 100px;
+			}
+
+			.visual-circle {
+				width: 100px;
+				height: 100px;
+			}
+
+			.country-visual {
+				width: 100px;
+				height: 100px;
+			}
+
 			.country-rate {
 				font-size: 30px;
 			}
@@ -342,20 +351,15 @@
 				font-size: 18px;
 			}
 
-			.visual-circle {
-				width: 100px;
-				height: 100px;
-			}
-
 			.btn-download {
-				font-size: 12px;
+				font-size: 13px;
 				padding: 12px 20px;
 			}
 
 			.footer-date {
 				font-size: 14px;
 			}
-		}
+		} */
 	</style>
 </head>
 
@@ -411,7 +415,7 @@
 			const timeElement = document.getElementById('card-time');
 			const downloadBtn = document.getElementById('download-btn');
 
-			const formatNumber = (num, decimals = 4) => {
+			const formatNumber = (num, decimals = 3) => {
 				const mult = Math.pow(10, decimals);
 				const rounded = Math.round(num * mult) / mult;
 				const str = rounded.toFixed(decimals);
@@ -437,7 +441,7 @@
 				let decimals = 2;
 				if (noDecimals.includes(code)) decimals = 0;
 				if (rate >= 1000) decimals = 0;
-				if (rate < 10) decimals = 4;
+				if (rate < 10) decimals = 3;
 
 				return formatNumber(rate, decimals);
 			};
@@ -670,11 +674,8 @@
 			const getCountryFromURL = () => {
 				const params = new URLSearchParams(window.location.search);
 				const pais = params.get('pais');
-				// ✅ Verificar que el país existe en ratesData
 				if (pais && ratesData && ratesData[pais]) return pais;
-				// ✅ Si existe 'honduras' en ratesData, usarlo
 				if (ratesData && ratesData['honduras']) return 'honduras';
-				// ✅ Si no, tomar el primer país disponible
 				if (ratesData) {
 					const keys = Object.keys(ratesData);
 					if (keys.length > 0) return keys[0];
