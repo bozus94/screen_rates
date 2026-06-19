@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<title>G&SENVIOS - Tarjeta de Tasa</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+		rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: linear-gradient(135deg, #071F4A 0%, #0D3B8E 100%);
+			font-family: 'Montserrat', 'Arial', 'Helvetica', sans-serif;
+			padding: 40px 20px;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 28px;
+			max-width: 100%;
+		}
+
+		/* ========== SELECTOR ========== */
+		.country-selector {
+			background: #0D3B8E;
+			color: #FFFFFF;
+			font-family: 'Montserrat', sans-serif;
+			font-size: 14px;
+			font-weight: 600;
+			padding: 14px 32px;
+			border: 2px solid #F2B705;
+			cursor: pointer;
+			letter-spacing: 0.5px;
+			transition: all 0.2s ease;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+			min-width: 240px;
+			appearance: none;
+			-webkit-appearance: none;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F2B705' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+			background-repeat: no-repeat;
+			background-position: right 18px center;
+			padding-right: 48px;
+		}
+
+		.country-selector:hover {
+			background: #071F4A;
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.country-selector:focus {
+			outline: none;
+			box-shadow: 0 0 0 3px #F2B705;
+		}
+
+		.country-selector option {
+			background: #FFFFFF;
+			color: #071F4A;
+			font-weight: 500;
+		}
+
+		/* ========== TARJETA ========== */
+		.exchange-card {
+			width: 540px;
+			max-width: 100%;
+			background: #FFFFFF;
+			box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35);
+			overflow: hidden;
+			transition: transform 0.2s ease;
+		}
+
+		/* ========== HEADER ========== */
+		.card-header {
+			background: #0D3B8E;
+			padding: 14px 24px;
+			text-align: center;
+			border-bottom: 3px solid #F2B705;
+		}
+
+		.card-header .brand {
+			font-size: 18px;
+			font-weight: 800;
+			color: #FFFFFF;
+			letter-spacing: 2px;
+		}
+
+		.card-header .brand span {
+			color: #F2B705;
+		}
+
+		.card-header .slogan {
+			font-size: 11px;
+			font-weight: 500;
+			color: #B0C4DE;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+			margin-top: 2px;
+		}
+
+		/* ========== CONTENIDO ========== */
+		.card-content {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 32px 28px 24px 28px;
+			gap: 24px;
+		}
+
+		.card-left {
+			flex: 1;
+			min-width: 40%;
+		}
+
+		.country-title {
+			font-size: 26px;
+			font-weight: 900;
+			color: #071F4A;
+			letter-spacing: 1.5px;
+			text-transform: uppercase;
+			line-height: 1.1;
+		}
+
+		.country-divider {
+			width: 60px;
+			height: 4px;
+			background: linear-gradient(90deg, #F2B705, #D9A404, #F2B705);
+			margin: 12px 0 14px 0;
+			border-radius: 4px;
+			box-shadow: 0 2px 8px rgba(242, 183, 5, 0.25);
+		}
+
+		.country-rate {
+			font-size: 65px;
+			font-weight: 900;
+			color: #F2B705;
+			line-height: 1;
+			letter-spacing: 1px;
+		}
+
+		.country-rate .currency-code {
+			font-size: 20px;
+			font-weight: 700;
+			color: #9CA3AF;
+			margin-left: 4px;
+		}
+
+		.country-rate.disabled {
+			font-size: 18px;
+			font-weight: 600;
+			color: #9CA3AF;
+		}
+
+		/* ========== IMAGEN ========== */
+		.card-right {
+			flex-shrink: 1;
+		}
+
+		.visual-circle {
+			width: 100%;
+			height: 100%;
+			background: #F2F6FA;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+		}
+
+		.country-visual {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		/* ========== DISCLAIMER ========== */
+		.card-disclaimer {
+			background: #F8FAFC;
+			padding: 12px 24px;
+			text-align: center;
+			font-size: 11px;
+			font-weight: 500;
+			color: #6B7280;
+			border-top: 1px solid #E5E7EB;
+			border-bottom: 1px solid #E5E7EB;
+			letter-spacing: 0.3px;
+		}
+
+		/* ========== FOOTER ========== */
+		.card-footer {
+			background: #F8FAFC;
+			padding: 16px 24px;
+			text-align: center;
+		}
+
+		.footer-date {
+			font-size: 16px;
+			font-weight: 800;
+			color: #071F4A;
+			letter-spacing: 0.5px;
+		}
+
+		.footer-time {
+			font-size: 12px;
+			font-weight: 500;
+			color: #6B7280;
+			letter-spacing: 0.3px;
+			margin-top: 4px;
+		}
+
+		/* ========== BOTÓN ========== */
+		.btn-download {
+			background: #F2B705;
+			color: #071F4A;
+			font-family: 'Montserrat', sans-serif;
+			font-size: 15px;
+			font-weight: 800;
+			padding: 16px 32px;
+			border: none;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			letter-spacing: 1.5px;
+			box-shadow: 0 4px 16px rgba(242, 183, 5, 0.3);
+			width: 100%;
+			max-width: 540px;
+			text-transform: uppercase;
+		}
+
+		.btn-download:hover {
+			background: #D9A404;
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(242, 183, 5, 0.4);
+		}
+
+		.btn-download:active {
+			transform: scale(0.97);
+		}
+
+		.btn-download.loading {
+			opacity: 0.6;
+			pointer-events: none;
+			transform: none;
+		}
+
+		/* ========== LOADER ========== */
+		.card-loader {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 30px;
+			color: #9CA3AF;
+			font-size: 14px;
+			font-weight: 600;
+			gap: 14px;
+			width: 100%;
+		}
+
+		.card-loader .spinner {
+			width: 24px;
+			height: 24px;
+			border: 3px solid #E5E7EB;
+			border-top-color: #F2B705;
+			border-radius: 50%;
+			animation: spin 0.8s linear infinite;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		/* ========== RESPONSIVE ========== */
+		@media (max-width: 580px) {
+			.exchange-card {
+				width: 95%;
+			}
+
+			.card-content {
+				flex-direction: column;
+				text-align: center;
+				padding: 24px 20px 18px 20px;
+			}
+
+			.country-divider {
+				margin: 10px auto 12px auto;
+			}
+
+			.country-title {
+				font-size: 22px;
+			}
+
+			.country-rate {
+				font-size: 36px;
+			}
+
+			.country-rate .currency-code {
+				font-size: 18px;
+			}
+
+			.visual-circle {
+				width: 120px;
+				height: 120px;
+			}
+
+			.card-left {
+				text-align: center;
+			}
+
+			.btn-download {
+				max-width: 95%;
+				font-size: 13px;
+				padding: 14px 24px;
+			}
+
+			.country-selector {
+				width: 95%;
+				min-width: auto;
+				text-align: center;
+			}
+		}
+
+		@media (max-width: 380px) {
+			.country-rate {
+				font-size: 30px;
+			}
+
+			.country-title {
+				font-size: 18px;
+			}
+
+			.visual-circle {
+				width: 100px;
+				height: 100px;
+			}
+
+			.btn-download {
+				font-size: 12px;
+				padding: 12px 20px;
+			}
+
+			.footer-date {
+				font-size: 14px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<select id="country-selector" class="country-selector">
+			<option value="honduras">🇭🇳 Honduras</option>
+			<option value="colombia">🇨🇴 Colombia</option>
+			<option value="republicaDominicana">🇩🇴 República Dominicana</option>
+			<option value="estadosUnidos">🇺🇸 Estados Unidos</option>
+			<option value="bolivia">🇧🇴 Bolivia</option>
+		</select>
+
+		<div id="export-card" class="exchange-card">
+			<div class="card-header">
+				<div class="brand"><span>G&SENVIOS</span></div>
+				<div class="slogan">La mejor tasa para tus envíos</div>
+			</div>
+
+			<div class="card-content" id="card-content">
+				<div class="card-loader">
+					<div class="spinner"></div>
+					Cargando...
+				</div>
+			</div>
+
+			<div class="card-disclaimer">
+				La tasa de cambio puede variar al momento de realizar su envío.
+			</div>
+
+			<div class="card-footer">
+				<div class="footer-date" id="card-date">--/--/----</div>
+				<div class="footer-time" id="card-time">Hora de Actualización --:--</div>
+			</div>
+		</div>
+
+		<button id="download-btn" class="btn-download">📸 Exportar como imagen</button>
+	</div>
+
+	<script>
+		(() => {
+			const CSV_URL =
+				'https://script.google.com/macros/s/AKfycbwmNgg2V8PzcWHrOXSD8mNA4MALz46u50xb9Ol15Svj5D5A1bDOvKxLUs2krySTT8Behg/exec';
+
+			let ratesData = null;
+			let currentCountry = 'honduras';
+			let isLoading = false;
+
+			const selector = document.getElementById('country-selector');
+			const cardContent = document.getElementById('card-content');
+			const dateElement = document.getElementById('card-date');
+			const timeElement = document.getElementById('card-time');
+			const downloadBtn = document.getElementById('download-btn');
+
+			const formatNumber = (num, decimals = 4) => {
+				const mult = Math.pow(10, decimals);
+				const rounded = Math.round(num * mult) / mult;
+				const str = rounded.toFixed(decimals);
+				const parts = str.split('.');
+				const intPart = parts[0];
+				const decPart = parts[1] || '';
+				let result = '';
+				let count = 0;
+				for (let i = intPart.length - 1; i >= 0; i--) {
+					if (count > 0 && count % 3 === 0) result = '.' + result;
+					result = intPart[i] + result;
+					count++;
+				}
+				if (decimals > 0 && decPart) result += ',' + decPart;
+				return result;
+			};
+
+			const formatRateValue = (rate, code) => {
+				if (!rate || rate === 0) return 'SERVICIO NO DISPONIBLE';
+
+				const noDecimals = ['COP', 'PYG', 'KRW', 'JPY', 'HUF', 'VND', 'CLP', 'IQD'];
+
+				let decimals = 2;
+				if (noDecimals.includes(code)) decimals = 0;
+				if (rate >= 1000) decimals = 0;
+				if (rate < 10) decimals = 4;
+
+				return formatNumber(rate, decimals);
+			};
+
+			const loadCSV = () => {
+				return new Promise((resolve, reject) => {
+					const xhr = new XMLHttpRequest();
+					xhr.open('GET', CSV_URL + '?nocache=' + Date.now(), true);
+					xhr.onreadystatechange = () => {
+						if (xhr.readyState === 4) {
+							if (xhr.status === 200) resolve(xhr.responseText);
+							else reject(new Error('HTTP ' + xhr.status));
+						}
+					};
+					xhr.onerror = () => reject(new Error('Network error'));
+					xhr.send();
+				});
+			};
+
+			const parseCSV = (csvText) => {
+				const lines = csvText.replace(/\r/g, '').split('\n');
+				if (lines.length < 2) return {};
+
+				const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+				const result = {};
+
+				for (let i = 1; i < lines.length; i++) {
+					const line = lines[i].trim();
+					if (!line) continue;
+
+					const values = [];
+					let inQuote = false;
+					let current = '';
+					for (let c = 0; c < line.length; c++) {
+						const chr = line[c];
+						if (chr === '"') {
+							inQuote = !inQuote;
+						} else if (chr === ',' && !inQuote) {
+							values.push(current.trim());
+							current = '';
+						} else {
+							current += chr;
+						}
+					}
+					values.push(current.trim());
+
+					const obj = {};
+					headers.forEach((h, idx) => {
+						obj[h] = values[idx] || '';
+					});
+
+					const typeRaw = (obj.tipo || obj.type || '').toLowerCase();
+					const isShipment = typeRaw === 'envio' || typeRaw === 'envios' || typeRaw === 'shipment';
+					if (!isShipment) continue;
+
+					const code = (obj.codigo || obj.code || '').toUpperCase();
+					const name = obj.nombre || obj.name || '';
+					const valueRaw = obj.valor || obj.value || '';
+					const activeRaw = (obj.activo || obj.active || '').toLowerCase();
+					const active = activeRaw === 'si' || activeRaw === 'sí' || activeRaw === 'true' || activeRaw === '1';
+					const order = parseInt(obj.orden || obj.order || '999', 10);
+
+					if (!active) continue;
+
+					const key = code.toLowerCase();
+					const rate = parseFloat(valueRaw.replace(/,/g, '.')) || 0;
+
+					result[key] = {
+						country: name.toUpperCase(),
+						code: code,
+						rate: rate,
+						rateFormatted: formatRateValue(rate, code),
+						visual: 'assets/visuals/' + key + '.png',
+						enabled: rate > 0,
+						order: order || 999
+					};
+				}
+
+				const sorted = {};
+				Object.keys(result)
+					.sort((a, b) => (result[a].order || 999) - (result[b].order || 999))
+					.forEach(key => {
+						sorted[key] = result[key];
+					});
+
+				return sorted;
+			};
+
+			const getFallbackData = () => ({
+				honduras: {
+					country: 'HONDURAS',
+					code: 'HNL',
+					rate: 30.86,
+					rateFormatted: '30,86',
+					visual: 'assets/visuals/honduras.png',
+					enabled: true,
+					order: 1
+				},
+				colombia: {
+					country: 'COLOMBIA',
+					code: 'COP',
+					rate: 4066,
+					rateFormatted: '4.066',
+					visual: 'assets/visuals/colombia.png',
+					enabled: true,
+					order: 2
+				},
+				republicaDominicana: {
+					country: 'REP. DOMINICANA',
+					code: 'DOP',
+					rate: 68.47,
+					rateFormatted: '68,47',
+					visual: 'assets/visuals/republica_dominicana.png',
+					enabled: true,
+					order: 3
+				},
+				estadosUnidos: {
+					country: 'ESTADOS UNIDOS',
+					code: 'USD',
+					rate: 1.05,
+					rateFormatted: '1,05',
+					visual: 'assets/visuals/estados_unidos.png',
+					enabled: true,
+					order: 4
+				},
+				bolivia: {
+					country: 'BOLIVIA',
+					code: 'BOB',
+					rate: 0,
+					rateFormatted: 'SERVICIO NO DISPONIBLE',
+					visual: 'assets/visuals/bolivia.png',
+					enabled: false,
+					order: 5
+				}
+			});
+
+			const loadData = async () => {
+				if (isLoading) return;
+				isLoading = true;
+
+				try {
+					const csvText = await loadCSV();
+					const parsed = parseCSV(csvText);
+					if (Object.keys(parsed).length > 0) {
+						ratesData = parsed;
+					} else {
+						throw new Error('CSV vacío');
+					}
+				} catch (error) {
+					console.error('Error cargando datos:', error);
+					ratesData = getFallbackData();
+				}
+
+				isLoading = false;
+				updateSelector();
+				// ✅ Actualizar currentCountry DESPUÉS de que el selector esté poblado
+				currentCountry = getCountryFromURL();
+				if (selector) selector.value = currentCountry;
+				updateCard(currentCountry);
+			};
+
+			const updateSelector = () => {
+				if (!ratesData) return;
+				const keys = Object.keys(ratesData);
+				let html = '';
+				keys.forEach(key => {
+					const data = ratesData[key];
+					const flag = data.code.substring(0, 2);
+					html += `<option value="${key}">${flag} ${data.country}</option>`;
+				});
+				selector.innerHTML = html;
+				// ✅ Si currentCountry existe en los datos, seleccionarlo
+				if (ratesData[currentCountry]) {
+					selector.value = currentCountry;
+				} else {
+					// Si no, seleccionar el primer país
+					const firstKey = keys[0] || 'honduras';
+					selector.value = firstKey;
+					currentCountry = firstKey;
+				}
+			};
+
+			const updateCard = (countryKey) => {
+				const data = ratesData ? ratesData[countryKey] : null;
+				if (!data) {
+					cardContent.innerHTML = `
+                <div style="text-align:center;padding:40px;color:#9CA3AF;width:100%;height:100%;">
+                    Seleccione un país.
+                </div>
+            `;
+					return;
+				}
+
+				const disabled = !data.enabled || data.rate === 0;
+				const rateDisplay = disabled ? 'SERVICIO NO DISPONIBLE' : data.rateFormatted;
+				const currencyHtml = (!disabled && data.rate > 0) ?
+					`<span class="currency-code">${data.code}</span>` :
+					'';
+
+				cardContent.innerHTML = `
+            <div class="card-left">
+                <div class="country-title">${data.country}</div>
+                <div class="country-divider"></div>
+                <div class="country-rate ${disabled ? 'disabled' : ''}">
+                    ${rateDisplay}
+                </div>
+            </div>
+            <div class="card-right">
+                <div class="visual-circle">
+                    <img id="card-visual" src="${data.visual}" class="country-visual" alt="${data.country}" />
+                </div>
+            </div>
+        `;
+
+				updateDateTime();
+			};
+
+			const updateDateTime = () => {
+				const now = new Date();
+				const day = String(now.getDate()).padStart(2, '0');
+				const month = String(now.getMonth() + 1).padStart(2, '0');
+				const year = now.getFullYear();
+				const hours = String(now.getHours()).padStart(2, '0');
+				const minutes = String(now.getMinutes()).padStart(2, '0');
+
+				dateElement.textContent = `${day}/${month}/${year}`;
+				timeElement.textContent = `Hora de Actualización ${hours}:${minutes}`;
+			};
+
+			const getCountryFromURL = () => {
+				const params = new URLSearchParams(window.location.search);
+				const pais = params.get('pais');
+				// ✅ Verificar que el país existe en ratesData
+				if (pais && ratesData && ratesData[pais]) return pais;
+				// ✅ Si existe 'honduras' en ratesData, usarlo
+				if (ratesData && ratesData['honduras']) return 'honduras';
+				// ✅ Si no, tomar el primer país disponible
+				if (ratesData) {
+					const keys = Object.keys(ratesData);
+					if (keys.length > 0) return keys[0];
+				}
+				return 'honduras';
+			};
+
+			const exportAsImage = async () => {
+				const card = document.getElementById('export-card');
+				if (!card) return;
+
+				const images = card.querySelectorAll('img');
+				await Promise.all(Array.from(images).map(img => {
+					if (img.complete) return Promise.resolve();
+					return new Promise(resolve => {
+						img.onload = resolve;
+						img.onerror = resolve;
+					});
+				}));
+
+				downloadBtn.classList.add('loading');
+				downloadBtn.textContent = '⏳ GENERANDO...';
+
+				try {
+					await new Promise(resolve => setTimeout(resolve, 150));
+
+					const canvas = await html2canvas(card, {
+						scale: 2.5,
+						backgroundColor: '#FFFFFF',
+						logging: false,
+						useCORS: true,
+						allowTaint: true
+					});
+
+					const link = document.createElement('a');
+					const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+					link.download = `G&SENVIOS_${currentCountry}_${timestamp}.png`;
+					link.href = canvas.toDataURL('image/png');
+					link.click();
+
+				} catch (error) {
+					console.error('Error:', error);
+					alert('Error al generar la imagen');
+				} finally {
+					downloadBtn.classList.remove('loading');
+					downloadBtn.textContent = '📸 Exportar como imagen';
+				}
+			};
+
+			const init = async () => {
+				cardContent.innerHTML = `
+            <div class="card-loader">
+                <div class="spinner"></div>
+                Cargando...
+            </div>
+        `;
+
+				await loadData();
+
+				selector.addEventListener('change', (e) => {
+					currentCountry = e.target.value;
+					updateCard(currentCountry);
+
+					const url = new URL(window.location);
+					url.searchParams.set('pais', currentCountry);
+					window.history.pushState({}, '', url);
+				});
+
+				downloadBtn.addEventListener('click', exportAsImage);
+				setInterval(updateDateTime, 60000);
+			};
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', init);
+			} else {
+				init();
+			}
+		})();
+	</script>
+
+</body>
+
+</html>
