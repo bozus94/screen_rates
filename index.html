@@ -34,22 +34,16 @@
 			color: #ffffff;
 		}
 
-		/* ========== CLEARFIX (IE + Chromium) ========== */
 		.cf:after {
 			content: "";
 			display: table;
 			clear: both;
 		}
-
 		.cf {
 			zoom: 1;
 		}
 
-		/* ============================================================
-				LAYOUT PRINCIPAL
-				Padding generoso en los lados, compacto arriba/abajo
-				para que el contenido llene el viewport sin overflow.
-			============================================================ */
+		/* ========== LAYOUT PRINCIPAL ========== */
 		.main-layout {
 			width: 100%;
 			height: 100%;
@@ -57,12 +51,7 @@
 			overflow: hidden;
 		}
 
-		/* ============================================================
-				HEADER
-				Tres columnas (logo | agencia | fecha).
-				Altura total ~110px a 1080p.
-				Fuentes grandes para visibilidad a distancia.
-			============================================================ */
+		/* ========== HEADER ========== */
 		.header {
 			width: 100%;
 			padding-bottom: 18px;
@@ -126,9 +115,7 @@
 			display: none;
 		}
 
-		/* ============================================================
-				CONTENEDOR PRINCIPAL — display:table
-			============================================================ */
+		/* ========== CONTENEDOR PRINCIPAL (table) ========== */
 		.content-container {
 			width: 100%;
 			height: 89%;
@@ -146,89 +133,82 @@
 			vertical-align: top;
 		}
 
-		.divider-row {
-			display: table-row;
-			height: 62px;
-		}
-
-		.divider-cell {
-			display: table-cell;
-			vertical-align: middle;
-		}
-
-		.carousel-row {
-			display: table-row;
-			height: 26%;
-		}
-
-		.carousel-cell {
-			display: table-cell;
-			vertical-align: top;
-			padding-top: 12px;
-		}
-
-		/* ============================================================
-				TARJETAS DE ENVIO — 3 columnas
-			============================================================ */
-		.countries-grid {
+		.row-full {
 			width: 100%;
 			height: 100%;
 			overflow: hidden;
 			zoom: 1;
 		}
 
-		.country-card {
+		.col-countries {
 			float: left;
-			width: 31.5%;
-			margin-right: 2.75%;
-			margin-bottom: 2%;
-			background: #0a2f72;
-			background: -webkit-linear-gradient(135deg, #0d3b8e, #0a2f72);
-			background: linear-gradient(135deg, #0d3b8e, #0a2f72);
-			-webkit-box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-			box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-			border: 1px solid #1e5fbc;
-			border-left: 10px solid #f2b705;
-			border-radius: 18px;
-			padding: 26px 22px;
+			width: 100%;
+			height: 100%;
+			padding: 6px 10px 6px 0;
 			overflow: hidden;
+			box-sizing: border-box;
+		}
+
+		/* ========== GRID DE PAÍSES (estático, sin carrusel) ========== */
+		.countries-grid {
+			width: 100%;
+			height: 100%;
+			overflow-y: auto;
+			overflow-x: hidden;
+			padding: 5px 0;
 			zoom: 1;
 		}
 
-		.country-card.last-in-row {
+		.country-card {
+			float: left;
+			width: 31.333%;
+			margin-right: 2.75%;
+			margin-bottom: 18px;
+			background: #0a2f72;
+			background: -webkit-linear-gradient(135deg, #0d3b8e, #0a2f72);
+			background: linear-gradient(135deg, #0d3b8e, #0a2f72);
+			-webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+			border: 1px solid #1e5fbc;
+			border-left: 8px solid #f2b705;
+			border-radius: 14px;
+			padding: 18px 20px;
+			overflow: hidden;
+			zoom: 1;
+			display: flex;
+			align-items: center;
+			gap: 14px;
+		}
+
+		.country-card:nth-child(3n) {
 			margin-right: 0;
 		}
 
 		.country-flag {
-			float: left;
-			width: 88px;
-			height: 88px;
+			flex: 0 0 70px;
+			width: 70px;
+			height: 70px;
 			border-radius: 50%;
-			border: 4px solid #f2b705;
-			margin-right: 20px;
+			border: 3px solid #f2b705;
 			background-color: #071f4a;
 			background-repeat: no-repeat;
 			background-position: center center;
 			-webkit-background-size: cover;
 			background-size: cover;
-			display: block;
 		}
 
-		/* Fallback cuando no hay imagen */
-
 		.flag-fallback {
-			float: left;
-			width: 88px;
-			height: 88px;
+			flex: 0 0 70px;
+			width: 70px;
+			height: 70px;
 			border-radius: 50%;
 			background-color: #071f4a;
 			text-align: center;
-			line-height: 88px;
-			font-size: 28px;
+			line-height: 70px;
+			font-size: 26px;
 			font-weight: 800;
 			color: #f2b705;
-			border: 4px solid #f2b705;
-			margin-right: 20px;
+			border: 3px solid #f2b705;
 			display: none;
 		}
 
@@ -237,26 +217,25 @@
 		}
 
 		.country-info {
-			float: left;
-			width: 71%;
+			flex: 1;
 			text-align: left;
-			padding-top: 6px;
+			overflow: hidden;
 		}
 
 		.country-name {
-			font-size: 22px;
+			font-size: 18px;
 			font-weight: 700;
 			text-transform: uppercase;
-			margin-bottom: 8px;
 			color: #ffffff;
 			letter-spacing: 1px;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			margin-bottom: 2px;
 		}
 
 		.country-value {
-			font-size: 42px;
+			font-size: 28px;
 			font-weight: 800;
 			color: #f2b705;
 			line-height: 1.1;
@@ -267,16 +246,22 @@
 		}
 
 		.country-value.disabled {
-			font-size: 20px;
+			font-size: 16px;
 			color: #9ca3af;
 			white-space: normal;
 			font-weight: 600;
 		}
 
-		/* ============================================================
-   DIVISOR "TIPO DE CAMBIO"
-   Líneas laterales con <span> reales (sin ::before/::after)
-   ============================================================ */
+		/* ========== DIVISOR ========== */
+		.divider-row {
+			display: table-row;
+			height: 62px;
+		}
+		.divider-cell {
+			display: table-cell;
+			vertical-align: middle;
+		}
+
 		.section-divider {
 			text-align: center;
 			font-size: 22px;
@@ -285,7 +270,6 @@
 			color: #d1d5db;
 			text-transform: uppercase;
 		}
-
 		.section-divider-line {
 			display: inline-block;
 			width: 29%;
@@ -294,19 +278,23 @@
 			vertical-align: middle;
 			margin: 0 16px;
 		}
-
 		.section-divider-text {
 			font-size: 25px;
 			display: inline-block;
 			vertical-align: middle;
 		}
 
-		/* ============================================================
-   CARRUSEL DE DIVISAS — 4 cards por slide
-   Ancho por item: 23.25% con margen 2.33% entre ellos
-   Bandera + nombre + valor en fila
-   Valores grandes para pantalla
-   ============================================================ */
+		/* ========== CARRUSEL DE DIVISAS ========== */
+		.carousel-row {
+			display: table-row;
+			height: 26%;
+		}
+		.carousel-cell {
+			display: table-cell;
+			vertical-align: top;
+			padding-top: 12px;
+		}
+
 		.currencies-slide {
 			width: 100%;
 			overflow: hidden;
@@ -329,7 +317,6 @@
 			-webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
 			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
 		}
-
 		.currency-item.last-in-row {
 			margin-right: 0;
 		}
@@ -348,7 +335,6 @@
 			background-size: cover;
 			display: block;
 		}
-
 		.currency-flag-fallback {
 			float: left;
 			width: 64px;
@@ -364,7 +350,6 @@
 			margin-right: 16px;
 			display: none;
 		}
-
 		.currency-flag.loaded+.currency-flag-fallback {
 			display: none;
 		}
@@ -375,7 +360,6 @@
 			text-align: left;
 			padding-top: 4px;
 		}
-
 		.currency-name {
 			font-size: 20px;
 			font-weight: 700;
@@ -386,7 +370,6 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-
 		.currency-value {
 			font-size: 28px;
 			font-weight: 800;
@@ -397,10 +380,7 @@
 			text-overflow: ellipsis;
 		}
 
-		/* ============================================================
-			LOADER - CON EFECTO FADE Y TEXTO ANIMADO
-
-			============================================================ */
+		/* ========== LOADER ========== */
 		.loader-overlay {
 			position: fixed;
 			top: 0;
@@ -413,21 +393,16 @@
 			display: table;
 			transition: opacity 0.5s ease;
 		}
-
 		.loader-overlay.hidden {
 			opacity: 0;
 			visibility: hidden;
-			transition:
-				opacity 0.5s ease,
-				visibility 0s 0.5s;
+			transition: opacity 0.5s ease, visibility 0s 0.5s;
 		}
-
 		.loader-container {
 			display: table-cell;
 			vertical-align: middle;
 			text-align: center;
 		}
-
 		.loader-text {
 			color: #f2b705;
 			font-size: 28px;
@@ -439,35 +414,28 @@
 			display: inline-block;
 			animation: textPulse 1.5s ease-in-out infinite;
 		}
-
 		@keyframes textPulse {
 			0% {
 				opacity: 0.5;
 			}
-
 			50% {
 				opacity: 1;
 			}
-
 			100% {
 				opacity: 0.5;
 			}
 		}
-
 		.loader-spinner {
 			display: none;
 		}
 
-		/* ========== SCROLLBAR WEBKIT ========== */
 		::-webkit-scrollbar {
 			width: 5px;
 		}
-
 		::-webkit-scrollbar-track {
 			background: #071f4a;
 			border-radius: 3px;
 		}
-
 		::-webkit-scrollbar-thumb {
 			background: #f2b705;
 			border-radius: 3px;
@@ -488,10 +456,14 @@
 		</div>
 
 		<div class="content-container">
-			<!-- ENVIOS -->
+			<!-- ENVIOS (grid estático, sin carrusel) -->
 			<div class="shipments-row">
 				<div class="shipments-cell">
-					<div id="rates-grid" class="countries-grid cf"></div>
+					<div class="row-full cf">
+						<div class="col-countries">
+							<div id="rates-grid" class="countries-grid cf"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -500,7 +472,7 @@
 				<div class="divider-cell">
 					<div class="section-divider">
 						<span class="section-divider-line"></span>
-						<span class="section-divider-text">DIVISAS | EXCHANGE </span>
+						<span class="section-divider-text">DIVISAS | EXCHANGE</span>
 						<span class="section-divider-line"></span>
 					</div>
 				</div>
@@ -524,22 +496,15 @@
 	</div>
 
 	<script>
-		(function () {
-			/* ========== LOGGER SEGURO ========== */
-			var log =
-				typeof console !== "undefined" && console.log
-					? function (msg) {
-						console.log(msg);
-					}
-					: function () { };
+		(function() {
+			var log = (typeof console !== "undefined" && console.log) ? function(msg) { console.log(msg); } : function() {};
 
 			/* ========== CONFIGURACION ========== */
 			var USE_MOCK = false;
-			var REFRESH_INTERVAL = 14400000; /* 4 horas */
-			var DATA_REFRESH_INTERVAL = 600000  /* 10min */
+			var REFRESH_INTERVAL = 14400000;
+			var DATA_REFRESH_INTERVAL = 900000; /* 15 minutos */
 			var CAROUSEL_INTERVAL = 10000;
 
-			/* ========== ESTADO ========== */
 			var isLoading = false;
 			var currentSlide = 0;
 			var slideTimer = null;
@@ -547,12 +512,8 @@
 			var currenciesData = [];
 			var currenciesCarousel = [];
 
-			/* ========== AGENCIAS ========== */
 			var agencyList = {
-				default: {
-					name: "",
-					url: "https://script.google.com/macros/s/AKfycbwmNgg2V8PzcWHrOXSD8mNA4MALz46u50xb9Ol15Svj5D5A1bDOvKxLUs2krySTT8Behg/exec",
-				},
+				default: { name: "", url: "https://script.google.com/macros/s/AKfycbwmNgg2V8PzcWHrOXSD8mNA4MALz46u50xb9Ol15Svj5D5A1bDOvKxLUs2krySTT8Behg/exec" },
 				badalona: { name: "Agencia Badalona", url: "https://script.google.com/macros/s/AKfycbzukMdtwjOwY7vs6JnAfqRGoCLLCF0RMSSumKoHG6Pt4wyNGbgwPahn-qyQciu6PJYC/exec" },
 				casal: { name: "Agencia Casal", url: "https://script.google.com/macros/s/AKfycbzn-3p6uI0J4O_LU-wVBLRQ1BdUXi6G097h8H9S5eNC0s-p3v3qgsMSuSQ_dv4UXp7C/exec" },
 				lepanto: { name: "Agencia Lepanto", url: "https://script.google.com/macros/s/AKfycbwc0PdseRvXCK0h6jDOgVno5OCdzEAFOCftk_Cni81Df7V_nwx5UuACGK_GKXiXBe062w/exec" },
@@ -561,38 +522,20 @@
 				moncunil: { name: "Agencia Moncunil", url: "https://script.google.com/macros/s/AKfycbxzC-4yEinKQdi-MplwYv1aNWVW2Kut0zydL2hJIXIssgcl0g-X7Y1jvvjOEgjQWKbp/exec" },
 				paralel: { name: "Agencia Paralel", url: "https://script.google.com/macros/s/AKfycbwqZ4wi_L5j76JpYTnwGFSN9P0CrZ2ty2gFCbLbPOm7Cu5E6qcIJgSiHjCs1mJifTpujw/exec" },
 				rblanca: { name: "Agencia Riera Blanca", url: "https://script.google.com/macros/s/AKfycbzmQo9JI2ukWRxa3TDtJ0Q1vW6DAa7vQmu6cwA7yf0tZAOts1sMkldRv2EqY2K-Ii2DWA/exec" },
-				rescuder: { name: "Agencia Riera Escuder", url: "https://script.google.com/macros/s/AKfycbwQv7HI2R2eYAl4RK1VS--xu2SQU4wDsuk9ic69xqWF2bzX9gkzl12vySegqoAFuvSf/exec" },
+				rescuder: { name: "Agencia Riera Escuder", url: "https://script.google.com/macros/s/AKfycbwQv7HI2R2eYAl4RK1VS--xu2SQU4wDsuk9ic69xqWF2bzX9gkzl12vySegqoAFuvSf/exec" }
 			};
 
-			/* ========== BANDERAS ========== */
 			var flagMap = {
-				HN: "assets/flags/hn.svg",
-				CO: "assets/flags/co.svg",
-				DO: "assets/flags/do.svg",
-				BO: "assets/flags/bo.svg",
-				EC: "assets/flags/ec.svg",
-				NI: "assets/flags/ni.svg",
-				PY: "assets/flags/py.svg",
-				PE: "assets/flags/pe.svg",
-				MA: "assets/flags/ma.svg",
-				PK: "assets/flags/pk.svg",
-				BR: "assets/flags/br.svg",
-				PH: "assets/flags/ph.svg",
-				USD: "assets/flags/us.svg",
-				GBP: "assets/flags/gb.svg",
-				CHF: "assets/flags/ch.svg",
-				JPY: "assets/flags/jp.svg",
-				CAD: "assets/flags/ca.svg",
-				AUD: "assets/flags/au.svg",
-				MXN: "assets/flags/mx.svg",
-				KRW: "assets/flags/kr.svg",
-				CNY: "assets/flags/cn.svg",
-				MAD: "assets/flags/ma.svg",
-				DOP: "assets/flags/do.svg",
-				HKD: "assets/flags/hk.svg",
+				HN: "assets/flags/hn.svg", CO: "assets/flags/co.svg", DO: "assets/flags/do.svg",
+				BO: "assets/flags/bo.svg", EC: "assets/flags/ec.svg", NI: "assets/flags/ni.svg",
+				PY: "assets/flags/py.svg", PE: "assets/flags/pe.svg", MA: "assets/flags/ma.svg",
+				PK: "assets/flags/pk.svg", BR: "assets/flags/br.svg", PH: "assets/flags/ph.svg",
+				USD: "assets/flags/us.svg", GBP: "assets/flags/gb.svg", CHF: "assets/flags/ch.svg",
+				JPY: "assets/flags/jp.svg", CAD: "assets/flags/ca.svg", AUD: "assets/flags/au.svg",
+				MXN: "assets/flags/mx.svg", KRW: "assets/flags/kr.svg", CNY: "assets/flags/cn.svg",
+				MAD: "assets/flags/ma.svg", DOP: "assets/flags/do.svg", HKD: "assets/flags/hk.svg"
 			};
 
-			/* ========== MOCK ========== */
 			var MOCK_DATA = [
 				{ type: "shipment", code: "HN", name: "Honduras", value: "30.86", order: 1, active: true },
 				{ type: "shipment", code: "CO", name: "Colombia", value: "4136", order: 2, active: true },
@@ -602,55 +545,33 @@
 				{ type: "shipment", code: "PY", name: "Paraguay", value: "7108", order: 6, active: true },
 				{ type: "currency", code: "USD", name: "Dolar Americano", value: "1.0512", order: 1, active: true },
 				{ type: "currency", code: "GBP", name: "Libra Esterlina", value: "0.9421", order: 2, active: true },
-				{ type: "currency", code: "CHF", name: "Franco Suizo", value: "1.0234", order: 3, active: true },
+				{ type: "currency", code: "CHF", name: "Franco Suizo", value: "1.0234", order: 3, active: true }
 			];
 
-			/* ========== UTILIDADES ========== */
-			function $id(id) {
-				return document.getElementById(id);
-			}
+			function $id(id) { return document.getElementById(id); }
+			function trim(str) { return str.replace(/^\s+|\s+$/g, ""); }
+			function cleanValue(str) { return (str === undefined || str === null) ? "" : trim(str.toString()); }
 
-			function trim(str) {
-				return str.replace(/^\s+|\s+$/g, "");
-			}
+			function showLoader() { var el = $id("loader-overlay"); if (el) el.className = "loader-overlay"; }
+			function hideLoader() { var el = $id("loader-overlay"); if (el) el.className = "loader-overlay hidden"; }
 
-			function cleanValue(str) {
-				if (str === undefined || str === null) return "";
-				return trim(str.toString());
-			}
-
-			/* ========== LOADER ========== */
-			function showLoader() {
-				var el = $id("loader-overlay");
-				if (el) el.className = "loader-overlay";
-			}
-			function hideLoader() {
-				var el = $id("loader-overlay");
-				if (el) el.className = "loader-overlay hidden";
-			}
-
-			/* ========== LOGO FALLBACK ========== */
 			function initLogoFallback() {
 				var logo = $id("main-logo");
 				var fallback = $id("logo-fallback");
 				if (!logo) return;
-				logo.onerror = function () {
+				logo.onerror = function() {
 					logo.style.display = "none";
 					if (fallback) fallback.style.display = "inline-block";
 				};
 			}
 
-			/* ========== AGENCIA DESDE URL ========== */
 			function getAgencyFromURL() {
 				var search = window.location.search;
 				if (!search || search.length < 2) return "default";
 				var pairs = search.substring(1).split("&");
-				var i;
-				for (i = 0; i < pairs.length; i++) {
+				for (var i = 0; i < pairs.length; i++) {
 					var pair = pairs[i].split("=");
-					if (pair[0] === "agency" && pair[1] && agencyList[pair[1]]) {
-						return pair[1];
-					}
+					if (pair[0] === "agency" && pair[1] && agencyList[pair[1]]) return pair[1];
 				}
 				return "default";
 			}
@@ -668,50 +589,21 @@
 				return agencyList[agency].url;
 			}
 
-			/* ========== RELOJ ========== */
 			function updateDate() {
 				var el = $id("current-date");
 				if (!el) return;
 				var now = new Date();
 				var days = ["DOMINGO", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO"];
-				var months = [
-					"ENERO",
-					"FEBRERO",
-					"MARZO",
-					"ABRIL",
-					"MAYO",
-					"JUNIO",
-					"JULIO",
-					"AGOSTO",
-					"SEPTIEMBRE",
-					"OCTUBRE",
-					"NOVIEMBRE",
-					"DICIEMBRE",
-				];
-				var h = now.getHours();
-				var m = now.getMinutes();
+				var months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
+				var h = now.getHours(),
+					m = now.getMinutes();
 				var hs = h < 10 ? "0" + h : "" + h;
 				var ms = m < 10 ? "0" + m : "" + m;
-				el.innerHTML =
-					days[now.getDay()] +
-					" " +
-					now.getDate() +
-					" " +
-					months[now.getMonth()] +
-					" " +
-					now.getFullYear() +
-					" &middot; " +
-					hs +
-					":" +
-					ms;
+				el.innerHTML = days[now.getDay()] + " " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear() + " &middot; " + hs + ":" + ms;
 			}
 
-			function startClock() {
-				updateDate();
-				setInterval(updateDate, 60000);
-			}
+			function startClock() { updateDate(); setInterval(updateDate, 60000); }
 
-			/* ========== FORMATEO NUMERICO PROPIO ========== */
 			function formatNumber(num, decimals) {
 				var mult = Math.pow(10, decimals);
 				var rounded = Math.round(num * mult) / mult;
@@ -721,13 +613,12 @@
 				var decPart = parts.length > 1 ? parts[1] : "";
 				var result = "";
 				var count = 0;
-				var i;
-				for (i = intPart.length - 1; i >= 0; i--) {
+				for (var i = intPart.length - 1; i >= 0; i--) {
 					if (count > 0 && count % 3 === 0) result = "." + result;
 					result = intPart[i] + result;
 					count++;
 				}
-				if (decimals > 0 && decPart) result = result + "," + decPart;
+				if (decimals > 0 && decPart) result += "," + decPart;
 				return result;
 			}
 
@@ -736,8 +627,7 @@
 				var num = parseFloat(value.toString().replace(/,/g, "."));
 				if (isNaN(num) || num === 0) return "No disponible";
 				var countryDollars = ["NI", "EC"];
-				var i;
-				for (i = 0; i < countryDollars.length; i++) {
+				for (var i = 0; i < countryDollars.length; i++) {
 					if (countryDollars[i] === code) return formatNumber(num, 4);
 				}
 				return num >= 1000 ? formatNumber(num, 0) : formatNumber(num, 2);
@@ -745,78 +635,47 @@
 
 			function formatCurrencyValue(value, code) {
 				if (!value || value === "") return "No disponible";
-
 				if (value.toString().indexOf(code) !== -1) return value;
 				var num = parseFloat(value.toString().replace(/,/g, "."));
 				if (isNaN(num) || num === 0) return "No disponible";
-				/* 		var noDecimals = ["COP", "PYG", "KRW", "VND"];
-	var i;
-	for (i = 0; i < noDecimals.length; i++) {
-		if (noDecimals[i] === code) return formatNumber(num, 0) + " " + code;
-	} */
 				return formatNumber(num, 4) + " " + code;
 			}
 
-			/* ========== HTML BANDERAS ========== */
 			function createFlagHTML(code, cls, fbCls) {
 				var src = flagMap[code] || "";
-				/* Siempre genera los dos divs; el probe JS decide cuál mostrar */
-				return (
-					'<div class="' +
-					cls +
-					'" id="flag-' +
-					cls +
-					"-" +
-					code +
-					"-" +
-					Math.floor(Math.random() * 99999) +
-					'"></div>' +
-					'<div class="' +
-					fbCls +
-					'" id="fb-' +
-					fbCls +
-					"-" +
-					code +
-					'">' +
-					code +
-					"</div>"
-				);
+				return '<div class="' + cls + '" id="flag-' + cls + '-' + code + '-' + Math.floor(Math.random() * 99999) + '"></div>' +
+					'<div class="' + fbCls + '" id="fb-' + fbCls + '-' + code + '">' + code + '</div>';
 			}
 
 			function probeFlagImage(flagEl, fallbackEl, src) {
 				if (!src || !flagEl) {
-					/* Sin URL: mostrar fallback directamente */
 					if (fallbackEl) fallbackEl.style.display = "block";
 					return;
 				}
 				var probe = new Image();
-				probe.onload = function () {
-					/* Imagen OK: aplicar como background, ocultar fallback */
+				probe.onload = function() {
 					flagEl.style.backgroundImage = "url(" + src + ")";
 					if (fallbackEl) fallbackEl.style.display = "none";
 				};
-				probe.onerror = function () {
-					/* Imagen rota: ocultar div bandera, mostrar fallback */
+				probe.onerror = function() {
 					flagEl.style.display = "none";
 					if (fallbackEl) fallbackEl.style.display = "block";
 				};
 				probe.src = src;
 			}
 
-			/* ========== RENDER ENVIOS ========== */
+			// ===== RENDER ENVIOS (grid estático, 3 columnas) =====
 			function renderShipments() {
 				var container = $id("rates-grid");
 				if (!container) return;
 				container.innerHTML = "";
 
 				if (!shipmentsData || shipmentsData.length === 0) {
-					container.innerHTML =
-						'<div style="text-align:center;padding:40px;color:#9CA3AF;">Sin datos de envios</div>';
+					container.innerHTML = '<div style="text-align:center;padding:40px;color:#9CA3AF;">Sin datos de envios</div>';
 					return;
 				}
 
-				var i;
-				for (i = 0; i < shipmentsData.length; i++) {
+				for (var i = 0; i < shipmentsData.length; i++) {
 					var item = shipmentsData[i];
 					var card = document.createElement("div");
 					var isLast = (i + 1) % 3 === 0;
@@ -826,17 +685,12 @@
 					card.innerHTML =
 						createFlagHTML(item.code, "country-flag", "flag-fallback") +
 						'<div class="country-info">' +
-						'<div class="country-name">' +
-						item.name +
-						"</div>" +
-						'<div class="country-value' +
-						disabled +
-						'">' +
-						item.value +
-						"</div>" +
-						"</div>" +
+						'<div class="country-name">' + item.name + '</div>' +
+						'<div class="country-value' + disabled + '">' + item.value + '</div>' +
+						'</div>' +
 						'<div style="clear:both;"></div>';
 					container.appendChild(card);
+
 					var flagEl = card.getElementsByClassName("country-flag")[0];
 					var fbEl = card.getElementsByClassName("flag-fallback")[0];
 					probeFlagImage(flagEl, fbEl, flagMap[item.code] || "");
@@ -844,13 +698,12 @@
 				log("Envios renderizados: " + shipmentsData.length);
 			}
 
-			/* ========== CARRUSEL ========== */
+			// ===== CARRUSEL DIVISAS =====
 			function buildCarouselPages() {
 				currenciesCarousel = [];
-				var i, j, page;
-				for (i = 0; i < currenciesData.length; i += 4) {
-					page = [];
-					for (j = i; j < i + 4 && j < currenciesData.length; j++) {
+				for (var i = 0; i < currenciesData.length; i += 4) {
+					var page = [];
+					for (var j = i; j < i + 4 && j < currenciesData.length; j++) {
 						page.push(currenciesData[j]);
 					}
 					currenciesCarousel.push(page);
@@ -867,38 +720,26 @@
 				var page = currenciesCarousel[index];
 				if (!page) return;
 				var html = "";
-				var i;
-				for (i = 0; i < page.length; i++) {
+				for (var i = 0; i < page.length; i++) {
 					var curr = page[i];
 					var isLast = (i + 1) % 4 === 0;
-					html +=
-						'<div class="currency-item' +
-						(isLast ? " last-in-row" : "") +
-						'">' +
+					html += '<div class="currency-item' + (isLast ? " last-in-row" : "") + '">' +
 						createFlagHTML(curr.code, "currency-flag", "currency-flag-fallback") +
 						'<div class="currency-info">' +
-						'<div class="currency-name">' +
-						curr.name +
-						"</div>" +
-						'<div class="currency-value">' +
-						curr.value +
-						"</div>" +
-						"</div>" +
+						'<div class="currency-name">' + curr.name + '</div>' +
+						'<div class="currency-value">' + curr.value + '</div>' +
+						'</div>' +
 						'<div style="clear:both;"></div>' +
-						"</div>";
+						'</div>';
 				}
 				container.innerHTML = html;
 				var items = container.getElementsByClassName("currency-item");
-				var k;
-				for (k = 0; k < items.length; k++) {
+				for (var k = 0; k < items.length; k++) {
 					var fEl = items[k].getElementsByClassName("currency-flag")[0];
 					var fbEl = items[k].getElementsByClassName("currency-flag-fallback")[0];
-					var codeEl = items[k].getElementsByClassName("currency-name")[0];
-					/* Recuperar el code del fallback que siempre tiene el texto del código */
 					var codeText = fbEl ? fbEl.innerHTML : "";
 					probeFlagImage(fEl, fbEl, flagMap[codeText] || "");
 				}
-				log("Divisas renderizados: " + currenciesCarousel.length + 1);
 			}
 
 			function nextSlide() {
@@ -921,54 +762,36 @@
 				resetCarouselTimer();
 			}
 
-			/* ========== PARSEO CSV ========== */
+			// ===== CSV PARSER =====
 			function parseCSV(csvText) {
-				/* Normalizar saltos de línea Windows/Linux */
 				var lines = csvText.replace(/\r/g, "").split("\n");
 				if (lines.length < 2) return { shipments: [], currencies: [] };
 
-				/* Headers → siempre minúsculas para comparación uniforme */
 				var rawHeaders = lines[0].split(",");
 				var headers = [];
-				var h;
-				for (h = 0; h < rawHeaders.length; h++) {
+				for (var h = 0; h < rawHeaders.length; h++) {
 					headers.push(trim(rawHeaders[h]).toLowerCase());
 				}
-				log("Headers CSV: " + headers.join(", "));
 
-				var shipmentsTemp = [];
-				var currenciesTemp = [];
-				var i;
-
-				for (i = 1; i < lines.length; i++) {
+				var shipmentsTemp = [],
+					currenciesTemp = [];
+				for (var i = 1; i < lines.length; i++) {
 					var line = trim(lines[i]);
 					if (!line) continue;
-
-					/* Parser CSV con soporte de comillas */
-					var values = [];
-					var inQuote = false;
-					var current = "";
-					var c;
-					for (c = 0; c < line.length; c++) {
+					var values = [],
+						inQuote = false,
+						current = "";
+					for (var c = 0; c < line.length; c++) {
 						var chr = line.charAt(c);
-						if (chr === '"') {
-							inQuote = !inQuote;
-						} else if (chr === "," && !inQuote) {
-							values.push(trim(current));
-							current = "";
-						} else {
-							current += chr;
-						}
+						if (chr === '"') inQuote = !inQuote;
+						else if (chr === "," && !inQuote) { values.push(trim(current));
+							current = ""; } else current += chr;
 					}
 					values.push(trim(current));
 
 					var obj = {};
-					var j;
-					for (j = 0; j < headers.length; j++) {
-						obj[headers[j]] = values[j] || "";
-					}
+					for (var j = 0; j < headers.length; j++) obj[headers[j]] = values[j] || "";
 
-					/* Tipo: normalizar a minúsculas antes de comparar */
 					var typeRaw = (obj.tipo || obj.type || "").toLowerCase();
 					var isShipment = typeRaw === "envio" || typeRaw === "envios" || typeRaw === "shipment";
 					var isCurrency = typeRaw === "divisa" || typeRaw === "divisas" || typeRaw === "currency";
@@ -977,88 +800,61 @@
 					var code = (obj.codigo || obj.code || "").toUpperCase();
 					var name = cleanValue(obj.nombre || obj.name || "");
 					var valueRaw = cleanValue(obj.valor || obj.value || "");
-					/* Activo: normalizar a minúsculas antes de comparar */
 					var activeRaw = (obj.activo || obj.active || "").toLowerCase();
 					var active = activeRaw === "si" || activeRaw === "sí" || activeRaw === "true" || activeRaw === "1";
-					/* [FIX 6] parseInt con radix 10 */
 					var order = parseInt(obj.orden || obj.order || "999", 10);
 					if (isNaN(order)) order = 999;
 
 					if (!active) continue;
 
 					var formatted = isShipment ? formatShipmentValue(valueRaw, code) : formatCurrencyValue(valueRaw, code);
-
 					var record = { code: code, name: name, value: formatted, order: order };
 					if (isShipment) shipmentsTemp.push(record);
 					else currenciesTemp.push(record);
 				}
 
-				shipmentsTemp.sort(function (a, b) {
-					return a.order - b.order;
-				});
-				currenciesTemp.sort(function (a, b) {
-					return a.order - b.order;
-				});
+				shipmentsTemp.sort(function(a, b) { return a.order - b.order; });
+				currenciesTemp.sort(function(a, b) { return a.order - b.order; });
 
-				log("Envios: " + shipmentsTemp.length + " | Divisas: " + currenciesTemp.length);
 				return { shipments: shipmentsTemp, currencies: currenciesTemp };
 			}
 
-			/* ========== XHR ========== */
 			function createXHR() {
 				if (window.XMLHttpRequest) return new XMLHttpRequest();
-				try {
-					return new ActiveXObject("Msxml2.XMLHTTP.6.0");
-				} catch (e) { }
-				try {
-					return new ActiveXObject("Microsoft.XMLHTTP");
-				} catch (e) { }
+				try { return new ActiveXObject("Msxml2.XMLHTTP.6.0"); } catch (e) {}
+				try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) {}
 				return null;
 			}
 
 			function loadCSV(callback) {
 				var xhr = createXHR();
-				if (!xhr) {
-					callback(new Error("XHR no disponible"), null);
-					return;
-				}
+				if (!xhr) { callback(new Error("XHR no disponible"), null); return; }
 				var url = getCsvUrl() + "?nocache=" + new Date().getTime();
 				xhr.open("GET", url, true);
-				xhr.onreadystatechange = function () {
+				xhr.timeout = 15000;
+				xhr.ontimeout = function() {
+					callback(new Error("Timeout"), null);
+				};
+				xhr.onreadystatechange = function() {
 					if (xhr.readyState === 4) {
-						if (xhr.status === 200) {
-							callback(null, xhr.responseText);
-						} else {
-							callback(new Error("HTTP " + xhr.status), null);
-						}
+						if (xhr.status === 200) { callback(null, xhr.responseText); } else { callback(new Error("HTTP " + xhr.status), null); }
 					}
 				};
-				xhr.onerror = function () {
-					callback(new Error("Error de red"), null);
-				};
-				try {
-					xhr.send();
-				} catch (e) {
-					finish(new Error('Excepcion al enviar XHR: ' + e.message), null);
-				}
+				xhr.onerror = function() { callback(new Error("Error de red"), null); };
+				try { xhr.send(); } catch (e) { callback(new Error('Excepción XHR: ' + e.message), null); }
 			}
 
-			/* ========== PROCESAR MOCK ========== */
 			function processMock() {
-				var shipments = [];
-				var currencies = [];
-				var i;
-				for (i = 0; i < MOCK_DATA.length; i++) {
+				var shipments = [],
+					currencies = [];
+				for (var i = 0; i < MOCK_DATA.length; i++) {
 					var item = MOCK_DATA[i];
 					if (!item.active) continue;
 					var rec = {
 						code: item.code,
 						name: item.name,
-						value:
-							item.type === "shipment"
-								? formatShipmentValue(item.value.item.code)
-								: formatCurrencyValue(item.value, item.code),
-						order: item.order,
+						value: item.type === "shipment" ? formatShipmentValue(item.value, item.code) : formatCurrencyValue(item.value, item.code),
+						order: item.order
 					};
 					if (item.type === "shipment") shipments.push(rec);
 					else currencies.push(rec);
@@ -1066,38 +862,35 @@
 				return { shipments: shipments, currencies: currencies };
 			}
 
-			/* ========== CARGA DATOS ========== */
 			function loadDataFromSource(callback) {
-				if (USE_MOCK) {
-					callback(null, processMock());
-					return;
-				}
-				loadCSV(function (err, csvText) {
-					if (err || !csvText) {
-						log("Error CSV, usando MOCK: " + (err ? err.message : "sin texto"));
-						callback(null, processMock());
-						return;
-					}
+				if (USE_MOCK) { callback(null, processMock()); return; }
+				loadCSV(function(err, csvText) {
+					if (err || !csvText) { log("Error CSV, usando MOCK: " + (err ? err.message : "sin texto")); callback(null, processMock()); return; }
 					var parsed = parseCSV(csvText);
-					if (parsed.shipments.length === 0 && parsed.currencies.length === 0) {
-						log("CSV vacio o sin datos validos, usando MOCK");
-						callback(null, processMock());
-						return;
-					}
+					if (parsed.shipments.length === 0 && parsed.currencies.length === 0) { log("CSV vacio, usando MOCK"); callback(null, processMock()); return; }
 					callback(null, parsed);
 				});
 			}
 
-			/* ========== REFRESCO PRINCIPAL ========== */
 			function refreshData(silent) {
 				if (silent === undefined) silent = true;
-
 				if (isLoading) return;
 				isLoading = true;
-
 				if (!silent) showLoader();
 
-				loadDataFromSource(function (err, data) {
+				var loaderTimeout = null;
+				if (!silent) {
+					loaderTimeout = setTimeout(function() {
+						if (isLoading) {
+							log("Loader timeout: ocultando loader forzosamente");
+							hideLoader();
+							isLoading = false;
+						}
+					}, 15000);
+				}
+
+				loadDataFromSource(function(err, data) {
+					if (loaderTimeout) clearTimeout(loaderTimeout);
 					try {
 						shipmentsData = data.shipments;
 						currenciesData = data.currencies;
@@ -1105,31 +898,26 @@
 						buildCarouselPages();
 						initCarousel();
 					} catch (e) {
-						log('Error al renderizar: ' + e.message);
+						log('Error render: ' + e.message);
 					}
-
 					isLoading = false;
 					if (!silent) hideLoader();
 				});
 			}
 
-			/* ========== INICIALIZACION ========== */
 			function init() {
-				log("G&SENVIOS iniciado. Modo: " + (USE_MOCK ? "MOCK" : "CSV"));
+				log("G&SENVIOS iniciado. Actualización de datos cada 15 min (silenciosa)");
 				initLogoFallback();
 				setAgencyName();
 				startClock();
 				refreshData(false);
-				setInterval(function () {
-					refreshData(true)
-				}, DATA_REFRESH_INTERVAL);
+				setInterval(function() { refreshData(true); }, DATA_REFRESH_INTERVAL);
 			}
 
-			/* Arranque compatible IE8+ y Chromium 56 */
 			if (document.addEventListener) {
 				document.addEventListener("DOMContentLoaded", init, false);
 			} else if (document.attachEvent) {
-				document.attachEvent("onreadystatechange", function () {
+				document.attachEvent("onreadystatechange", function() {
 					if (document.readyState === "complete") init();
 				});
 			} else {
