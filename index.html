@@ -5,7 +5,6 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 	<title>G&amp;SENVIOS - Tasas de Cambio</title>
-	<meta http-equiv="refresh" content="14400" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -616,647 +615,681 @@
 		</div>
 	</footer>
 
-	<script>
-		/* ========== DETECCIÓN DE MODELO ========== */
-		(function () {
-			var ua = navigator.userAgent;
-			var modelo = '';
-			if (ua.indexOf('Maple2012') > -1) {
-				modelo = 's2-maple';
-			} else if (ua.indexOf('Tizen 2.4') > -1 || ua.indexOf('SamsungBrowser/1.1') > -1) {
-				modelo = 's4-tizen24';
-			} else if (ua.indexOf('Tizen 3') > -1 || ua.indexOf('Chrome/47') > -1) {
-				modelo = 's5-tizen30';
-			}
-			if (modelo) document.body.className = modelo;
-			window.MODELO_TIZEN = modelo || 'desconocido';
-			window.USAR_JSONP = (modelo === 's4-tizen24');
-		})();
+<script>
+/* ========== DETECCIÓN DE MODELO ========== */
+(function () {
+    var ua = navigator.userAgent;
+    var modelo = '';
+    if (ua.indexOf('Maple2012') > -1) {
+        modelo = 's2-maple';
+    } else if (ua.indexOf('Tizen 2.4') > -1 || ua.indexOf('SamsungBrowser/1.1') > -1) {
+        modelo = 's4-tizen24';
+    } else if (ua.indexOf('Tizen 3') > -1 || ua.indexOf('Chrome/47') > -1) {
+        modelo = 's5-tizen30';
+    }
+    if (modelo) document.body.className = modelo;
+    window.MODELO_TIZEN = modelo || 'desconocido';
+    window.USAR_JSONP = (modelo === 's4-tizen24');
+})();
 
-		window.onerror = function (msg, url, line, col, error) {
-			var errorDiv = document.createElement('div');
-			errorDiv.style.position = 'fixed';
-			errorDiv.style.top = '0';
-			errorDiv.style.left = '0';
-			errorDiv.style.zIndex = '99999';
-			errorDiv.style.background = 'red';
-			errorDiv.style.color = 'white';
-			errorDiv.style.padding = '10px';
-			errorDiv.style.fontSize = '16px';
-			errorDiv.style.maxWidth = '100%';
-			errorDiv.style.wordWrap = 'break-word';
-			errorDiv.innerHTML = 'Error: ' + msg + '<br>Linea: ' + line;
-			document.body.appendChild(errorDiv);
-			var loader = document.getElementById('loader-overlay');
-			if (loader) loader.className = 'loader-overlay hidden';
-			return false;
-		};
+window.onerror = function (msg, url, line, col, error) {
+    // Suprimir errores de scripts externos (JSONP, Google Apps Script)
+    if (msg === 'Script error.' || msg === 'Script error' || line === 0) {
+        return true;
+    }
+    var errorDiv = document.createElement('div');
+    errorDiv.style.position = 'fixed';
+    errorDiv.style.top = '0';
+    errorDiv.style.left = '0';
+    errorDiv.style.zIndex = '99999';
+    errorDiv.style.background = 'red';
+    errorDiv.style.color = 'white';
+    errorDiv.style.padding = '10px';
+    errorDiv.style.fontSize = '16px';
+    errorDiv.style.maxWidth = '100%';
+    errorDiv.style.wordWrap = 'break-word';
+    errorDiv.innerHTML = 'Error: ' + msg + '<br>Linea: ' + line;
+    document.body.appendChild(errorDiv);
+    var loader = document.getElementById('loader-overlay');
+    if (loader) loader.className = 'loader-overlay hidden';
+    return false;
+};
 
-		(function () {
-			var log = (typeof console !== "undefined" && console.log)
-				? function (msg) { console.log(msg); }
-				: function () { };
+(function () {
+    var log = (typeof console !== "undefined" && console.log)
+        ? function (msg) { console.log(msg); }
+        : function () { };
 
-			var PRODUCTION = false;
-			var USE_MOCK = false;
-			var DATA_REFRESH_INTERVAL = 600000;
-			var RETRY_INTERVAL = 60000;
-			var CAROUSEL_INTERVAL = 10000;
+    var PRODUCTION = false;
+    var USE_MOCK = false;
+    var DATA_REFRESH_INTERVAL = 600000;
+    var RETRY_INTERVAL = 60000;
+    var CAROUSEL_INTERVAL = 10000;
 
-			var isLoading = false;
-			var retryTimer = null;
-			var refreshTimer = null;
-			var currentSlide = 0;
-			var slideTimer = null;
-			var shipmentsData = [];
-			var currenciesData = [];
-			var currenciesCarousel = [];
-			var firstLoad = true;
+    var isLoading = false;
+    var retryTimer = null;
+    var refreshTimer = null;
+    var currentSlide = 0;
+    var slideTimer = null;
+    var shipmentsData = [];
+    var currenciesData = [];
+    var currenciesCarousel = [];
+    var firstLoad = true;
 
-			var agencyList = {
-				default: { name: "", url: "https://script.google.com/macros/s/AKfycbwmNgg2V8PzcWHrOXSD8mNA4MALz46u50xb9Ol15Svj5D5A1bDOvKxLUs2krySTT8Behg/exec" },
-				badalona: { name: "Agencia Badalona", url: "https://script.google.com/macros/s/AKfycbzukMdtwjOwY7vs6JnAfqRGoCLLCF0RMSSumKoHG6Pt4wyNGbgwPahn-qyQciu6PJYC/exec" },
-				casal: { name: "Agencia Casal", url: "https://script.google.com/macros/s/AKfycbzn-3p6uI0J4O_LU-wVBLRQ1BdUXi6G097h8H9S5eNC0s-p3v3qgsMSuSQ_dv4UXp7C/exec" },
-				lepanto: { name: "Agencia Lepanto", url: "https://script.google.com/macros/s/AKfycbwc0PdseRvXCK0h6jDOgVno5OCdzEAFOCftk_Cni81Df7V_nwx5UuACGK_GKXiXBe062w/exec" },
-				jcosta: { name: "Agencia Joaquin Costa", url: "https://script.google.com/macros/s/AKfycbyIDJ2xIHzWUB4m6UJP1LqCzAOW5boMj9UsfL-mYWGdNQfF7KoISJ9GhDkMjlr3O2_e/exec" },
-				mas: { name: "Agencia Mas", url: "https://script.google.com/macros/s/AKfycbyZi4uRVzVXp8G4rzguF-u4bN_0qEeAXUa8VFNwGe8jzrep3Y9vuLxbPd9n8AHLaF5E/exec" },
-				moncunil: { name: "Agencia Moncunil", url: "https://script.google.com/macros/s/AKfycbxzC-4yEinKQdi-MplwYv1aNWVW2Kut0zydL2hJIXIssgcl0g-X7Y1jvvjOEgjQWKbp/exec" },
-				paralel: { name: "Agencia Paralel", url: "https://script.google.com/macros/s/AKfycbwqZ4wi_L5j76JpYTnwGFSN9P0CrZ2ty2gFCbLbPOm7Cu5E6qcIJgSiHjCs1mJifTpujw/exec" },
-				rblanca: { name: "Agencia Riera Blanca", url: "https://script.google.com/macros/s/AKfycbzmQo9JI2ukWRxa3TDtJ0Q1vW6DAa7vQmu6cwA7yf0tZAOts1sMkldRv2EqY2K-Ii2DWA/exec" },
-				rescuder: { name: "Agencia Riera Escuder", url: "https://script.google.com/macros/s/AKfycbwQv7HI2R2eYAl4RK1VS--xu2SQU4wDsuk9ic69xqWF2bzX9gkzl12vySegqoAFuvSf/exec" },
-			};
+    var agencyList = {
+        default: { name: "", url: "https://script.google.com/macros/s/AKfycbwmNgg2V8PzcWHrOXSD8mNA4MALz46u50xb9Ol15Svj5D5A1bDOvKxLUs2krySTT8Behg/exec" },
+        badalona: { name: "Agencia Badalona", url: "https://script.google.com/macros/s/AKfycbzukMdtwjOwY7vs6JnAfqRGoCLLCF0RMSSumKoHG6Pt4wyNGbgwPahn-qyQciu6PJYC/exec" },
+        casal: { name: "Agencia Casal", url: "https://script.google.com/macros/s/AKfycbzn-3p6uI0J4O_LU-wVBLRQ1BdUXi6G097h8H9S5eNC0s-p3v3qgsMSuSQ_dv4UXp7C/exec" },
+        lepanto: { name: "Agencia Lepanto", url: "https://script.google.com/macros/s/AKfycbwc0PdseRvXCK0h6jDOgVno5OCdzEAFOCftk_Cni81Df7V_nwx5UuACGK_GKXiXBe062w/exec" },
+        jcosta: { name: "Agencia Joaquin Costa", url: "https://script.google.com/macros/s/AKfycbyIDJ2xIHzWUB4m6UJP1LqCzAOW5boMj9UsfL-mYWGdNQfF7KoISJ9GhDkMjlr3O2_e/exec" },
+        mas: { name: "Agencia Mas", url: "https://script.google.com/macros/s/AKfycbyZi4uRVzVXp8G4rzguF-u4bN_0qEeAXUa8VFNwGe8jzrep3Y9vuLxbPd9n8AHLaF5E/exec" },
+        moncunil: { name: "Agencia Moncunil", url: "https://script.google.com/macros/s/AKfycbxzC-4yEinKQdi-MplwYv1aNWVW2Kut0zydL2hJIXIssgcl0g-X7Y1jvvjOEgjQWKbp/exec" },
+        paralel: { name: "Agencia Paralel", url: "https://script.google.com/macros/s/AKfycbwqZ4wi_L5j76JpYTnwGFSN9P0CrZ2ty2gFCbLbPOm7Cu5E6qcIJgSiHjCs1mJifTpujw/exec" },
+        rblanca: { name: "Agencia Riera Blanca", url: "https://script.google.com/macros/s/AKfycbzmQo9JI2ukWRxa3TDtJ0Q1vW6DAa7vQmu6cwA7yf0tZAOts1sMkldRv2EqY2K-Ii2DWA/exec" },
+        rescuder: { name: "Agencia Riera Escuder", url: "https://script.google.com/macros/s/AKfycbwQv7HI2R2eYAl4RK1VS--xu2SQU4wDsuk9ic69xqWF2bzX9gkzl12vySegqoAFuvSf/exec" },
+    };
 
-			var flagMap = {
-				HN: "assets/flags/hn.svg", CO: "assets/flags/co.svg", DO: "assets/flags/do.svg",
-				BO: "assets/flags/bo.svg", EC: "assets/flags/ec.svg", NI: "assets/flags/ni.svg",
-				PY: "assets/flags/py.svg", PE: "assets/flags/pe.svg", MA: "assets/flags/ma.svg",
-				PK: "assets/flags/pk.svg", BR: "assets/flags/br.svg", PH: "assets/flags/ph.svg",
-				USD: "assets/flags/us.svg", GBP: "assets/flags/gb.svg", CHF: "assets/flags/ch.svg",
-				JPY: "assets/flags/jp.svg", CAD: "assets/flags/ca.svg", AUD: "assets/flags/au.svg",
-				MXN: "assets/flags/mx.svg", KRW: "assets/flags/kr.svg", CNY: "assets/flags/cn.svg",
-				MAD: "assets/flags/ma.svg", DOP: "assets/flags/do.svg", HKD: "assets/flags/hk.svg",
-			};
+    var flagMap = {
+        HN: "assets/flags/hn.svg", CO: "assets/flags/co.svg", DO: "assets/flags/do.svg",
+        BO: "assets/flags/bo.svg", EC: "assets/flags/ec.svg", NI: "assets/flags/ni.svg",
+        PY: "assets/flags/py.svg", PE: "assets/flags/pe.svg", MA: "assets/flags/ma.svg",
+        PK: "assets/flags/pk.svg", BR: "assets/flags/br.svg", PH: "assets/flags/ph.svg",
+        USD: "assets/flags/us.svg", GBP: "assets/flags/gb.svg", CHF: "assets/flags/ch.svg",
+        JPY: "assets/flags/jp.svg", CAD: "assets/flags/ca.svg", AUD: "assets/flags/au.svg",
+        MXN: "assets/flags/mx.svg", KRW: "assets/flags/kr.svg", CNY: "assets/flags/cn.svg",
+        MAD: "assets/flags/ma.svg", DOP: "assets/flags/do.svg", HKD: "assets/flags/hk.svg",
+    };
 
-			var MOCK_DATA = [
-				{ type: "shipment", code: "HN", name: "Honduras", value: "30.86", order: 1, active: true },
-				{ type: "shipment", code: "CO", name: "Colombia", value: "4136", order: 2, active: true },
-				{ type: "shipment", code: "DO", name: "R. Dominicana", value: "68.07", order: 3, active: true },
-				{ type: "shipment", code: "EC", name: "Ecuador", value: "1.154", order: 4, active: true },
-				{ type: "shipment", code: "BO", name: "Bolivia", value: "11.36", order: 5, active: true },
-				{ type: "shipment", code: "PY", name: "Paraguay", value: "7108", order: 6, active: true },
-				{ type: "currency", code: "USD", name: "Dolar Americano", value: "1.0512", order: 1, active: true },
-				{ type: "currency", code: "GBP", name: "Libra Esterlina", value: "0.9421", order: 2, active: true },
-				{ type: "currency", code: "CHF", name: "Franco Suizo", value: "1.0234", order: 3, active: true },
-			];
+    var MOCK_DATA = [
+        { type: "shipment", code: "HN", name: "Honduras", value: "30.86", order: 1, active: true },
+        { type: "shipment", code: "CO", name: "Colombia", value: "4136", order: 2, active: true },
+        { type: "shipment", code: "DO", name: "R. Dominicana", value: "68.07", order: 3, active: true },
+        { type: "shipment", code: "EC", name: "Ecuador", value: "1.154", order: 4, active: true },
+        { type: "shipment", code: "BO", name: "Bolivia", value: "11.36", order: 5, active: true },
+        { type: "shipment", code: "PY", name: "Paraguay", value: "7108", order: 6, active: true },
+        { type: "currency", code: "USD", name: "Dolar Americano", value: "1.0512", order: 1, active: true },
+        { type: "currency", code: "GBP", name: "Libra Esterlina", value: "0.9421", order: 2, active: true },
+        { type: "currency", code: "CHF", name: "Franco Suizo", value: "1.0234", order: 3, active: true },
+    ];
 
-			function $id(id) { return document.getElementById(id); }
-			function trim(str) {
-				if (str === undefined || str === null) return "";
-				return str.replace(/^\s+|\s+$/g, "");
-			}
-			function cleanValue(str) {
-				if (str === undefined || str === null) return "";
-				return trim(str.toString());
-			}
+    function $id(id) { return document.getElementById(id); }
+    function trim(str) {
+        if (str === undefined || str === null) return "";
+        return str.replace(/^\s+|\s+$/g, "");
+    }
+    function cleanValue(str) {
+        if (str === undefined || str === null) return "";
+        return trim(str.toString());
+    }
 
-			function debugVisibility() {
-				var debugBar = $id("debug-info");
-				if (PRODUCTION) if (debugBar) debugBar.style.display = "none";
-			}
+    function debugVisibility() {
+        var debugBar = $id("debug-info");
+        if (PRODUCTION) if (debugBar) debugBar.style.display = "none";
+    }
 
-			function updateDebug(modelo, metodo, estado) {
-				var dbModelo = $id('db-modelo');
-				var dbMetodo = $id('db-metodo');
-				var dbEstado = $id('db-estado');
-				if (dbModelo) dbModelo.innerHTML = modelo || '---';
-				if (dbMetodo) dbMetodo.innerHTML = metodo || '---';
-				if (dbEstado) dbEstado.innerHTML = estado || '---';
-			}
+    function updateDebug(modelo, metodo, estado) {
+        var dbModelo = $id('db-modelo');
+        var dbMetodo = $id('db-metodo');
+        var dbEstado = $id('db-estado');
+        if (dbModelo) dbModelo.innerHTML = modelo || '---';
+        if (dbMetodo) dbMetodo.innerHTML = metodo || '---';
+        if (dbEstado) dbEstado.innerHTML = estado || '---';
+    }
 
-			function showLoader() {
-				var el = $id("loader-overlay");
-				if (el) { el.className = "loader-overlay"; el.style.display = ""; }
-			}
-			function hideLoader() {
-				var el = $id("loader-overlay");
-				if (el) { el.className = "loader-overlay hidden"; }
-			}
+    function showLoader() {
+        var el = $id("loader-overlay");
+        if (el) { el.className = "loader-overlay"; el.style.display = ""; }
+    }
+    function hideLoader() {
+        var el = $id("loader-overlay");
+        if (el) { el.className = "loader-overlay hidden"; }
+    }
 
-			function showNoData() {
-				$id('no-data-shipments').style.display = '';
-				$id('no-data-currencies').style.display = '';
-				$id('rates-grid').innerHTML = '';
-				$id('currencies-slide').innerHTML = '';
-			}
-			function hideNoData() {
-				$id('no-data-shipments').style.display = 'none';
-				$id('no-data-currencies').style.display = 'none';
-			}
+    function showNoData() {
+        $id('no-data-shipments').style.display = '';
+        $id('no-data-currencies').style.display = '';
+        $id('rates-grid').innerHTML = '';
+        $id('currencies-slide').innerHTML = '';
+    }
+    function hideNoData() {
+        $id('no-data-shipments').style.display = 'none';
+        $id('no-data-currencies').style.display = 'none';
+    }
 
-			function setUpdateIndicator(text, updating) {
-				var el = $id('update-indicator');
-				if (!el) return;
-				el.innerHTML = text;
-				el.style.display = '';
-				el.className = updating ? 'update-indicator updating-state' : 'update-indicator';
-			}
+    function setUpdateIndicator(text, updating) {
+        var el = $id('update-indicator');
+        if (!el) return;
+        el.innerHTML = text;
+        el.style.display = '';
+        el.className = updating ? 'update-indicator updating-state' : 'update-indicator';
+    }
 
-			function blinkUpdatedValues() {
-				var countryValues = document.getElementsByClassName('country-value');
-				for (var i = 0; i < countryValues.length; i++) {
-					var el = countryValues[i];
-					el.offsetHeight;
-					el.classList.add('updating');
-					(function (element) {
-						setTimeout(function () { element.classList.remove('updating'); }, 2000);
-					})(el);
-				}
-				var currencyValues = document.getElementsByClassName('currency-value');
-				for (var j = 0; j < currencyValues.length; j++) {
-					var el2 = currencyValues[j];
-					el2.offsetHeight;
-					el2.classList.add('updating');
-					(function (element) {
-						setTimeout(function () { element.classList.remove('updating'); }, 2000);
-					})(el2);
-				}
-			}
+    function blinkUpdatedValues() {
+        var countryValues = document.getElementsByClassName('country-value');
+        for (var i = 0; i < countryValues.length; i++) {
+            var el = countryValues[i];
+            el.offsetHeight;
+            el.classList.add('updating');
+            (function (element) {
+                setTimeout(function () { element.classList.remove('updating'); }, 2000);
+            })(el);
+        }
+        var currencyValues = document.getElementsByClassName('currency-value');
+        for (var j = 0; j < currencyValues.length; j++) {
+            var el2 = currencyValues[j];
+            el2.offsetHeight;
+            el2.classList.add('updating');
+            (function (element) {
+                setTimeout(function () { element.classList.remove('updating'); }, 2000);
+            })(el2);
+        }
+    }
 
-			function updateShipmentValues() {
-				var cards = document.getElementsByClassName('country-card');
-				for (var i = 0; i < cards.length; i++) {
-					if (i < shipmentsData.length) {
-						var valEl = cards[i].getElementsByClassName('country-value')[0];
-						if (valEl) {
-							valEl.textContent = shipmentsData[i].value;
-							valEl.className = 'country-value' + (shipmentsData[i].value === 'No disponible' ? ' disabled' : '');
-						}
-					}
-				}
-			}
+    function updateShipmentValues() {
+        var cards = document.getElementsByClassName('country-card');
+        for (var i = 0; i < cards.length; i++) {
+            if (i < shipmentsData.length) {
+                var valEl = cards[i].getElementsByClassName('country-value')[0];
+                if (valEl) {
+                    valEl.textContent = shipmentsData[i].value;
+                    valEl.className = 'country-value' + (shipmentsData[i].value === 'No disponible' ? ' disabled' : '');
+                }
+            }
+        }
+    }
 
-			function updateCurrencyValues() {
-				var slide = $id('currencies-slide');
-				if (!slide) return;
-				var items = slide.getElementsByClassName('currency-item');
-				var page = currenciesCarousel[currentSlide] || [];
-				for (var i = 0; i < items.length; i++) {
-					if (i < page.length) {
-						var valEl = items[i].getElementsByClassName('currency-value')[0];
-						if (valEl) valEl.textContent = page[i].value;
-					}
-				}
-			}
+    function updateCurrencyValues() {
+        var slide = $id('currencies-slide');
+        if (!slide) return;
+        var items = slide.getElementsByClassName('currency-item');
+        var page = currenciesCarousel[currentSlide] || [];
+        for (var i = 0; i < items.length; i++) {
+            if (i < page.length) {
+                var valEl = items[i].getElementsByClassName('currency-value')[0];
+                if (valEl) valEl.textContent = page[i].value;
+            }
+        }
+    }
 
-			function initLogoFallback() {
-				var logo = $id("main-logo");
-				var fallback = $id("logo-fallback");
-				if (!logo) return;
-				logo.onerror = function () {
-					logo.style.display = "none";
-					if (fallback) fallback.style.display = "inline-block";
-				};
-			}
+    function initLogoFallback() {
+        var logo = $id("main-logo");
+        var fallback = $id("logo-fallback");
+        if (!logo) return;
+        logo.onerror = function () {
+            logo.style.display = "none";
+            if (fallback) fallback.style.display = "inline-block";
+        };
+    }
 
-			function getAgencyFromURL() {
-				var search = window.location.search;
-				if (!search || search.length < 2) return "default";
-				var pairs = search.substring(1).split("&");
-				for (var i = 0; i < pairs.length; i++) {
-					var pair = pairs[i].split("=");
-					if (pair[0] === "agency" && pair[1] && agencyList[pair[1]]) return pair[1];
-				}
-				return "default";
-			}
+    function getAgencyFromURL() {
+        var search = window.location.search;
+        if (!search || search.length < 2) return "default";
+        var pairs = search.substring(1).split("&");
+        for (var i = 0; i < pairs.length; i++) {
+            var pair = pairs[i].split("=");
+            if (pair[0] === "agency" && pair[1] && agencyList[pair[1]]) return pair[1];
+        }
+        return "default";
+    }
 
-			function setAgencyName() {
-				var agency = getAgencyFromURL();
-				var name = USE_MOCK ? "PRUEBA" : agencyList[agency].name;
-				var el = $id("agency-name");
-				if (el) el.innerHTML = name;
-				return agency;
-			}
+    function setAgencyName() {
+        var agency = getAgencyFromURL();
+        var name = USE_MOCK ? "PRUEBA" : agencyList[agency].name;
+        var el = $id("agency-name");
+        if (el) el.innerHTML = name;
+        return agency;
+    }
 
-			function getCsvUrl() {
-				var agency = getAgencyFromURL();
-				return agencyList[agency].url;
-			}
+    function getCsvUrl() {
+        var agency = getAgencyFromURL();
+        return agencyList[agency].url;
+    }
 
-			function updateDate() {
-				var el = $id("current-date");
-				if (!el) return;
-				var now = new Date();
-				var days = ["DOMINGO", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO"];
-				var months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
-				var h = now.getHours(), m = now.getMinutes();
-				var hs = h < 10 ? "0" + h : "" + h;
-				var ms = m < 10 ? "0" + m : "" + m;
-				el.innerHTML = days[now.getDay()] + " " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear() + " &middot; " + hs + ":" + ms;
-			}
+    function updateDate() {
+        var el = $id("current-date");
+        if (!el) return;
+        var now = new Date();
+        var days = ["DOMINGO", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO"];
+        var months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
+        var h = now.getHours(), m = now.getMinutes();
+        var hs = h < 10 ? "0" + h : "" + h;
+        var ms = m < 10 ? "0" + m : "" + m;
+        el.innerHTML = days[now.getDay()] + " " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear() + " &middot; " + hs + ":" + ms;
+    }
 
-			function startClock() { updateDate(); setInterval(updateDate, 60000); }
+    function startClock() { updateDate(); setInterval(updateDate, 60000); }
 
-			function formatNumber(num, decimals) {
-				var mult = Math.pow(10, decimals);
-				var rounded = Math.round(num * mult) / mult;
-				var str = rounded.toFixed(decimals);
-				var parts = str.split(".");
-				var intPart = parts[0], decPart = parts.length > 1 ? parts[1] : "";
-				var result = "", count = 0;
-				for (var i = intPart.length - 1; i >= 0; i--) {
-					if (count > 0 && count % 3 === 0) result = "." + result;
-					result = intPart[i] + result;
-					count++;
-				}
-				if (decimals > 0 && decPart) result = result + "," + decPart;
-				return result;
-			}
+    function formatNumber(num, decimals) {
+        var mult = Math.pow(10, decimals);
+        var rounded = Math.round(num * mult) / mult;
+        var str = rounded.toFixed(decimals);
+        var parts = str.split(".");
+        var intPart = parts[0], decPart = parts.length > 1 ? parts[1] : "";
+        var result = "", count = 0;
+        for (var i = intPart.length - 1; i >= 0; i--) {
+            if (count > 0 && count % 3 === 0) result = "." + result;
+            result = intPart[i] + result;
+            count++;
+        }
+        if (decimals > 0 && decPart) result = result + "," + decPart;
+        return result;
+    }
 
-			function formatShipmentValue(value, code) {
-				if (!value || value === "") return "No disponible";
-				var num = parseFloat(value.toString().replace(/,/g, "."));
-				if (isNaN(num) || num === 0) return "No disponible";
-				var countryDollars = ["NI", "EC"];
-				for (var i = 0; i < countryDollars.length; i++) {
-					if (countryDollars[i] === code) return formatNumber(num, 4);
-				}
-				return num >= 1000 ? formatNumber(num, 0) : formatNumber(num, 2);
-			}
+    function formatShipmentValue(value, code) {
+        if (!value || value === "") return "No disponible";
+        var num = parseFloat(value.toString().replace(/,/g, "."));
+        if (isNaN(num) || num === 0) return "No disponible";
+        var countryDollars = ["NI", "EC"];
+        for (var i = 0; i < countryDollars.length; i++) {
+            if (countryDollars[i] === code) return formatNumber(num, 4);
+        }
+        return num >= 1000 ? formatNumber(num, 0) : formatNumber(num, 2);
+    }
 
-			function formatCurrencyValue(value, code) {
-				if (!value || value === "") return "No disponible";
-				if (value.toString().indexOf(code) !== -1) return value;
-				var num = parseFloat(value.toString().replace(/,/g, "."));
-				if (isNaN(num) || num === 0) return "No disponible";
-				return formatNumber(num, 4) + " " + code;
-			}
+    function formatCurrencyValue(value, code) {
+        if (!value || value === "") return "No disponible";
+        if (value.toString().indexOf(code) !== -1) return value;
+        var num = parseFloat(value.toString().replace(/,/g, "."));
+        if (isNaN(num) || num === 0) return "No disponible";
+        return formatNumber(num, 4) + " " + code;
+    }
 
-			function createFlagHTML(code, cls, fbCls) {
-				var uniqueId = Math.floor(Math.random() * 99999);
-				return (
-					'<div class="' + cls + '" id="flag-' + cls + '-' + code + '-' + uniqueId + '"></div>' +
-					'<div class="' + fbCls + '" id="fb-' + fbCls + '-' + code + '">' + code + '</div>'
-				);
-			}
+    function createFlagHTML(code, cls, fbCls) {
+        var uniqueId = Math.floor(Math.random() * 99999);
+        return (
+            '<div class="' + cls + '" id="flag-' + cls + '-' + code + '-' + uniqueId + '"></div>' +
+            '<div class="' + fbCls + '" id="fb-' + fbCls + '-' + code + '">' + code + '</div>'
+        );
+    }
 
-			function probeFlagImage(flagEl, fallbackEl, src) {
-				if (!src || !flagEl) {
-					if (fallbackEl) fallbackEl.style.display = "block";
-					return;
-				}
-				var probe = new Image();
-				probe.onload = function () {
-					flagEl.style.backgroundImage = "url(" + src + ")";
-					flagEl.style.display = "block";
-					if (fallbackEl) fallbackEl.style.display = "none";
-				};
-				probe.onerror = function () {
-					flagEl.style.display = "none";
-					if (fallbackEl) fallbackEl.style.display = "block";
-				};
-				probe.src = src;
-			}
+    function probeFlagImage(flagEl, fallbackEl, src) {
+        if (!src || !flagEl) {
+            if (fallbackEl) fallbackEl.style.display = "block";
+            return;
+        }
+        var probe = new Image();
+        probe.onload = function () {
+            flagEl.style.backgroundImage = "url(" + src + ")";
+            flagEl.style.display = "block";
+            if (fallbackEl) fallbackEl.style.display = "none";
+        };
+        probe.onerror = function () {
+            flagEl.style.display = "none";
+            if (fallbackEl) fallbackEl.style.display = "block";
+        };
+        probe.src = src;
+    }
 
-			function renderShipments() {
-				var container = $id("rates-grid");
-				if (!container) return;
-				container.innerHTML = "";
-				if (!shipmentsData || shipmentsData.length === 0) return;
-				for (var i = 0; i < shipmentsData.length; i++) {
-					var item = shipmentsData[i];
-					var card = document.createElement("div");
-					var isLast = (i + 1) % 3 === 0;
-					var disabled = item.value === "No disponible" ? " disabled" : "";
-					card.className = "country-card" + (isLast ? " last-in-row" : "");
-					card.innerHTML =
-						createFlagHTML(item.code, "country-flag", "flag-fallback") +
-						'<div class="country-info">' +
-						'<div class="country-name">' + item.name + '</div>' +
-						'<div class="country-value' + disabled + '">' + item.value + '</div>' +
-						'</div>';
-					container.appendChild(card);
-					var flagEl = card.getElementsByClassName("country-flag")[0];
-					var fbEl = card.getElementsByClassName("flag-fallback")[0];
-					probeFlagImage(flagEl, fbEl, flagMap[item.code] || "");
-				}
-			}
+    function renderShipments() {
+        var container = $id("rates-grid");
+        if (!container) return;
+        container.innerHTML = "";
+        if (!shipmentsData || shipmentsData.length === 0) return;
+        for (var i = 0; i < shipmentsData.length; i++) {
+            var item = shipmentsData[i];
+            var card = document.createElement("div");
+            var isLast = (i + 1) % 3 === 0;
+            var disabled = item.value === "No disponible" ? " disabled" : "";
+            card.className = "country-card" + (isLast ? " last-in-row" : "");
+            card.innerHTML =
+                createFlagHTML(item.code, "country-flag", "flag-fallback") +
+                '<div class="country-info">' +
+                '<div class="country-name">' + item.name + '</div>' +
+                '<div class="country-value' + disabled + '">' + item.value + '</div>' +
+                '</div>';
+            container.appendChild(card);
+            var flagEl = card.getElementsByClassName("country-flag")[0];
+            var fbEl = card.getElementsByClassName("flag-fallback")[0];
+            probeFlagImage(flagEl, fbEl, flagMap[item.code] || "");
+        }
+    }
 
-			function buildCarouselPages() {
-				currenciesCarousel = [];
-				for (var i = 0; i < currenciesData.length; i += 4) {
-					var page = [];
-					for (var j = i; j < i + 4 && j < currenciesData.length; j++) {
-						page.push(currenciesData[j]);
-					}
-					currenciesCarousel.push(page);
-				}
-			}
+    function buildCarouselPages() {
+        currenciesCarousel = [];
+        for (var i = 0; i < currenciesData.length; i += 4) {
+            var page = [];
+            for (var j = i; j < i + 4 && j < currenciesData.length; j++) {
+                page.push(currenciesData[j]);
+            }
+            currenciesCarousel.push(page);
+        }
+    }
 
-			function renderCarouselSlide(index) {
-				var container = $id("currencies-slide");
-				if (!container) return;
-				if (!currenciesCarousel || currenciesCarousel.length === 0) {
-					container.innerHTML = '';
-					return;
-				}
-				var page = currenciesCarousel[index];
-				if (!page) return;
-				var html = "";
-				for (var i = 0; i < page.length; i++) {
-					var curr = page[i];
-					var isLast = (i + 1) % 4 === 0;
-					html +=
-						'<div class="currency-item' + (isLast ? " last-in-row" : "") + '">' +
-						createFlagHTML(curr.code, "currency-flag", "currency-flag-fallback") +
-						'<div class="currency-info">' +
-						'<div class="currency-name">' + curr.name + '</div>' +
-						'<div class="currency-value">' + curr.value + '</div>' +
-						'</div>' +
-						'</div>';
-				}
-				container.innerHTML = html;
-				var items = container.getElementsByClassName("currency-item");
-				for (var k = 0; k < items.length; k++) {
-					var fEl = items[k].getElementsByClassName("currency-flag")[0];
-					var fbEl = items[k].getElementsByClassName("currency-flag-fallback")[0];
-					var codeText = fbEl ? fbEl.innerHTML : "";
-					probeFlagImage(fEl, fbEl, flagMap[codeText] || "");
-				}
-			}
+    function renderCarouselSlide(index) {
+        var container = $id("currencies-slide");
+        if (!container) return;
+        if (!currenciesCarousel || currenciesCarousel.length === 0) {
+            container.innerHTML = '';
+            return;
+        }
+        var page = currenciesCarousel[index];
+        if (!page) return;
+        var html = "";
+        for (var i = 0; i < page.length; i++) {
+            var curr = page[i];
+            var isLast = (i + 1) % 4 === 0;
+            html +=
+                '<div class="currency-item' + (isLast ? " last-in-row" : "") + '">' +
+                createFlagHTML(curr.code, "currency-flag", "currency-flag-fallback") +
+                '<div class="currency-info">' +
+                '<div class="currency-name">' + curr.name + '</div>' +
+                '<div class="currency-value">' + curr.value + '</div>' +
+                '</div>' +
+                '</div>';
+        }
+        container.innerHTML = html;
+        var items = container.getElementsByClassName("currency-item");
+        for (var k = 0; k < items.length; k++) {
+            var fEl = items[k].getElementsByClassName("currency-flag")[0];
+            var fbEl = items[k].getElementsByClassName("currency-flag-fallback")[0];
+            var codeText = fbEl ? fbEl.innerHTML : "";
+            probeFlagImage(fEl, fbEl, flagMap[codeText] || "");
+        }
+    }
 
-			function nextSlide() {
-				if (currenciesCarousel.length <= 1) return;
-				currentSlide = (currentSlide + 1) % currenciesCarousel.length;
-				renderCarouselSlide(currentSlide);
-			}
+    function nextSlide() {
+        if (currenciesCarousel.length <= 1) return;
+        currentSlide = (currentSlide + 1) % currenciesCarousel.length;
+        renderCarouselSlide(currentSlide);
+    }
 
-			function resetCarouselTimer() {
-				if (slideTimer) clearInterval(slideTimer);
-				slideTimer = null;
-				if (currenciesCarousel.length > 1) {
-					slideTimer = setInterval(nextSlide, CAROUSEL_INTERVAL);
-				}
-			}
+    function resetCarouselTimer() {
+        if (slideTimer) clearInterval(slideTimer);
+        slideTimer = null;
+        if (currenciesCarousel.length > 1) {
+            slideTimer = setInterval(nextSlide, CAROUSEL_INTERVAL);
+        }
+    }
 
-			function clearCarousel() {
-				if (slideTimer) clearInterval(slideTimer);
-				slideTimer = null;
-				$id('currencies-slide').innerHTML = '';
-			}
+    function clearCarousel() {
+        if (slideTimer) clearInterval(slideTimer);
+        slideTimer = null;
+        $id('currencies-slide').innerHTML = '';
+    }
 
-			function initCarousel() {
-				if (currenciesCarousel.length === 0) return;
-				currentSlide = 0;
-				renderCarouselSlide(0);
-				resetCarouselTimer();
-			}
+    function initCarousel() {
+        if (currenciesCarousel.length === 0) return;
+        currentSlide = 0;
+        renderCarouselSlide(0);
+        resetCarouselTimer();
+    }
 
-			function parseCSV(csvText) {
-				var lines = csvText.replace(/\r/g, "").split("\n");
-				if (lines.length < 2) return { shipments: [], currencies: [] };
-				var rawHeaders = lines[0].split(",");
-				var headers = [];
-				for (var h = 0; h < rawHeaders.length; h++) {
-					headers.push(trim(rawHeaders[h]).toLowerCase());
-				}
-				var shipmentsTemp = [];
-				var currenciesTemp = [];
-				for (var i = 1; i < lines.length; i++) {
-					var line = trim(lines[i]);
-					if (!line) continue;
-					var values = [];
-					var inQuote = false;
-					var current = "";
-					for (var c = 0; c < line.length; c++) {
-						var chr = line.charAt(c);
-						if (chr === '"') { inQuote = !inQuote; }
-						else if (chr === "," && !inQuote) { values.push(trim(current)); current = ""; }
-						else { current += chr; }
-					}
-					values.push(trim(current));
-					var obj = {};
-					for (var j = 0; j < headers.length; j++) {
-						obj[headers[j]] = values[j] || "";
-					}
-					var typeRaw = (obj.tipo || obj.type || "").toLowerCase();
-					var isShipment = typeRaw === "envio" || typeRaw === "envios" || typeRaw === "shipment";
-					var isCurrency = typeRaw === "divisa" || typeRaw === "divisas" || typeRaw === "currency";
-					if (!isShipment && !isCurrency) continue;
-					var code = (obj.codigo || obj.code || "").toUpperCase();
-					var name = cleanValue(obj.nombre || obj.name || "");
-					var valueRaw = cleanValue(obj.valor || obj.value || "");
-					var activeRaw = (obj.activo || obj.active || "").toLowerCase();
-					var active = activeRaw === "si" || activeRaw === "sí" || activeRaw === "true" || activeRaw === "1";
-					var order = parseInt(obj.orden || obj.order || "999", 10);
-					if (isNaN(order)) order = 999;
-					if (!active) continue;
-					var formatted = isShipment ? formatShipmentValue(valueRaw, code) : formatCurrencyValue(valueRaw, code);
-					var record = { code: code, name: name, value: formatted, order: order };
-					if (isShipment) shipmentsTemp.push(record);
-					else currenciesTemp.push(record);
-				}
-				shipmentsTemp.sort(function (a, b) { return a.order - b.order; });
-				currenciesTemp.sort(function (a, b) { return a.order - b.order; });
-				return { shipments: shipmentsTemp, currencies: currenciesTemp };
-			}
+    function parseCSV(csvText) {
+        var lines = csvText.replace(/\r/g, "").split("\n");
+        if (lines.length < 2) return { shipments: [], currencies: [] };
+        var rawHeaders = lines[0].split(",");
+        var headers = [];
+        for (var h = 0; h < rawHeaders.length; h++) {
+            headers.push(trim(rawHeaders[h]).toLowerCase());
+        }
+        var shipmentsTemp = [];
+        var currenciesTemp = [];
+        for (var i = 1; i < lines.length; i++) {
+            var line = trim(lines[i]);
+            if (!line) continue;
+            var values = [];
+            var inQuote = false;
+            var current = "";
+            for (var c = 0; c < line.length; c++) {
+                var chr = line.charAt(c);
+                if (chr === '"') { inQuote = !inQuote; }
+                else if (chr === "," && !inQuote) { values.push(trim(current)); current = ""; }
+                else { current += chr; }
+            }
+            values.push(trim(current));
+            var obj = {};
+            for (var j = 0; j < headers.length; j++) {
+                obj[headers[j]] = values[j] || "";
+            }
+            var typeRaw = (obj.tipo || obj.type || "").toLowerCase();
+            var isShipment = typeRaw === "envio" || typeRaw === "envios" || typeRaw === "shipment";
+            var isCurrency = typeRaw === "divisa" || typeRaw === "divisas" || typeRaw === "currency";
+            if (!isShipment && !isCurrency) continue;
+            var code = (obj.codigo || obj.code || "").toUpperCase();
+            var name = cleanValue(obj.nombre || obj.name || "");
+            var valueRaw = cleanValue(obj.valor || obj.value || "");
+            var activeRaw = (obj.activo || obj.active || "").toLowerCase();
+            var active = activeRaw === "si" || activeRaw === "sí" || activeRaw === "true" || activeRaw === "1";
+            var order = parseInt(obj.orden || obj.order || "999", 10);
+            if (isNaN(order)) order = 999;
+            if (!active) continue;
+            var formatted = isShipment ? formatShipmentValue(valueRaw, code) : formatCurrencyValue(valueRaw, code);
+            var record = { code: code, name: name, value: formatted, order: order };
+            if (isShipment) shipmentsTemp.push(record);
+            else currenciesTemp.push(record);
+        }
+        shipmentsTemp.sort(function (a, b) { return a.order - b.order; });
+        currenciesTemp.sort(function (a, b) { return a.order - b.order; });
+        return { shipments: shipmentsTemp, currencies: currenciesTemp };
+    }
 
-			function createXHR() {
-				if (window.XMLHttpRequest) return new XMLHttpRequest();
-				try { return new ActiveXObject("Msxml2.XMLHTTP.6.0"); } catch (e) { }
-				try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) { }
-				return null;
-			}
+    function createXHR() {
+        if (window.XMLHttpRequest) return new XMLHttpRequest();
+        try { return new ActiveXObject("Msxml2.XMLHTTP.6.0"); } catch (e) { }
+        try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) { }
+        return null;
+    }
 
-			function loadViaXHR(url, callback) {
-				var xhr = createXHR();
-				if (!xhr) { callback(new Error("XHR no disponible"), null); return; }
-				var timeout = setTimeout(function () {
-					xhr.abort();
-					callback(new Error("Timeout"), null);
-				}, 15000);
-				xhr.open("GET", url, true);
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState === 4) {
-						clearTimeout(timeout);
-						if (xhr.status === 200) {
-							callback(null, xhr.responseText);
-						} else if (xhr.status === 0) {
-							callback(new Error("CORS bloqueado"), null);
-						} else {
-							callback(new Error("HTTP " + xhr.status), null);
-						}
-					}
-				};
-				xhr.onerror = function () { clearTimeout(timeout); callback(new Error("Error de red"), null); };
-				try { xhr.send(); } catch (e) { clearTimeout(timeout); callback(new Error(e.message), null); }
-			}
+    function loadViaXHR(url, callback) {
+        var xhr = createXHR();
+        if (!xhr) { callback(new Error("XHR no disponible"), null); return; }
+        var timeout = setTimeout(function () {
+            xhr.abort();
+            callback(new Error("Timeout"), null);
+        }, 15000);
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                clearTimeout(timeout);
+                if (xhr.status === 200) {
+                    callback(null, xhr.responseText);
+                } else if (xhr.status === 0) {
+                    callback(new Error("CORS bloqueado"), null);
+                } else {
+                    callback(new Error("HTTP " + xhr.status), null);
+                }
+            }
+        };
+        xhr.onerror = function () { clearTimeout(timeout); callback(new Error("Error de red"), null); };
+        try { xhr.send(); } catch (e) { clearTimeout(timeout); callback(new Error(e.message), null); }
+    }
 
-			function loadViaJSONP(url, callback) {
-				var callbackName = 'jsonp_' + Math.floor(Math.random() * 999999);
-				var timeout = setTimeout(function () {
-					delete window[callbackName];
-					callback(new Error("JSONP timeout"), null);
-				}, 15000);
+    /* ========== JSONP CON TIMEOUT EXTENDIDO PARA S4 ========== */
+    function loadViaJSONP(url, callback) {
+        var callbackName = 'jsonp_' + Math.floor(Math.random() * 999999);
+        var timeoutMs = 30000; // 30 segundos para S4
 
-				window[callbackName] = function (data) {
-					clearTimeout(timeout);
-					delete window[callbackName];
-					var csvText = (typeof data === 'string') ? data : (data.data || data.contents || JSON.stringify(data));
-					callback(null, csvText);
-				};
+        log('JSONP: creando callback ' + callbackName + ' (timeout: ' + (timeoutMs/1000) + 's)');
 
-				var script = document.createElement('script');
-				script.src = url + (url.indexOf('?') === -1 ? '?' : '&') + 'callback=' + callbackName;
-				document.body.appendChild(script);
-			}
+        var timeout = setTimeout(function () {
+            delete window[callbackName];
+            log('JSONP: timeout después de ' + (timeoutMs/1000) + 's');
+            callback(new Error("JSONP timeout"), null);
+        }, timeoutMs);
 
-			function loadCSV(callback) {
-				var url = getCsvUrl();
-				var fullUrl = url + "?nocache=" + new Date().getTime();
-				var metodo = window.USAR_JSONP ? 'JSONP' : 'XHR';
+        window[callbackName] = function (data) {
+            clearTimeout(timeout);
+            delete window[callbackName];
+            log('JSONP: callback recibido correctamente');
+            var csvText = (typeof data === 'string') ? data : (data.data || data.contents || JSON.stringify(data));
+            callback(null, csvText);
+        };
 
-				log("Cargando [" + metodo + "]: " + fullUrl);
-				updateDebug(window.MODELO_TIZEN, metodo, 'Cargando...');
+        var script = document.createElement('script');
+        script.src = url + (url.indexOf('?') === -1 ? '?' : '&') + 'callback=' + callbackName;
+        log('JSONP: inyectando script');
+        document.body.appendChild(script);
+    }
 
-				var loadFn = window.USAR_JSONP ? loadViaJSONP : loadViaXHR;
+    function loadCSV(callback) {
+        var url = getCsvUrl();
+        var fullUrl = url + "?nocache=" + new Date().getTime();
+        var metodo = window.USAR_JSONP ? 'JSONP' : 'XHR';
 
-				loadFn(fullUrl, function (err, data) {
-					if (!err) {
-						updateDebug(window.MODELO_TIZEN, metodo, 'OK');
-						callback(null, data);
-						return;
-					}
-					updateDebug(window.MODELO_TIZEN, metodo, 'FALLÓ: ' + err.message);
-					callback(err, null);
-				});
-			}
+        log("Cargando [" + metodo + "]: " + fullUrl);
+        updateDebug(window.MODELO_TIZEN, metodo, 'Cargando...');
 
-			function processMock() {
-				var shipments = [];
-				var currencies = [];
-				for (var i = 0; i < MOCK_DATA.length; i++) {
-					var item = MOCK_DATA[i];
-					if (!item.active) continue;
-					var formattedValue = item.type === "shipment"
-						? formatShipmentValue(item.value, item.code)
-						: formatCurrencyValue(item.value, item.code);
-					var rec = { code: item.code, name: item.name, value: formattedValue, order: item.order };
-					if (item.type === "shipment") shipments.push(rec);
-					else currencies.push(rec);
-				}
-				return { shipments: shipments, currencies: currencies };
-			}
+        var loadFn = window.USAR_JSONP ? loadViaJSONP : loadViaXHR;
 
-			function loadDataFromSource(callback) {
-				if (USE_MOCK) {
-					updateDebug(window.MODELO_TIZEN, 'MOCK', 'Usando datos de prueba');
-					callback(null, processMock());
-					return;
-				}
-				loadCSV(function (err, csvText) {
-					if (err || !csvText) {
-						callback(new Error(err ? err.message : 'Sin respuesta'), null);
-						return;
-					}
-					var parsed = parseCSV(csvText);
-					if (parsed.shipments.length === 0 && parsed.currencies.length === 0) {
-						callback(new Error('CSV vacío'), null);
-						return;
-					}
-					callback(null, parsed);
-				});
-			}
+        loadFn(fullUrl, function (err, data) {
+            if (!err) {
+                log('loadCSV: OK (' + data.length + ' bytes)');
+                updateDebug(window.MODELO_TIZEN, metodo, 'OK');
+                callback(null, data);
+                return;
+            }
+            log('loadCSV: ERROR - ' + err.message);
+            updateDebug(window.MODELO_TIZEN, metodo, 'FALLÓ: ' + err.message);
+            callback(err, null);
+        });
+    }
 
-			/* ========== REFRESCO PRINCIPAL ========== */
-			function refreshData(silent) {
-				if (silent === undefined) silent = true;
-				if (isLoading) return;
-				isLoading = true;
+    function processMock() {
+        var shipments = [];
+        var currencies = [];
+        for (var i = 0; i < MOCK_DATA.length; i++) {
+            var item = MOCK_DATA[i];
+            if (!item.active) continue;
+            var formattedValue = item.type === "shipment"
+                ? formatShipmentValue(item.value, item.code)
+                : formatCurrencyValue(item.value, item.code);
+            var rec = { code: item.code, name: item.name, value: formattedValue, order: item.order };
+            if (item.type === "shipment") shipments.push(rec);
+            else currencies.push(rec);
+        }
+        return { shipments: shipments, currencies: currencies };
+    }
 
-				if (firstLoad) showLoader();
-				if (!firstLoad) setUpdateIndicator('Actualizando...', true);
+    function loadDataFromSource(callback) {
+        if (USE_MOCK) {
+            updateDebug(window.MODELO_TIZEN, 'MOCK', 'Usando datos de prueba');
+            callback(null, processMock());
+            return;
+        }
+        loadCSV(function (err, csvText) {
+            if (err || !csvText) {
+                log('loadDataFromSource: ERROR - ' + (err ? err.message : 'sin texto'));
+                callback(new Error(err ? err.message : 'Sin respuesta'), null);
+                return;
+            }
+            var parsed = parseCSV(csvText);
+            if (parsed.shipments.length === 0 && parsed.currencies.length === 0) {
+                log('loadDataFromSource: CSV vacío');
+                callback(new Error('CSV vacío'), null);
+                return;
+            }
+            log('loadDataFromSource: OK - ' + parsed.shipments.length + ' envios, ' + parsed.currencies.length + ' divisas');
+            callback(null, parsed);
+        });
+    }
 
-				loadDataFromSource(function (err, data) {
-					isLoading = false;
+   /* ========== REFRESCO PRINCIPAL ========== */
+function refreshData(silent) {
+    if (silent === undefined) silent = true;
 
-					if (err) {
-						log('FALLÓ: ' + err.message);
-						updateDebug(window.MODELO_TIZEN, window.USAR_JSONP ? 'JSONP' : 'XHR', 'FALLÓ');
+    if (isLoading) {
+        log('Bloqueado por isLoading=true');
+        return;
+    }
+    isLoading = true;
 
-						if (shipmentsData.length === 0) {
-							showNoData();
-							clearCarousel();
-						}
+    log('refreshData: silent=' + silent + ', firstLoad=' + firstLoad);
 
-						if (!firstLoad) setUpdateIndicator('Sin conexión', false);
+    /* Loader SOLO si NO es silencioso y NO es primera carga fallida */
+    if (!silent || firstLoad) showLoader();
+    if (silent && !firstLoad) setUpdateIndicator('Actualizando...', true);
 
-						if (refreshTimer) { clearTimeout(refreshTimer); refreshTimer = null; }
-						if (retryTimer) { clearTimeout(retryTimer); retryTimer = null; }
-						retryTimer = setTimeout(function () { refreshData(true); }, RETRY_INTERVAL);
+    loadDataFromSource(function (err, data) {
+        isLoading = false;
 
-					} else {
-						log('OK: ' + data.shipments.length + ' envios, ' + data.currencies.length + ' divisas');
-						updateDebug(window.MODELO_TIZEN, window.USAR_JSONP ? 'JSONP' : 'XHR',
-							data.shipments.length + ' envios, ' + data.currencies.length + ' divisas');
+        if (err) {
+            log('FALLÓ: ' + err.message);
+            updateDebug(window.MODELO_TIZEN, window.USAR_JSONP ? 'JSONP' : 'XHR', 'FALLÓ: ' + err.message);
 
-						if (retryTimer) { clearTimeout(retryTimer); retryTimer = null; }
-						if (refreshTimer) { clearTimeout(refreshTimer); refreshTimer = null; }
+            if (shipmentsData.length === 0) {
+                showNoData();
+                clearCarousel();
+            }
 
-						var isFirstOrRecovery = (firstLoad || shipmentsData.length === 0);
-						shipmentsData = data.shipments;
-						currenciesData = data.currencies;
+            if (!firstLoad) setUpdateIndicator('Sin conexión', false);
 
-						if (isFirstOrRecovery) {
-							hideNoData();
-							renderShipments();
-							buildCarouselPages();
-							initCarousel();
-						} else {
-							updateShipmentValues();
-							buildCarouselPages();
-							updateCurrencyValues();
-						}
+            // Limpiar timers
+            if (refreshTimer) { clearInterval(refreshTimer); refreshTimer = null; }
+            if (retryTimer) { clearTimeout(retryTimer); retryTimer = null; }
 
-						blinkUpdatedValues();
+            // Programar reintento
+            log('Programando reintento en ' + (RETRY_INTERVAL/1000) + 's');
+            retryTimer = setTimeout(function () { refreshData(false); }, RETRY_INTERVAL);
 
-						var now = new Date();
-						var h = now.getHours(), m = now.getMinutes();
-						var hs = h < 10 ? "0" + h : "" + h;
-						var ms = m < 10 ? "0" + m : "" + m;
-						setUpdateIndicator('Actualizado: ' + hs + ':' + ms, false);
+        } else {
+            log('OK: ' + data.shipments.length + ' envios, ' + data.currencies.length + ' divisas');
+            updateDebug(window.MODELO_TIZEN, window.USAR_JSONP ? 'JSONP' : 'XHR',
+                data.shipments.length + ' envios, ' + data.currencies.length + ' divisas');
 
-						refreshTimer = setTimeout(function () { refreshData(true); }, DATA_REFRESH_INTERVAL);
-					}
+            // Limpiar TODOS los timers
+            if (retryTimer) { clearTimeout(retryTimer); retryTimer = null; }
 
-					if (firstLoad) {
-						hideLoader();
-						firstLoad = false;
-					}
-				});
-			}
+            var isFirstOrRecovery = (firstLoad || shipmentsData.length === 0);
+            shipmentsData = data.shipments;
+            currenciesData = data.currencies;
 
-			function init() {
-				log("===== G&SENVIOS =====");
-				log("Modelo: " + window.MODELO_TIZEN);
-				log("Método: " + (window.USAR_JSONP ? 'JSONP' : 'XHR'));
-				(PRODUCTION) ? debugVisibility() : updateDebug(window.MODELO_TIZEN, window.USAR_JSONP ? 'JSONP' : 'XHR', 'Iniciando...');
-				initLogoFallback();
-				setAgencyName();
-				startClock();
-				refreshData(false);
-			}
+            if (isFirstOrRecovery) {
+                log('Render completo');
+                hideNoData();
+                renderShipments();
+                buildCarouselPages();
+                initCarousel();
+            } else {
+                log('Actualización silenciosa');
+                updateShipmentValues();
+                buildCarouselPages();
+                updateCurrencyValues();
+            }
 
-			if (document.addEventListener) {
-				document.addEventListener("DOMContentLoaded", init, false);
-			} else if (document.attachEvent) {
-				document.attachEvent("onreadystatechange", function () {
-					if (document.readyState === "complete") init();
-				});
-			} else {
-				window.onload = init;
-			}
-		})();
-	</script>
+            blinkUpdatedValues();
+
+            var now = new Date();
+            var h = now.getHours(), m = now.getMinutes();
+            var hs = h < 10 ? "0" + h : "" + h;
+            var ms = m < 10 ? "0" + m : "" + m;
+            setUpdateIndicator('Actualizado: ' + hs + ':' + ms, false);
+
+            // Programar siguiente refresco CON SETINTERVAL (solo una vez)
+            if (!refreshTimer) {
+                log('Creando setInterval de refresco cada ' + (DATA_REFRESH_INTERVAL/1000) + 's');
+                refreshTimer = setInterval(function () { refreshData(true); }, DATA_REFRESH_INTERVAL);
+            }
+        }
+
+        if (firstLoad) {
+            hideLoader();
+            firstLoad = false;
+        }
+    });
+}
+
+    function init() {
+        log("===== G&SENVIOS =====");
+        log("Modelo: " + window.MODELO_TIZEN);
+        log("Método: " + (window.USAR_JSONP ? 'JSONP' : 'XHR'));
+        (PRODUCTION) ? debugVisibility() : updateDebug(window.MODELO_TIZEN, window.USAR_JSONP ? 'JSONP' : 'XHR', 'Iniciando...');
+        initLogoFallback();
+        setAgencyName();
+        startClock();
+        refreshData(false);
+    }
+
+    if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", init, false);
+    } else if (document.attachEvent) {
+        document.attachEvent("onreadystatechange", function () {
+            if (document.readyState === "complete") init();
+        });
+    } else {
+        window.onload = init;
+    }
+})();
+</script>
 </body>
 
 </html>
