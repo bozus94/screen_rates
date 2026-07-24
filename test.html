@@ -258,12 +258,12 @@
         /* ========== BARRA DE CONTROL ========== */
         .control-bar {
             position: fixed;
-            top: var(--space-md);
+            top: 70px;
             right: var(--space-md);
             z-index: 99999;
             display: flex;
             gap: 10px;
-            background: rgba(7, 31, 74, 0.92);
+            background: rgba(7, 31, 74, 0.72);
             padding: 12px 18px;
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -286,7 +286,8 @@
         }
 
         .control-bar select {
-            background: #0D3B8E;
+            background: rgba(13, 59, 142, 0.70);
+            backdrop-filter: blur(16px);
             color: #FFFFFF;
             border: 1px solid #F2B705;
             padding: var(--space-sm) 28px var(--space-sm) 12px;
@@ -856,9 +857,6 @@
 
         /* ========== FOOTER ========== */
         .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
             width: 100%;
             background: var(--footer-bg);
             padding: var(--space-md) var(--space-2xl);

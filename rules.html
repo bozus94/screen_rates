@@ -4,16 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GSEnvíos - Informe de Temas</title>
+    <title>GSEnvíos - Informe de Temas v3</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
         rel="stylesheet" />
     <style>
-        /* ============================================================
-           TEMA GSENVIOS - INFORME MODERNO
-           ============================================================ */
         :root {
             --azul-corp: #0D3B8E;
             --azul-profundo: #071F4A;
@@ -50,7 +47,6 @@
             min-height: 100vh;
         }
 
-        /* ========== SIDEBAR ========== */
         .sidebar {
             position: fixed;
             top: 0;
@@ -120,15 +116,13 @@
             border-top: 1px solid rgba(255, 255, 255, 0.10);
         }
 
-        /* ========== MAIN CONTENT ========== */
         .main {
             margin-left: var(--sidebar-w);
             flex: 1;
             padding: 40px 48px;
-            max-width: 900px;
+            max-width: 950px;
         }
 
-        /* ========== PORTADA ========== */
         .cover {
             text-align: center;
             padding: 60px 0;
@@ -190,7 +184,6 @@
             color: var(--azul-corp);
         }
 
-        /* ========== SECCIONES ========== */
         section {
             margin-bottom: 48px;
             padding-top: 20px;
@@ -230,7 +223,6 @@
             color: var(--texto);
         }
 
-        /* ========== TARJETAS DE CONTENIDO ========== */
         .card {
             background: var(--blanco);
             border: 1px solid var(--borde);
@@ -240,7 +232,10 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* ========== TABLAS ========== */
+        .card--highlight {
+            border-left: 4px solid var(--amarillo);
+        }
+
         .table-wrapper {
             overflow-x: auto;
             margin: 12px 0 20px 0;
@@ -276,7 +271,6 @@
             border-bottom: none;
         }
 
-        /* ========== LISTAS ========== */
         ul,
         ol {
             padding-left: 20px;
@@ -292,7 +286,6 @@
             color: var(--amarillo);
         }
 
-        /* ========== CÓDIGO ========== */
         code {
             background: #f4f5f7;
             padding: 2px 8px;
@@ -303,7 +296,24 @@
             font-weight: 500;
         }
 
-        /* ========== COLOR SWATCH ========== */
+        pre {
+            background: #1a1f2e;
+            color: #e0e0e0;
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.6;
+            margin: 12px 0;
+        }
+
+        pre code {
+            background: none;
+            color: #e0e0e0;
+            padding: 0;
+            font-size: 12px;
+        }
+
         .swatch {
             display: inline-flex;
             align-items: center;
@@ -318,7 +328,6 @@
             flex-shrink: 0;
         }
 
-        /* ========== COMPARATIVA ========== */
         .compare {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -342,34 +351,6 @@
             margin-bottom: 8px;
         }
 
-        /* ========== AYUDA IA ========== */
-        .ia-box {
-            background: linear-gradient(135deg, #fafbfc 0%, #f0f4ff 100%);
-            border: 2px solid var(--azul-corp);
-            border-radius: var(--radius);
-            padding: 28px;
-            margin-top: 20px;
-            box-shadow: var(--shadow-md);
-        }
-
-        .ia-box h2 {
-            border-left: none;
-            padding-left: 0;
-            color: var(--azul-corp);
-        }
-
-        .ia-block {
-            margin-bottom: 16px;
-        }
-
-        .ia-block h3 {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--amarillo);
-        }
-
-        /* ========== TOP BUTTON ========== */
         .top-btn {
             position: fixed;
             bottom: 24px;
@@ -397,7 +378,123 @@
             transform: translateY(-2px);
         }
 
-        /* ========== IMPRESIÓN ========== */
+        .new-badge {
+            display: inline-block;
+            background: var(--amarillo);
+            color: var(--azul-profundo);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-right: 4px;
+        }
+
+        .tag--prohibited {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .tag--allowed {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        /* ========== EDITOR DE CÓDIGO ========== */
+        .code-editor {
+            background: #1a1f2e;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-top: 20px;
+        }
+
+        .code-editor__header {
+            background: #2d3340;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .code-editor__dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .code-editor__dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-editor__dot--red {
+            background: #FF5F56;
+        }
+
+        .code-editor__dot--yellow {
+            background: #FFBD2E;
+        }
+
+        .code-editor__dot--green {
+            background: #27C93F;
+        }
+
+        .code-editor__title {
+            font-family: "SF Mono", "Courier New", monospace;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.50);
+        }
+
+        .code-editor__copy {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.60);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: "Poppins", sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .code-editor__copy:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+        }
+
+        .code-editor__copy.copied {
+            background: #065F46;
+            border-color: #065F46;
+            color: #FFFFFF;
+        }
+
+        .code-editor__body {
+            padding: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            overflow-x: auto;
+            font-family: "SF Mono", "Courier New", monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #e0e0e0;
+            text-align: left;
+            white-space: pre;
+            word-break: normal;
+        }
+
         @media print {
 
             .sidebar,
@@ -421,7 +518,6 @@
             }
         }
 
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             .sidebar {
                 display: none;
@@ -449,33 +545,23 @@
 
 <body>
 
-    <!-- ============================================================ -->
-    <!-- SIDEBAR                                                       -->
-    <!-- ============================================================ -->
     <aside class="sidebar">
         <div class="sidebar__brand"><span>G&S</span>ENVIOS</div>
         <nav>
             <ul class="sidebar__nav">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#reglas-generales">1. Reglas generales</a></li>
-                <li><a href="#rg-paleta" class="sidebar__nav--sub">Paleta de colores</a></li>
-                <li><a href="#rg-bem" class="sidebar__nav--sub">Metodología BEM</a></li>
-                <li><a href="#rg-amarillo" class="sidebar__nav--sub">Regla del amarillo</a></li>
-                <li><a href="#rg-tipografia" class="sidebar__nav--sub">Tipografía</a></li>
-                <li><a href="#rg-prohibido" class="sidebar__nav--sub">Prohibido</a></li>
                 <li><a href="#tema-oficial">2. Tema Oficial</a></li>
                 <li><a href="#tema-alternativo">3. Tema Alternativo</a></li>
+                <li><a href="#compatibilidad" class="sidebar__nav--sub">3.13 Compatibilidad Tizen</a></li>
                 <li><a href="#comparativa">4. Comparativa</a></li>
                 <li><a href="#proyectos">5. Proyectos actuales</a></li>
                 <li><a href="#ayuda-ia">6. Ayuda IA</a></li>
             </ul>
         </nav>
-        <div class="sidebar__footer">v2.0 &middot; Julio 2024</div>
+        <div class="sidebar__footer">v3.0 &middot; Julio 2024</div>
     </aside>
 
-    <!-- ============================================================ -->
-    <!-- CONTENIDO PRINCIPAL                                           -->
-    <!-- ============================================================ -->
     <main class="main">
 
         <!-- PORTADA -->
@@ -483,12 +569,13 @@
             <div class="cover">
                 <div class="cover__logo"><span>G&S</span>ENVIOS</div>
                 <div class="cover__title">Informe de Temas GSEnvíos</div>
-                <div class="cover__subtitle">Metodología BEM unificada &middot; v2</div>
+                <div class="cover__subtitle">Metodología BEM unificada &middot; v3</div>
                 <div class="cover__divider"></div>
                 <div class="cover__badges">
                     <span class="cover__badge">Pantallas cartelería</span>
                     <span class="cover__badge">Exportador</span>
                     <span class="cover__badge">Dashboard</span>
+                    <span class="cover__badge">Visor de temas</span>
                     <span class="cover__badge">Julio 2024</span>
                 </div>
             </div>
@@ -497,10 +584,9 @@
         <!-- 1. REGLAS GENERALES -->
         <section id="reglas-generales">
             <h1>1. Reglas generales compartidas</h1>
-            <p>Estas reglas aplican a <strong>todos</strong> los temas GSEnvios (Oficial, Alternativo, y cualquier
-                futuro).</p>
+            <p>Estas reglas aplican a <strong>todos</strong> los temas GSEnvios.</p>
 
-            <h2 id="rg-paleta">1.1. Paleta de colores base</h2>
+            <h2>1.1. Paleta de colores base</h2>
             <div class="table-wrapper">
                 <table>
                     <tr>
@@ -541,9 +627,8 @@
                 </table>
             </div>
 
-            <h2 id="rg-bem">1.2. Metodología BEM (Obligatorio)</h2>
-            <p>Usa metodología <strong>BEM</strong> con el prefijo <code>gsenvios-</code> para <strong>TODAS</strong>
-                las clases CSS en todos los temas.</p>
+            <h2>1.2. Metodología BEM (Obligatorio)</h2>
+            <p>Prefijo <code>gsenvios-</code> para <strong>TODAS</strong> las clases CSS.</p>
             <div class="table-wrapper">
                 <table>
                     <tr>
@@ -569,21 +654,19 @@
                 </table>
             </div>
 
-            <h2 id="rg-amarillo">1.3. Regla del amarillo</h2>
+            <h2>1.3. Regla del amarillo</h2>
             <div class="card">
                 <ul>
-                    <li><strong>Uso:</strong> Solo para destacar (valores, bordes de acento, botones principales,
-                        indicadores)</li>
-                    <li><strong>Prohibido:</strong> Nunca como fondo principal ni en demasiados elementos
-                        simultáneamente</li>
-                    <li><strong>Sobre fondo oscuro:</strong> ✅ Permitido</li>
-                    <li><strong>Sobre fondo claro:</strong> ❌ No (falta contraste). Usar <code>#0D3B8E</code> o
-                        <code>#071F4A</code>
+                    <li><strong>Uso:</strong> Solo valores, bordes de acento, botones primarios, indicadores.</li>
+                    <li><strong>Prohibido:</strong> Fondo principal. Demasiados elementos simultáneos.</li>
+                    <li><strong>Sobre fondo oscuro:</strong> ✅ Permitido.</li>
+                    <li><strong>Sobre fondo claro:</strong> ❌ Prohibido. Usar <code>#0D3B8E</code> o
+                        <code>#071F4A</code>.
                     </li>
                 </ul>
             </div>
 
-            <h2 id="rg-tipografia">1.4. Tipografía</h2>
+            <h2>1.4. Tipografía</h2>
             <div class="table-wrapper">
                 <table>
                     <tr>
@@ -602,51 +685,33 @@
                         <td>Fallback</td>
                         <td>"Segoe UI", Arial, Helvetica, sans-serif</td>
                     </tr>
+                    <tr>
+                        <td>Excepción</td>
+                        <td>Tema Alternativo usa SOLO Montserrat</td>
+                    </tr>
                 </table>
             </div>
 
-            <h2 id="rg-prohibido">1.5. Prohibido (todos los temas)</h2>
+            <h2>1.5. Prohibido (todos los temas)</h2>
             <div class="card">
                 <ul>
-                    <li>Usar colores fuera de la paleta oficial</li>
-                    <li>Usar rojo, verde, morado u otros colores ajenos a la marca</li>
-                    <li>Usar efectos de galaxia, cosmos o partículas</li>
-                    <li>Usar brillos excesivos o elementos decorativos innecesarios</li>
+                    <li>Colores fuera de la paleta oficial</li>
+                    <li>Rojo, verde, morado</li>
+                    <li>Efectos de galaxia, cosmos o partículas</li>
+                    <li>Brillo excesivo o elementos decorativos innecesarios</li>
                     <li>Sobrecargar la interfaz</li>
-                    <li>Usar el amarillo como color dominante</li>
-                    <li>Modificar, deformar o cambiar colores del logo original</li>
+                    <li>Amarillo como color dominante</li>
+                    <li>Modificar el logo original</li>
                 </ul>
             </div>
-
-            <h2>1.6. Logo</h2>
-            <p>Utilizar siempre el archivo oficial original. Nunca recrear, modificar, deformar ni cambiar
-                arbitrariamente sus colores o proporciones.</p>
-
-            <h2>1.7. Composición</h2>
-            <ul>
-                <li>Utilizar suficiente espacio en blanco</li>
-                <li>Secciones claramente diferenciadas</li>
-                <li>Márgenes amplios</li>
-                <li>Jerarquía visual clara</li>
-                <li>No saturar la interfaz</li>
-            </ul>
-
-            <h2>1.8. Imágenes</h2>
-            <p>Deben transmitir cercanía, confianza, familia y conexión entre España y Latinoamérica. Realistas,
-                profesionales y naturales.</p>
-
-            <h2>1.9. Regla final</h2>
-            <p>Toda web de GSENVIOS debe mantener: identidad azul dominante, amarillo únicamente para destacar, alta
-                legibilidad, Montserrat y Poppins, metodología BEM con prefijo <code>gsenvios-</code>, logo original,
-                diseño limpio, profesional, cercano y responsive.</p>
         </section>
 
         <!-- 2. TEMA OFICIAL -->
         <section id="tema-oficial">
             <h1>2. Tema GSEnvíos - Oficial</h1>
-            <p>Tema principal para web corporativa, landing pages y dashboards. Enfoque profesional, limpio y claro.</p>
+            <p>Tema principal para web corporativa, landing pages y dashboards.</p>
 
-            <h2>2.1. Colores exclusivos</h2>
+            <h2>Colores exclusivos</h2>
             <div class="table-wrapper">
                 <table>
                     <tr>
@@ -667,25 +732,7 @@
                 </table>
             </div>
 
-            <h2>2.2. Fondo</h2>
-            <div class="table-wrapper">
-                <table>
-                    <tr>
-                        <th>Variante</th>
-                        <th>Fondo</th>
-                    </tr>
-                    <tr>
-                        <td>Claro</td>
-                        <td><code>#fcfcfc</code> (body), <code>#fefefe</code> (superficies)</td>
-                    </tr>
-                    <tr>
-                        <td>Oscuro</td>
-                        <td>Degradado radial <code>#0D3B8E → #071F4A</code></td>
-                    </tr>
-                </table>
-            </div>
-
-            <h2>2.3. Componentes clave</h2>
+            <h2>Componentes clave</h2>
             <div class="table-wrapper">
                 <table>
                     <tr>
@@ -721,65 +768,19 @@
                 </table>
             </div>
 
-            <h2>2.4. Botones</h2>
-            <div class="table-wrapper">
-                <table>
-                    <tr>
-                        <th>Tipo</th>
-                        <th>Fondo</th>
-                        <th>Texto</th>
-                    </tr>
-                    <tr>
-                        <td>Primario</td>
-                        <td>#F2B705</td>
-                        <td>#071F4A</td>
-                    </tr>
-                    <tr>
-                        <td>Secundario</td>
-                        <td>#0D3B8E</td>
-                        <td>#FFFFFF</td>
-                    </tr>
-                </table>
-            </div>
+            <h2>Tecnologías permitidas</h2>
+            <p><span class="tag tag--allowed">variables CSS</span> <span class="tag tag--allowed">clamp()</span> <span
+                    class="tag tag--allowed">backdrop-filter</span> <span class="tag tag--allowed">flex-wrap</span>
+                <span class="tag tag--allowed">grid</span> <span class="tag tag--allowed">animaciones avanzadas</span>
+            </p>
         </section>
 
         <!-- 3. TEMA ALTERNATIVO -->
         <section id="tema-alternativo">
             <h1>3. Tema GSEnvíos - Alternativo</h1>
-            <p>Tema diseñado para pantallas de cartelería digital (Samsung Tizen) y aplicaciones financieras. Prioriza
-                alto contraste, compatibilidad con navegadores antiguos y degradados.</p>
+            <p>Para pantallas de cartelería digital (Samsung Tizen) y aplicaciones financieras.</p>
 
-            <h2>3.1. Colores exclusivos</h2>
-            <div class="table-wrapper">
-                <table>
-                    <tr>
-                        <th>Color</th>
-                        <th>Código</th>
-                        <th>Uso</th>
-                    </tr>
-                    <tr>
-                        <td>Blanco semitransparente</td>
-                        <td><code>rgba(255,255,255,0.15)</code></td>
-                        <td>Bordes de tarjetas</td>
-                    </tr>
-                    <tr>
-                        <td>Gris texto secundario</td>
-                        <td><code>#d1d5db</code></td>
-                        <td>Texto divisor</td>
-                    </tr>
-                </table>
-            </div>
-
-            <h2>3.2. Regla del degradado</h2>
-            <div class="card">
-                <ul>
-                    <li>Siempre presente en body y tarjetas (variante oscura)</li>
-                    <li>Radial en body, lineal (135deg) en tarjetas</li>
-                    <li>Hero: lineal (135deg)</li>
-                </ul>
-            </div>
-
-            <h2>3.3. Grid</h2>
+            <h2>Grid</h2>
             <div class="table-wrapper">
                 <table>
                     <tr>
@@ -787,7 +788,7 @@
                         <th>Display</th>
                     </tr>
                     <tr>
-                        <td>Antiguos (S2, S4, IE)</td>
+                        <td>Antiguos (S2, S4)</td>
                         <td><code>float: left</code> + clearfix</td>
                     </tr>
                     <tr>
@@ -797,33 +798,48 @@
                 </table>
             </div>
 
-            <h2>3.4. Estados</h2>
-            <div class="table-wrapper">
-                <table>
-                    <tr>
-                        <th>Estado</th>
-                        <th>Comportamiento</th>
-                    </tr>
-                    <tr>
-                        <td>Normal</td>
-                        <td>Diseño base según variante</td>
-                    </tr>
-                    <tr>
-                        <td>Hover</td>
-                        <td>Elevación +2px, sombra aumentada</td>
-                    </tr>
-                    <tr>
-                        <td>Deshabilitado</td>
-                        <td>Opacidad 50%, texto #9CA3AF</td>
-                    </tr>
-                    <tr>
-                        <td>Actualizando</td>
-                        <td>Animación blink 0.6s ease-in-out 3 iteraciones</td>
-                    </tr>
-                </table>
+            <h2 id="compatibilidad">3.13. Compatibilidad Tizen <span class="new-badge">Nuevo</span></h2>
+            <div class="card card--highlight">
+                <p><strong>Para pantallas Samsung Tizen (S2, S4, S5):</strong></p>
+
+                <p><strong>PROHIBIDO:</strong></p>
+                <p>
+                    <span class="tag tag--prohibited">var(--cualquier-variable)</span>
+                    <span class="tag tag--prohibited">clamp()</span>
+                    <span class="tag tag--prohibited">backdrop-filter</span>
+                    <span class="tag tag--prohibited">flex-wrap</span>
+                    <span class="tag tag--prohibited">display: table-cell</span>
+                    <span class="tag tag--prohibited">vh/vw</span>
+                    <span class="tag tag--prohibited">querySelectorAll</span>
+                    <span class="tag tag--prohibited">let/const/=></span>
+                    <span class="tag tag--prohibited">Promises/fetch</span>
+                </p>
+
+                <p><strong>PERMITIDO:</strong></p>
+                <p>
+                    <span class="tag tag--allowed">rgba()</span>
+                    <span class="tag tag--allowed">float+clearfix</span>
+                    <span class="tag tag--allowed">linear-gradient</span>
+                    <span class="tag tag--allowed">radial-gradient</span>
+                    <span class="tag tag--allowed">inline-block</span>
+                    <span class="tag tag--allowed">vertical-align</span>
+                    <span class="tag tag--allowed">XMLHttpRequest</span>
+                    <span class="tag tag--allowed">setTimeout</span>
+                </p>
+
+                <p><strong>Degradados con prefijos:</strong></p>
+                <pre><code>background: -webkit-linear-gradient(135deg, #0D3B8E, #071F4A);
+background: linear-gradient(135deg, #0D3B8E, #071F4A);</code></pre>
+
+                <p><strong>Colores directos, sin variables:</strong></p>
+                <pre><code>/* ✅ Correcto */
+.card { background: linear-gradient(135deg, #0D3B8E, #071F4A); color: #FFFFFF; }
+
+/* ❌ Incorrecto */
+.card { background: var(--card-bg); color: var(--text); }</code></pre>
             </div>
 
-            <h2>3.5. Compatibilidad</h2>
+            <h2>Plataformas compatibles</h2>
             <div class="table-wrapper">
                 <table>
                     <tr>
@@ -861,8 +877,8 @@
                         <li>Modo claro por defecto</li>
                         <li>Degradado solo en hero</li>
                         <li>Montserrat + Poppins</li>
-                        <li>Colores: #1E72BC, #D4A017</li>
-                        <li>Grid: Flex/Grid moderno</li>
+                        <li>Variables CSS: ✅</li>
+                        <li>Efectos modernos: ✅</li>
                     </ul>
                 </div>
                 <div class="compare__col">
@@ -872,8 +888,8 @@
                         <li>Modo oscuro por defecto</li>
                         <li>Degradado en body y tarjetas</li>
                         <li>Solo Montserrat</li>
-                        <li>Colores: rgba, #d1d5db</li>
-                        <li>Grid: float + flex</li>
+                        <li>Variables CSS: ❌</li>
+                        <li>Efectos modernos: ❌</li>
                     </ul>
                 </div>
             </div>
@@ -904,6 +920,11 @@
                         <td>Oficial (claro/oscuro)</td>
                         <td>🔧 Desarrollo</td>
                     </tr>
+                    <tr>
+                        <td>Visor de temas</td>
+                        <td>Herramienta interna</td>
+                        <td>🖥️ Solo escritorio</td>
+                    </tr>
                 </table>
             </div>
         </section>
@@ -911,164 +932,96 @@
         <!-- 6. AYUDA IA -->
         <section id="ayuda-ia">
             <h1>6. Ayuda IA</h1>
-            <div class="ia-box">
+            <p>Instrucciones en formato Markdown listas para copiar y usar como archivo de reglas para IA.</p>
 
-                <div class="ia-block">
-                    <h3>ROL</h3>
-                    <p>Eres un diseñador web experto y desarrollador frontend especializado en el sistema de diseño
-                        GSENVIOS. GSENVIOS es una marca de servicios financieros centrada en transferencias de dinero y
-                        cambio de divisas, principalmente entre España y Latinoamérica.</p>
+            <div class="code-editor">
+                <div class="code-editor__header">
+                    <div class="code-editor__dots">
+                        <span class="code-editor__dot code-editor__dot--red"></span>
+                        <span class="code-editor__dot code-editor__dot--yellow"></span>
+                        <span class="code-editor__dot code-editor__dot--green"></span>
+                    </div>
+                    <span class="code-editor__title">.cursorrules</span>
+                    <button class="code-editor__copy" id="copyButton" onclick="copyCode()">📋 Copiar</button>
                 </div>
+                <div class="code-editor__body" id="codeContent">
+                    # REGLAS GSENVIOS PARA IA
 
-                <div class="ia-block">
-                    <h3>IDENTIDAD DE MARCA</h3>
-                    <p>La marca debe transmitir confianza, rapidez, seguridad, cercanía y profesionalidad. El diseño
-                        debe ser moderno, limpio, claro y fácil de usar.</p>
-                </div>
+                    ## COMPORTAMIENTO OBLIGATORIO
+                    1. Antes de generar codigo, pregunta: "Tema: Oficial o Alternativo?"
+                    2. Segunda pregunta: "Modo: claro u oscuro?"
+                    3. No generes codigo sin respuesta a estas dos preguntas.
 
-                <div class="ia-block">
-                    <h3>PALETA DE COLORES OFICIAL</h3>
-                    <p>Usa SOLAMENTE estos colores. Nunca introduzcas colores fuera de esta paleta.</p>
-                    <ul>
-                        <li>Azul corporativo: #0D3B8E</li>
-                        <li>Azul profundo: #071F4A</li>
-                        <li>Amarillo dorado: #F2B705</li>
-                        <li>Blanco: #FFFFFF</li>
-                        <li>Gris claro: #F2F2F2</li>
-                        <li>Azul banner: #1E72BC (solo Tema Oficial)</li>
-                        <li>Dorado financiero: #D4A017 (solo Tema Oficial)</li>
-                    </ul>
-                </div>
+                    ## PALETA (USO EXCLUSIVO)
+                    Colores permitidos. Cualquier otro color esta PROHIBIDO.
+                    #0D3B8E #071F4A #F2B705 #FFFFFF #F2F2F2
+                    #1E72BC solo Oficial. #D4A017 solo Oficial.
 
-                <div class="ia-block">
-                    <h3>REGLAS DE COLOR</h3>
-                    <ul>
-                        <li>El azul debe dominar el diseño. El blanco aporta limpieza y equilibrio.</li>
-                        <li>El amarillo (#F2B705) se usa SOLO para destacar: botones principales, precios, tasas de
-                            cambio, iconos destacados, indicadores y llamadas de atención.</li>
-                        <li>Nunca uses amarillo como color de fondo principal.</li>
-                        <li>Nunca uses texto amarillo sobre fondo blanco (contraste deficiente). Usa #0D3B8E o #071F4A
-                            en su lugar.</li>
-                        <li>Sobre fondos oscuros, el amarillo está permitido para valores.</li>
-                        <li>Sobre fondos claros, usa #071F4A para texto importante y #0D3B8E para texto secundario.</li>
-                    </ul>
-                </div>
+                    ## REGLAS DE COLOR ESTRICTAS
+                    - Fondo NUNCA #F2B705
+                    - Texto sobre blanco NUNCA #F2B705 → usar #0D3B8E o #071F4A
+                    - Texto sobre oscuro: #FFFFFF o #F2B705
+                    - Amarillo solo: valores, bordes acento, btn primario, indicadores
 
-                <div class="ia-block">
-                    <h3>METODOLOGÍA CSS (OBLIGATORIO)</h3>
-                    <p>Usa metodología BEM con el prefijo gsenvios- para TODAS las clases CSS.</p>
-                    <ul>
-                        <li>Bloque: .gsenvios-card</li>
-                        <li>Elemento: .gsenvios-card__title</li>
-                        <li>Modificador: .gsenvios-card--disabled</li>
-                        <li>Elemento + modificador: .gsenvios-card__value--highlight</li>
-                    </ul>
-                </div>
+                    ## TIPOGRAFIA
+                    Montserrat=titulos Poppins=texto Alternativo=solo Montserrat
+                    Google Fonts: Montserrat(400,500,600,700,800,900) Poppins(300,400,500,600,700)
 
-                <div class="ia-block">
-                    <h3>TIPOGRAFÍA</h3>
-                    <ul>
-                        <li>Títulos y encabezados: font-family: "Montserrat", sans-serif</li>
-                        <li>Texto general, formularios: font-family: "Poppins", sans-serif</li>
-                        <li>Fallback: "Segoe UI", Arial, Helvetica, sans-serif</li>
-                        <li>Excepción: Tema Alternativo usa SOLO Montserrat</li>
-                    </ul>
-                </div>
+                    ## BEM OBLIGATORIO
+                    .gsenvios-bloque{} .gsenvios-bloque__elemento{} .gsenvios-bloque--modificador{}
 
-                <div class="ia-block">
-                    <h3>TEMAS</h3>
-                    <p>Existen dos temas oficiales. <strong>Pregunta cuál usar antes de generar código.</strong></p>
-                    <p><strong>TEMA OFICIAL:</strong> Webs corporativas, landing pages, dashboards. Modo claro por
-                        defecto. Requiere Montserrat y Poppins.</p>
-                    <p><strong>TEMA ALTERNATIVO:</strong> Cartelería digital, pantallas financieras, Samsung Tizen. Modo
-                        oscuro por defecto. Solo Montserrat. Debe soportar float layout como fallback.</p>
-                </div>
+                    ## TEMA OFICIAL (web moderna)
+                    Claro: body=#fcfcfc cards=#fefefe header=degradado #0D3B8E→#071F4A
+                    Oscuro: body=#071F4A header=transparente cards=degradado
+                    Titulo=#0D3B8E(claro) #FFFFFF(oscuro) Texto=#071F4A(claro) #FFFFFF(oscuro)
+                    Valor destacado=#F2B705 Footer=#071F4A(claro) rgba(7,31,74,0.9)(oscuro)
+                    Btn1°: bg=#F2B705 text=#071F4A Btn2°: bg=#0D3B8E text=#FFFFFF
+                    Permitido: var() clamp() backdrop-filter flex-wrap grid animaciones
 
-                <div class="ia-block">
-                    <h3>BOTONES (Ambos temas)</h3>
-                    <ul>
-                        <li>Primario: fondo #F2B705, texto #071F4A</li>
-                        <li>Secundario: fondo #0D3B8E, texto #FFFFFF</li>
-                    </ul>
-                </div>
+                    ## TEMA ALTERNATIVO (pantallas Tizen, carteleria digital)
+                    Oscuro: body=radial(#0D3B8E→#071F4A 20%10%) header=transparente border-b 5px #F2B705
+                    Claro: body=#FFFFFF secciones=#F2F2F2 header=#FFFFFF border-b 3px #F2B705
+                    Cards oscuro: degradado 135deg #0D3B8E→#071F4A border rgba(255,255,255,.15)
+                    Cards claro: #FFFFFF border #F2F2F2
+                    Envios: border-l 8-10px #F2B705 Divisas: border-b 4-6px #F2B705
+                    Titulo oscuro=#FFFFFF claro=#0D3B8E Valor oscuro=#F2B705 claro=#0D3B8E|#071F4A
+                    Sombra: oscuro=0 6px 16px rgba(0,0,0,.25) claro=0 2px 8px rgba(0,0,0,.04)
+                    Footer=rgba(7,31,74,.9) Solo Montserrat
 
-                <div class="ia-block">
-                    <h3>PROHIBIDO</h3>
-                    <ul>
-                        <li>Colores fuera de la paleta oficial</li>
-                        <li>Rojo, verde, morado o cualquier color ajeno a la marca</li>
-                        <li>Efectos de galaxia, cosmos o partículas</li>
-                        <li>Brillo excesivo o elementos decorativos innecesarios</li>
-                        <li>Amarillo como color dominante</li>
-                        <li>Modificar el logo oficial</li>
-                    </ul>
-                </div>
+                    ## RESTRICCIONES TECNICAS DEL TEMA ALTERNATIVO
+                    - PROHIBIDO: var() clamp() backdrop-filter flex-wrap table-cell vh/vw querySelectorAll let const =>
+                    - Promises fetch
+                    - USAR: rgba() float+clearfix linear-gradient+radial-gradient(-webkit-) inline-block vertical-align
+                    - XMLHttpRequest setTimeout var function
+                    - Degradados: -webkit-linear-gradient(135deg,#0D3B8E,#071F4A) +
+                    - linear-gradient(135deg,#0D3B8E,#071F4A)
+                    - Colores directos: #0D3B8E no var(--azul)
 
-                <div class="ia-block">
-                    <h3>NOTAS DE COMPATIBILIDAD</h3>
-                    <ul>
-                        <li>Tema Alternativo debe funcionar en: Samsung Tizen 2.4, Tizen 3.0, Maple 2012</li>
-                        <li>Evitar en Alternativo: flex-wrap, display: table-cell, querySelectorAll, funciones ES6</li>
-                        <li>Tema Oficial solo requiere navegadores modernos</li>
-                    </ul>
-                </div>
+                    ## PROHIBIDO EN TODOS LOS TEMAS
+                    - Colores fuera paleta rojo verde morado galaxia cosmos particulas brillo amarillo=fondo modificar
+                    logo
 
-                <div class="ia-block">
-                    <h3>REGLA FINAL</h3>
-                    <p>Toda web de GSENVIOS debe mantener: identidad azul dominante, amarillo solo para destacar, alta
-                        legibilidad, Montserrat (y Poppins para Oficial), logo original, diseño limpio, profesional,
-                        cercano y responsive.</p>
-                </div>
+                    ## REGLAS DE TRABAJO CON ARCHIVOS
+                    1. Raiz del proyecto: /ruta/a/tu/proyecto/
+                    2. Archivos de produccion en raiz. No crear subcarpetas sin preguntar.
+                    3. Estructura: / ├── index.html ├── export.html ├── css/ ├── js/ └── assets/{logo,flags,visuals}
+                    4. Antes de modificar, confirma el cambio. No alteres logica de negocio.
+                    5. Si un cambio rompe compatibilidad Tizen/Maple, advierte primero.
+                    6. Si un cambio en common.js/app.css afecta a otro archivo, indicalo.
+                    7. Entrega: ```nombre-del-archivo.ext (codigo completo)
 
-                <div class="ia-block">
-                    <h3>AL GENERAR CÓDIGO, SIEMPRE:</h3>
-                    <ol>
-                        <li>Pregunta qué tema usar (Oficial o Alternativo)</li>
-                        <li>Pregunta si variante clara u oscura</li>
-                        <li>Usa BEM con prefijo gsenvios-</li>
-                        <li>Usa SOLO la paleta de colores oficial</li>
-                        <li>Nunca uses amarillo sobre fondo blanco</li>
-                        <li>Respeta las reglas de tipografía</li>
-                        <li>Incluye Montserrat y Poppins desde Google Fonts</li>
-                        <li>Genera HTML limpio y semántico con clases BEM correctas</li>
-                        <li>Evita efectos y colores prohibidos</li>
-                        <li>Para Tema Alternativo, asegura compatibilidad con navegadores antiguos</li>
-                    </ol>
+                    ## AL ENTREGAR CODIGO
+                    - Archivo completo solo si es nuevo. Si es refactorizacion, fragmentos.
+                    - HTML semantico BEM CSS -webkit- JS ES5(Alternativo) sin dependencias
+                    - No emojis en nombres de archivo
                 </div>
             </div>
         </section>
-
     </main>
 
-    <!-- BOTÓN VOLVER ARRIBA -->
     <a href="#inicio" class="top-btn" title="Volver arriba">↑</a>
 
-    <!-- HIGHLIGHT ACTIVE SECTION IN SIDEBAR -->
-    <script>
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.sidebar__nav a');
-
-        function updateActiveLink() {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('sidebar__nav--active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('sidebar__nav--active');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', updateActiveLink);
-        updateActiveLink();
-    </script>
-
+    <script> var sections = document.querySelectorAll('section[id]'); var navLinks = document.querySelectorAll('.sidebar__nav a'); function updateActiveLink() { var current = ''; for (var i = 0; i < sections.length; i++) { if (window.scrollY >= sections[i].offsetTop - 100) { current = sections[i].getAttribute('id'); } } for (var j = 0; j < navLinks.length; j++) { navLinks[j].classList.remove('sidebar__nav--active'); if (navLinks[j].getAttribute('href') === '#' + current) { navLinks[j].classList.add('sidebar__nav--active'); } } } window.addEventListener('scroll', updateActiveLink); updateActiveLink(); function copyCode() { var codeContent = document.getElementById('codeContent'); var copyButton = document.getElementById('copyButton'); var text = codeContent.textContent; if (navigator.clipboard) { navigator.clipboard.writeText(text).then(function () { copyButton.textContent = '✅ Copiado'; copyButton.classList.add('copied'); setTimeout(function () { copyButton.textContent = '📋 Copiar'; copyButton.classList.remove('copied'); }, 2000); }); } else { var textarea = document.createElement('textarea'); textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0'; document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); document.body.removeChild(textarea); copyButton.textContent = '✅ Copiado'; copyButton.classList.add('copied'); setTimeout(function () { copyButton.textContent = '📋 Copiar'; copyButton.classList.remove('copied'); }, 2000); } } </script>
 </body>
 
 </html>
