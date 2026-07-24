@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSEnvíos - Informe de Temas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ============================================================
+           TEMA GSENVIOS - INFORME MODERNO
+           ============================================================ */
+        :root {
+            --azul-corp: #0D3B8E;
+            --azul-profundo: #071F4A;
+            --amarillo: #F2B705;
+            --blanco: #FFFFFF;
+            --gris: #F2F2F2;
+            --texto: #1a1a1a;
+            --texto-sec: #6B7280;
+            --borde: #E5E7EB;
+            --sidebar-w: 280px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --radius: 10px;
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+            color: var(--texto);
+            line-height: 1.7;
+            background: #fafbfc;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-w);
+            height: 100vh;
+            background: var(--azul-profundo);
+            color: var(--blanco);
+            padding: 32px 24px;
+            overflow-y: auto;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar__brand {
+            font-family: "Montserrat", sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .sidebar__brand span {
+            color: var(--amarillo);
+        }
+
+        .sidebar__nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar__nav a {
+            display: block;
+            color: rgba(255, 255, 255, 0.70);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 14px;
+            border-radius: 6px;
+            transition: all var(--transition);
+            letter-spacing: 0.3px;
+        }
+
+        .sidebar__nav a:hover,
+        .sidebar__nav a.sidebar__nav--active {
+            background: rgba(255, 255, 255, 0.10);
+            color: var(--amarillo);
+        }
+
+        .sidebar__nav--sub {
+            padding-left: 20px !important;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+        }
+
+        .sidebar__footer {
+            margin-top: auto;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.40);
+            text-align: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            padding: 40px 48px;
+            max-width: 900px;
+        }
+
+        /* ========== PORTADA ========== */
+        .cover {
+            text-align: center;
+            padding: 60px 0;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover__logo {
+            font-family: "Montserrat", sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--azul-corp);
+            letter-spacing: 3px;
+            margin-bottom: 24px;
+        }
+
+        .cover__logo span {
+            color: var(--amarillo);
+        }
+
+        .cover__title {
+            font-family: "Montserrat", sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--azul-profundo);
+            margin-bottom: 8px;
+        }
+
+        .cover__subtitle {
+            font-size: 16px;
+            color: var(--texto-sec);
+            margin-bottom: 32px;
+        }
+
+        .cover__divider {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--amarillo), #D4A017);
+            border-radius: 2px;
+            margin-bottom: 32px;
+        }
+
+        .cover__badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cover__badge {
+            background: var(--gris);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--azul-corp);
+        }
+
+        /* ========== SECCIONES ========== */
+        section {
+            margin-bottom: 48px;
+            padding-top: 20px;
+        }
+
+        h1 {
+            font-family: "Montserrat", sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--azul-corp);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--amarillo);
+            position: relative;
+        }
+
+        h2 {
+            font-family: "Montserrat", sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--azul-profundo);
+            margin: 28px 0 12px 0;
+            padding-left: 14px;
+            border-left: 4px solid var(--amarillo);
+        }
+
+        h3 {
+            font-family: "Montserrat", sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--azul-corp);
+            margin: 18px 0 8px 0;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: var(--texto);
+        }
+
+        /* ========== TARJETAS DE CONTENIDO ========== */
+        .card {
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin: 16px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ========== TABLAS ========== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 12px 0 20px 0;
+            border-radius: var(--radius);
+            border: 1px solid var(--borde);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background: var(--azul-corp);
+            color: var(--blanco);
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--borde);
+            background: var(--blanco);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ========== LISTAS ========== */
+        ul,
+        ol {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            padding: 2px 0;
+            margin-bottom: 2px;
+        }
+
+        li::marker {
+            color: var(--amarillo);
+        }
+
+        /* ========== CÓDIGO ========== */
+        code {
+            background: #f4f5f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: "SF Mono", "Courier New", monospace;
+            font-size: 12px;
+            color: var(--azul-corp);
+            font-weight: 500;
+        }
+
+        /* ========== COLOR SWATCH ========== */
+        .swatch {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .swatch__dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+
+        /* ========== COMPARATIVA ========== */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 16px 0;
+        }
+
+        .compare__col {
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .compare__col h4 {
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--azul-corp);
+            margin-bottom: 8px;
+        }
+
+        /* ========== AYUDA IA ========== */
+        .ia-box {
+            background: linear-gradient(135deg, #fafbfc 0%, #f0f4ff 100%);
+            border: 2px solid var(--azul-corp);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-top: 20px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .ia-box h2 {
+            border-left: none;
+            padding-left: 0;
+            color: var(--azul-corp);
+        }
+
+        .ia-block {
+            margin-bottom: 16px;
+        }
+
+        .ia-block h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--amarillo);
+        }
+
+        /* ========== TOP BUTTON ========== */
+        .top-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            background: var(--azul-corp);
+            color: var(--blanco);
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .top-btn:hover {
+            background: var(--amarillo);
+            color: var(--azul-profundo);
+            transform: translateY(-2px);
+        }
+
+        /* ========== IMPRESIÓN ========== */
+        @media print {
+
+            .sidebar,
+            .top-btn {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            body {
+                background: #fff;
+            }
+
+            @page {
+                margin: 1.5cm;
+                size: A4;
+            }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .compare {
+                grid-template-columns: 1fr;
+            }
+
+            .cover__logo {
+                font-size: 32px;
+            }
+
+            .cover__title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================ -->
+    <!-- SIDEBAR                                                       -->
+    <!-- ============================================================ -->
+    <aside class="sidebar">
+        <div class="sidebar__brand"><span>G&S</span>ENVIOS</div>
+        <nav>
+            <ul class="sidebar__nav">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#reglas-generales">1. Reglas generales</a></li>
+                <li><a href="#rg-paleta" class="sidebar__nav--sub">Paleta de colores</a></li>
+                <li><a href="#rg-bem" class="sidebar__nav--sub">Metodología BEM</a></li>
+                <li><a href="#rg-amarillo" class="sidebar__nav--sub">Regla del amarillo</a></li>
+                <li><a href="#rg-tipografia" class="sidebar__nav--sub">Tipografía</a></li>
+                <li><a href="#rg-prohibido" class="sidebar__nav--sub">Prohibido</a></li>
+                <li><a href="#tema-oficial">2. Tema Oficial</a></li>
+                <li><a href="#tema-alternativo">3. Tema Alternativo</a></li>
+                <li><a href="#comparativa">4. Comparativa</a></li>
+                <li><a href="#proyectos">5. Proyectos actuales</a></li>
+                <li><a href="#ayuda-ia">6. Ayuda IA</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar__footer">v2.0 &middot; Julio 2024</div>
+    </aside>
+
+    <!-- ============================================================ -->
+    <!-- CONTENIDO PRINCIPAL                                           -->
+    <!-- ============================================================ -->
+    <main class="main">
+
+        <!-- PORTADA -->
+        <section id="inicio">
+            <div class="cover">
+                <div class="cover__logo"><span>G&S</span>ENVIOS</div>
+                <div class="cover__title">Informe de Temas GSEnvíos</div>
+                <div class="cover__subtitle">Metodología BEM unificada &middot; v2</div>
+                <div class="cover__divider"></div>
+                <div class="cover__badges">
+                    <span class="cover__badge">Pantallas cartelería</span>
+                    <span class="cover__badge">Exportador</span>
+                    <span class="cover__badge">Dashboard</span>
+                    <span class="cover__badge">Julio 2024</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. REGLAS GENERALES -->
+        <section id="reglas-generales">
+            <h1>1. Reglas generales compartidas</h1>
+            <p>Estas reglas aplican a <strong>todos</strong> los temas GSEnvios (Oficial, Alternativo, y cualquier
+                futuro).</p>
+
+            <h2 id="rg-paleta">1.1. Paleta de colores base</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Color</th>
+                        <th>Código</th>
+                        <th>Muestra</th>
+                    </tr>
+                    <tr>
+                        <td>Azul corporativo</td>
+                        <td><code>#0D3B8E</code></td>
+                        <td><span class="swatch"><span class="swatch__dot" style="background:#0D3B8E;"></span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Azul profundo</td>
+                        <td><code>#071F4A</code></td>
+                        <td><span class="swatch"><span class="swatch__dot" style="background:#071F4A;"></span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Amarillo dorado</td>
+                        <td><code>#F2B705</code></td>
+                        <td><span class="swatch"><span class="swatch__dot" style="background:#F2B705;"></span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Blanco</td>
+                        <td><code>#FFFFFF</code></td>
+                        <td><span class="swatch"><span class="swatch__dot" style="background:#FFFFFF;"></span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gris claro</td>
+                        <td><code>#F2F2F2</code></td>
+                        <td><span class="swatch"><span class="swatch__dot" style="background:#F2F2F2;"></span></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2 id="rg-bem">1.2. Metodología BEM (Obligatorio)</h2>
+            <p>Usa metodología <strong>BEM</strong> con el prefijo <code>gsenvios-</code> para <strong>TODAS</strong>
+                las clases CSS en todos los temas.</p>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                    <tr>
+                        <td>Bloque</td>
+                        <td><code>.gsenvios-card</code></td>
+                    </tr>
+                    <tr>
+                        <td>Elemento</td>
+                        <td><code>.gsenvios-card__title</code></td>
+                    </tr>
+                    <tr>
+                        <td>Modificador</td>
+                        <td><code>.gsenvios-card--disabled</code></td>
+                    </tr>
+                    <tr>
+                        <td>Elemento + modificador</td>
+                        <td><code>.gsenvios-card__value--highlight</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2 id="rg-amarillo">1.3. Regla del amarillo</h2>
+            <div class="card">
+                <ul>
+                    <li><strong>Uso:</strong> Solo para destacar (valores, bordes de acento, botones principales,
+                        indicadores)</li>
+                    <li><strong>Prohibido:</strong> Nunca como fondo principal ni en demasiados elementos
+                        simultáneamente</li>
+                    <li><strong>Sobre fondo oscuro:</strong> ✅ Permitido</li>
+                    <li><strong>Sobre fondo claro:</strong> ❌ No (falta contraste). Usar <code>#0D3B8E</code> o
+                        <code>#071F4A</code>
+                    </li>
+                </ul>
+            </div>
+
+            <h2 id="rg-tipografia">1.4. Tipografía</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Fuente</th>
+                    </tr>
+                    <tr>
+                        <td>Títulos y encabezados</td>
+                        <td>Montserrat</td>
+                    </tr>
+                    <tr>
+                        <td>Texto general, formularios</td>
+                        <td>Poppins</td>
+                    </tr>
+                    <tr>
+                        <td>Fallback</td>
+                        <td>"Segoe UI", Arial, Helvetica, sans-serif</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2 id="rg-prohibido">1.5. Prohibido (todos los temas)</h2>
+            <div class="card">
+                <ul>
+                    <li>Usar colores fuera de la paleta oficial</li>
+                    <li>Usar rojo, verde, morado u otros colores ajenos a la marca</li>
+                    <li>Usar efectos de galaxia, cosmos o partículas</li>
+                    <li>Usar brillos excesivos o elementos decorativos innecesarios</li>
+                    <li>Sobrecargar la interfaz</li>
+                    <li>Usar el amarillo como color dominante</li>
+                    <li>Modificar, deformar o cambiar colores del logo original</li>
+                </ul>
+            </div>
+
+            <h2>1.6. Logo</h2>
+            <p>Utilizar siempre el archivo oficial original. Nunca recrear, modificar, deformar ni cambiar
+                arbitrariamente sus colores o proporciones.</p>
+
+            <h2>1.7. Composición</h2>
+            <ul>
+                <li>Utilizar suficiente espacio en blanco</li>
+                <li>Secciones claramente diferenciadas</li>
+                <li>Márgenes amplios</li>
+                <li>Jerarquía visual clara</li>
+                <li>No saturar la interfaz</li>
+            </ul>
+
+            <h2>1.8. Imágenes</h2>
+            <p>Deben transmitir cercanía, confianza, familia y conexión entre España y Latinoamérica. Realistas,
+                profesionales y naturales.</p>
+
+            <h2>1.9. Regla final</h2>
+            <p>Toda web de GSENVIOS debe mantener: identidad azul dominante, amarillo únicamente para destacar, alta
+                legibilidad, Montserrat y Poppins, metodología BEM con prefijo <code>gsenvios-</code>, logo original,
+                diseño limpio, profesional, cercano y responsive.</p>
+        </section>
+
+        <!-- 2. TEMA OFICIAL -->
+        <section id="tema-oficial">
+            <h1>2. Tema GSEnvíos - Oficial</h1>
+            <p>Tema principal para web corporativa, landing pages y dashboards. Enfoque profesional, limpio y claro.</p>
+
+            <h2>2.1. Colores exclusivos</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Color</th>
+                        <th>Código</th>
+                        <th>Uso</th>
+                    </tr>
+                    <tr>
+                        <td>Azul banner</td>
+                        <td><code>#1E72BC</code></td>
+                        <td>Banners, call-to-action secundarios</td>
+                    </tr>
+                    <tr>
+                        <td>Dorado financiero</td>
+                        <td><code>#D4A017</code></td>
+                        <td>Hover de botones, indicadores secundarios</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2>2.2. Fondo</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Variante</th>
+                        <th>Fondo</th>
+                    </tr>
+                    <tr>
+                        <td>Claro</td>
+                        <td><code>#fcfcfc</code> (body), <code>#fefefe</code> (superficies)</td>
+                    </tr>
+                    <tr>
+                        <td>Oscuro</td>
+                        <td>Degradado radial <code>#0D3B8E → #071F4A</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2>2.3. Componentes clave</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Componente</th>
+                        <th>Modo Claro</th>
+                        <th>Modo Oscuro</th>
+                    </tr>
+                    <tr>
+                        <td>Header fondo</td>
+                        <td>Degradado #0D3B8E → #071F4A</td>
+                        <td>Transparente</td>
+                    </tr>
+                    <tr>
+                        <td>Tarjetas fondo</td>
+                        <td>#fefefe</td>
+                        <td>Degradado #0D3B8E → #071F4A</td>
+                    </tr>
+                    <tr>
+                        <td>Tarjetas título</td>
+                        <td>#0D3B8E</td>
+                        <td>#FFFFFF</td>
+                    </tr>
+                    <tr>
+                        <td>Tarjetas texto</td>
+                        <td>#071F4A</td>
+                        <td>#FFFFFF</td>
+                    </tr>
+                    <tr>
+                        <td>Footer fondo</td>
+                        <td>Degradado #0D3B8E → #071F4A</td>
+                        <td>rgba(7,31,74,0.90)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2>2.4. Botones</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Fondo</th>
+                        <th>Texto</th>
+                    </tr>
+                    <tr>
+                        <td>Primario</td>
+                        <td>#F2B705</td>
+                        <td>#071F4A</td>
+                    </tr>
+                    <tr>
+                        <td>Secundario</td>
+                        <td>#0D3B8E</td>
+                        <td>#FFFFFF</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. TEMA ALTERNATIVO -->
+        <section id="tema-alternativo">
+            <h1>3. Tema GSEnvíos - Alternativo</h1>
+            <p>Tema diseñado para pantallas de cartelería digital (Samsung Tizen) y aplicaciones financieras. Prioriza
+                alto contraste, compatibilidad con navegadores antiguos y degradados.</p>
+
+            <h2>3.1. Colores exclusivos</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Color</th>
+                        <th>Código</th>
+                        <th>Uso</th>
+                    </tr>
+                    <tr>
+                        <td>Blanco semitransparente</td>
+                        <td><code>rgba(255,255,255,0.15)</code></td>
+                        <td>Bordes de tarjetas</td>
+                    </tr>
+                    <tr>
+                        <td>Gris texto secundario</td>
+                        <td><code>#d1d5db</code></td>
+                        <td>Texto divisor</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2>3.2. Regla del degradado</h2>
+            <div class="card">
+                <ul>
+                    <li>Siempre presente en body y tarjetas (variante oscura)</li>
+                    <li>Radial en body, lineal (135deg) en tarjetas</li>
+                    <li>Hero: lineal (135deg)</li>
+                </ul>
+            </div>
+
+            <h2>3.3. Grid</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Plataforma</th>
+                        <th>Display</th>
+                    </tr>
+                    <tr>
+                        <td>Antiguos (S2, S4, IE)</td>
+                        <td><code>float: left</code> + clearfix</td>
+                    </tr>
+                    <tr>
+                        <td>Modernos (S5+)</td>
+                        <td><code>display: flex</code> (<code>@supports</code>)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2>3.4. Estados</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Comportamiento</th>
+                    </tr>
+                    <tr>
+                        <td>Normal</td>
+                        <td>Diseño base según variante</td>
+                    </tr>
+                    <tr>
+                        <td>Hover</td>
+                        <td>Elevación +2px, sombra aumentada</td>
+                    </tr>
+                    <tr>
+                        <td>Deshabilitado</td>
+                        <td>Opacidad 50%, texto #9CA3AF</td>
+                    </tr>
+                    <tr>
+                        <td>Actualizando</td>
+                        <td>Animación blink 0.6s ease-in-out 3 iteraciones</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2>3.5. Compatibilidad</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Plataforma</th>
+                        <th>Soporte</th>
+                    </tr>
+                    <tr>
+                        <td>Samsung Tizen 2.4 (S4)</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Samsung Tizen 3.0 (S5)</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Samsung Maple 2012 (S2)</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Navegadores modernos</td>
+                        <td>✅</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- 4. COMPARATIVA -->
+        <section id="comparativa">
+            <h1>4. Comparativa rápida</h1>
+            <div class="compare">
+                <div class="compare__col">
+                    <h4>Tema Oficial</h4>
+                    <ul>
+                        <li>Web corporativa</li>
+                        <li>Modo claro por defecto</li>
+                        <li>Degradado solo en hero</li>
+                        <li>Montserrat + Poppins</li>
+                        <li>Colores: #1E72BC, #D4A017</li>
+                        <li>Grid: Flex/Grid moderno</li>
+                    </ul>
+                </div>
+                <div class="compare__col">
+                    <h4>Tema Alternativo</h4>
+                    <ul>
+                        <li>Cartelería digital</li>
+                        <li>Modo oscuro por defecto</li>
+                        <li>Degradado en body y tarjetas</li>
+                        <li>Solo Montserrat</li>
+                        <li>Colores: rgba, #d1d5db</li>
+                        <li>Grid: float + flex</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PROYECTOS -->
+        <section id="proyectos">
+            <h1>5. Proyectos actuales</h1>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Proyecto</th>
+                        <th>Tema</th>
+                        <th>Estado</th>
+                    </tr>
+                    <tr>
+                        <td>Pantallas cartelería</td>
+                        <td>Alternativo (oscuro)</td>
+                        <td>✅ Producción</td>
+                    </tr>
+                    <tr>
+                        <td>Exportador tasas</td>
+                        <td>Alternativo (mixto)</td>
+                        <td>✅ Producción</td>
+                    </tr>
+                    <tr>
+                        <td>Dashboard</td>
+                        <td>Oficial (claro/oscuro)</td>
+                        <td>🔧 Desarrollo</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- 6. AYUDA IA -->
+        <section id="ayuda-ia">
+            <h1>6. Ayuda IA</h1>
+            <div class="ia-box">
+
+                <div class="ia-block">
+                    <h3>ROL</h3>
+                    <p>Eres un diseñador web experto y desarrollador frontend especializado en el sistema de diseño
+                        GSENVIOS. GSENVIOS es una marca de servicios financieros centrada en transferencias de dinero y
+                        cambio de divisas, principalmente entre España y Latinoamérica.</p>
+                </div>
+
+                <div class="ia-block">
+                    <h3>IDENTIDAD DE MARCA</h3>
+                    <p>La marca debe transmitir confianza, rapidez, seguridad, cercanía y profesionalidad. El diseño
+                        debe ser moderno, limpio, claro y fácil de usar.</p>
+                </div>
+
+                <div class="ia-block">
+                    <h3>PALETA DE COLORES OFICIAL</h3>
+                    <p>Usa SOLAMENTE estos colores. Nunca introduzcas colores fuera de esta paleta.</p>
+                    <ul>
+                        <li>Azul corporativo: #0D3B8E</li>
+                        <li>Azul profundo: #071F4A</li>
+                        <li>Amarillo dorado: #F2B705</li>
+                        <li>Blanco: #FFFFFF</li>
+                        <li>Gris claro: #F2F2F2</li>
+                        <li>Azul banner: #1E72BC (solo Tema Oficial)</li>
+                        <li>Dorado financiero: #D4A017 (solo Tema Oficial)</li>
+                    </ul>
+                </div>
+
+                <div class="ia-block">
+                    <h3>REGLAS DE COLOR</h3>
+                    <ul>
+                        <li>El azul debe dominar el diseño. El blanco aporta limpieza y equilibrio.</li>
+                        <li>El amarillo (#F2B705) se usa SOLO para destacar: botones principales, precios, tasas de
+                            cambio, iconos destacados, indicadores y llamadas de atención.</li>
+                        <li>Nunca uses amarillo como color de fondo principal.</li>
+                        <li>Nunca uses texto amarillo sobre fondo blanco (contraste deficiente). Usa #0D3B8E o #071F4A
+                            en su lugar.</li>
+                        <li>Sobre fondos oscuros, el amarillo está permitido para valores.</li>
+                        <li>Sobre fondos claros, usa #071F4A para texto importante y #0D3B8E para texto secundario.</li>
+                    </ul>
+                </div>
+
+                <div class="ia-block">
+                    <h3>METODOLOGÍA CSS (OBLIGATORIO)</h3>
+                    <p>Usa metodología BEM con el prefijo gsenvios- para TODAS las clases CSS.</p>
+                    <ul>
+                        <li>Bloque: .gsenvios-card</li>
+                        <li>Elemento: .gsenvios-card__title</li>
+                        <li>Modificador: .gsenvios-card--disabled</li>
+                        <li>Elemento + modificador: .gsenvios-card__value--highlight</li>
+                    </ul>
+                </div>
+
+                <div class="ia-block">
+                    <h3>TIPOGRAFÍA</h3>
+                    <ul>
+                        <li>Títulos y encabezados: font-family: "Montserrat", sans-serif</li>
+                        <li>Texto general, formularios: font-family: "Poppins", sans-serif</li>
+                        <li>Fallback: "Segoe UI", Arial, Helvetica, sans-serif</li>
+                        <li>Excepción: Tema Alternativo usa SOLO Montserrat</li>
+                    </ul>
+                </div>
+
+                <div class="ia-block">
+                    <h3>TEMAS</h3>
+                    <p>Existen dos temas oficiales. <strong>Pregunta cuál usar antes de generar código.</strong></p>
+                    <p><strong>TEMA OFICIAL:</strong> Webs corporativas, landing pages, dashboards. Modo claro por
+                        defecto. Requiere Montserrat y Poppins.</p>
+                    <p><strong>TEMA ALTERNATIVO:</strong> Cartelería digital, pantallas financieras, Samsung Tizen. Modo
+                        oscuro por defecto. Solo Montserrat. Debe soportar float layout como fallback.</p>
+                </div>
+
+                <div class="ia-block">
+                    <h3>BOTONES (Ambos temas)</h3>
+                    <ul>
+                        <li>Primario: fondo #F2B705, texto #071F4A</li>
+                        <li>Secundario: fondo #0D3B8E, texto #FFFFFF</li>
+                    </ul>
+                </div>
+
+                <div class="ia-block">
+                    <h3>PROHIBIDO</h3>
+                    <ul>
+                        <li>Colores fuera de la paleta oficial</li>
+                        <li>Rojo, verde, morado o cualquier color ajeno a la marca</li>
+                        <li>Efectos de galaxia, cosmos o partículas</li>
+                        <li>Brillo excesivo o elementos decorativos innecesarios</li>
+                        <li>Amarillo como color dominante</li>
+                        <li>Modificar el logo oficial</li>
+                    </ul>
+                </div>
+
+                <div class="ia-block">
+                    <h3>NOTAS DE COMPATIBILIDAD</h3>
+                    <ul>
+                        <li>Tema Alternativo debe funcionar en: Samsung Tizen 2.4, Tizen 3.0, Maple 2012</li>
+                        <li>Evitar en Alternativo: flex-wrap, display: table-cell, querySelectorAll, funciones ES6</li>
+                        <li>Tema Oficial solo requiere navegadores modernos</li>
+                    </ul>
+                </div>
+
+                <div class="ia-block">
+                    <h3>REGLA FINAL</h3>
+                    <p>Toda web de GSENVIOS debe mantener: identidad azul dominante, amarillo solo para destacar, alta
+                        legibilidad, Montserrat (y Poppins para Oficial), logo original, diseño limpio, profesional,
+                        cercano y responsive.</p>
+                </div>
+
+                <div class="ia-block">
+                    <h3>AL GENERAR CÓDIGO, SIEMPRE:</h3>
+                    <ol>
+                        <li>Pregunta qué tema usar (Oficial o Alternativo)</li>
+                        <li>Pregunta si variante clara u oscura</li>
+                        <li>Usa BEM con prefijo gsenvios-</li>
+                        <li>Usa SOLO la paleta de colores oficial</li>
+                        <li>Nunca uses amarillo sobre fondo blanco</li>
+                        <li>Respeta las reglas de tipografía</li>
+                        <li>Incluye Montserrat y Poppins desde Google Fonts</li>
+                        <li>Genera HTML limpio y semántico con clases BEM correctas</li>
+                        <li>Evita efectos y colores prohibidos</li>
+                        <li>Para Tema Alternativo, asegura compatibilidad con navegadores antiguos</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BOTÓN VOLVER ARRIBA -->
+    <a href="#inicio" class="top-btn" title="Volver arriba">↑</a>
+
+    <!-- HIGHLIGHT ACTIVE SECTION IN SIDEBAR -->
+    <script>
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.sidebar__nav a');
+
+        function updateActiveLink() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('sidebar__nav--active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('sidebar__nav--active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+    </script>
+
+</body>
+
+</html>
