@@ -1,6 +1,6 @@
 {
     "$schema": "node_modules/wrangler/config-schema.json",
-    "name": "screen-rates-test",
+    "name": "screenrates",
     "compatibility_date": "2026-07-08",
     "observability": {
         "enabled": true
