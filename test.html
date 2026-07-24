@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSEnvíos - Visor de Temas v5</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ============================================================
+           VISOR DE TEMAS GSENVIOS v5
+           Oficial: glassmorphism + ripple + hero animado + skeleton + clamp
+           Alternativo: sin efectos modernos, compatible Tizen, degradados
+           Variables de espaciado en AMBOS temas
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        /* ============================================================
+           VARIABLES DE ESPACIADO (compartidas)
+           ============================================================ */
+        :root {
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 40px;
+            --space-3xl: 48px;
+        }
+
+        /* ============================================================
+           TEMA OFICIAL - CLARO (glassmorphism + efectos modernos)
+           ============================================================ */
+        body,
+        .theme-oficial.theme-light {
+            --bg: #f0f2f5;
+            --bg-alt: #e8eaef;
+            --surface: rgba(255, 255, 255, 0.8);
+            --surface-solid: #FFFFFF;
+            --text: #071F4A;
+            --text-secondary: #0D3B8E;
+            --text-muted: #9CA3AF;
+            --title: #071F4A;
+            --border: rgba(0, 0, 0, 0.06);
+            --border-accent: #F2B705;
+            --table-header: rgba(0, 0, 0, 0.03);
+            --table-border: rgba(0, 0, 0, 0.06);
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.10);
+            --header-bg: rgba(13, 59, 142, 0.85);
+            --header-text: #FFFFFF;
+            --footer-bg: rgba(7, 31, 74, 0.95);
+            --footer-text: #FFFFFF;
+            --flag-bg: #F2F2F2;
+            --flag-border: #0D3B8E;
+            --badge-bg: #F2F2F2;
+            --badge-text: #0D3B8E;
+            --badge-dot: #0D3B8E;
+            --badge-warning-dot: #F2B705;
+            --divider-color: #0D3B8E;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-text: #071F4A;
+            --card-title: #0D3B8E;
+            --card-value: #071F4A;
+            --card-value-highlight: #F2B705;
+            --hero-bg: linear-gradient(135deg, #0D3B8E 0%, #071F4A 50%, #0D3B8E 100%);
+            --hero-text: #FFFFFF;
+            --rate-color: #F2B705;
+            --btn-primary-bg: #F2B705;
+            --btn-primary-text: #071F4A;
+            --btn-primary-hover: #D4A017;
+            --btn-secondary-bg: #0D3B8E;
+            --btn-secondary-text: #FFFFFF;
+            --btn-secondary-hover: #071F4A;
+            --btn-disabled-bg: rgba(0, 0, 0, 0.06);
+            --btn-disabled-text: #9CA3AF;
+            --skeleton-base: #E5E7EB;
+            --skeleton-shine: #F2F2F2;
+        }
+
+        .theme-oficial.theme-dark {
+            --bg: #0a1628;
+            --bg-alt: #0f1f35;
+            --surface: rgba(13, 59, 142, 0.5);
+            --surface-solid: #0D3B8E;
+            --text: #FFFFFF;
+            --text-secondary: #F2B705;
+            --text-muted: rgba(255, 255, 255, 0.50);
+            --title: #FFFFFF;
+            --border: rgba(255, 255, 255, 0.10);
+            --table-header: rgba(242, 183, 5, 0.06);
+            --table-border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.30);
+            --shadow-hover: 0 8px 35px rgba(0, 0, 0, 0.45);
+            --shadow-lg: 0 12px 45px rgba(0, 0, 0, 0.40);
+            --header-bg: rgba(7, 31, 74, 0.75);
+            --footer-bg: rgba(7, 31, 74, 0.90);
+            --card-bg: rgba(13, 59, 142, 0.45);
+            --card-text: #FFFFFF;
+            --card-title: #FFFFFF;
+            --card-value: #FFFFFF;
+            --btn-secondary-bg: transparent;
+            --btn-disabled-bg: rgba(255, 255, 255, 0.06);
+            --btn-disabled-text: rgba(255, 255, 255, 0.25);
+            --skeleton-base: rgba(255, 255, 255, 0.08);
+            --skeleton-shine: rgba(255, 255, 255, 0.15);
+            --flag-bg: rgba(255, 255, 255, 0.08);
+            --flag-border: #F2B705;
+            --badge-bg: rgba(242, 183, 5, 0.12);
+            --badge-text: #F2B705;
+            --badge-dot: #F2B705;
+            --divider-color: #F2B705;
+        }
+
+        /* ============================================================
+           TEMA ALTERNATIVO - SIN EFECTOS MODERNOS
+           ============================================================ */
+        .theme-alternativo.theme-dark {
+            --bg: #071F4A;
+            --bg-alt: #0A1F3D;
+            --surface: #0D3B8E;
+            --text: #FFFFFF;
+            --text-secondary: #d1d5db;
+            --text-muted: #9CA3AF;
+            --title: #FFFFFF;
+            --border: rgba(255, 255, 255, 0.15);
+            --table-header: rgba(242, 183, 5, 0.10);
+            --table-border: rgba(255, 255, 255, 0.10);
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+            --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.25);
+            --header-bg: transparent;
+            --header-text: #FFFFFF;
+            --footer-bg: rgba(7, 31, 74, 0.90);
+            --footer-text: #FFFFFF;
+            --flag-bg: rgba(242, 183, 5, 0.10);
+            --flag-border: #F2B705;
+            --badge-bg: rgba(242, 183, 5, 0.15);
+            --badge-text: #F2B705;
+            --badge-dot: #F2B705;
+            --badge-warning-dot: #F2B705;
+            --divider-color: #F2B705;
+            --card-bg: linear-gradient(135deg, #0D3B8E, #071F4A);
+            --card-text: #FFFFFF;
+            --card-title: #FFFFFF;
+            --card-value: #F2B705;
+            --card-value-highlight: #F2B705;
+            --hero-bg: linear-gradient(135deg, #0D3B8E, #071F4A);
+            --hero-text: #FFFFFF;
+            --rate-color: #F2B705;
+            --btn-primary-bg: #F2B705;
+            --btn-primary-text: #071F4A;
+            --btn-primary-hover: #D4A017;
+            --btn-secondary-bg: transparent;
+            --btn-secondary-text: #FFFFFF;
+            --btn-secondary-hover: #FFFFFF;
+            --btn-disabled-bg: rgba(255, 255, 255, 0.10);
+            --btn-disabled-text: rgba(255, 255, 255, 0.30);
+            --skeleton-base: rgba(255, 255, 255, 0.10);
+            --skeleton-shine: rgba(255, 255, 255, 0.18);
+        }
+
+        .theme-alternativo.theme-light {
+            --bg: #FFFFFF;
+            --bg-alt: #F2F2F2;
+            --surface: #F2F2F2;
+            --text: #071F4A;
+            --text-secondary: #0D3B8E;
+            --text-muted: #9CA3AF;
+            --title: #0D3B8E;
+            --border: #F2F2F2;
+            --table-header: #F2F2F2;
+            --table-border: #E5E7EB;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --header-bg: #FFFFFF;
+            --header-text: #0D3B8E;
+            --footer-bg: rgba(7, 31, 74, 0.90);
+            --footer-text: #FFFFFF;
+            --flag-bg: #F2F2F2;
+            --flag-border: #0D3B8E;
+            --badge-bg: #F2F2F2;
+            --badge-text: #0D3B8E;
+            --badge-dot: #0D3B8E;
+            --badge-warning-dot: #F2B705;
+            --divider-color: #0D3B8E;
+            --card-bg: #FFFFFF;
+            --card-text: #071F4A;
+            --card-title: #0D3B8E;
+            --card-value: #0D3B8E;
+            --card-value-highlight: #F2B705;
+            --hero-bg: linear-gradient(135deg, #0D3B8E, #071F4A);
+            --hero-text: #FFFFFF;
+            --rate-color: #F2B705;
+            --btn-primary-bg: #F2B705;
+            --btn-primary-text: #071F4A;
+            --btn-primary-hover: #D4A017;
+            --btn-secondary-bg: #0D3B8E;
+            --btn-secondary-text: #FFFFFF;
+            --btn-secondary-hover: #071F4A;
+            --btn-disabled-bg: #F2F2F2;
+            --btn-disabled-text: #9CA3AF;
+            --skeleton-base: #E5E7EB;
+            --skeleton-shine: #F2F2F2;
+        }
+
+        /* ============================================================
+           DARK MODE AUTOMÁTICO
+           ============================================================ */
+        @media (prefers-color-scheme: dark) {
+            body.theme-oficial:not(.theme-light):not(.theme-dark) {
+                --bg: #0a1628;
+                --surface: rgba(13, 59, 142, 0.5);
+                --text: #FFFFFF;
+                --card-bg: rgba(13, 59, 142, 0.45);
+                --card-text: #FFFFFF;
+                --card-title: #FFFFFF;
+                --card-value: #FFFFFF;
+            }
+        }
+
+        /* ============================================================
+           BASE
+           ============================================================ */
+        body {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .theme-alternativo.theme-dark body {
+            background: -webkit-radial-gradient(20% 10%, circle, #0D3B8E 0%, #071F4A 100%);
+            background: radial-gradient(circle at 20% 10%, #0D3B8E 0%, #071F4A 100%);
+        }
+
+        /* ========== BARRA DE CONTROL ========== */
+        .control-bar {
+            position: fixed;
+            top: var(--space-md);
+            right: var(--space-md);
+            z-index: 99999;
+            display: flex;
+            gap: 10px;
+            background: rgba(7, 31, 74, 0.92);
+            padding: 12px 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-bar__group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .control-bar__label {
+            color: rgba(255, 255, 255, 0.60);
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .control-bar select {
+            background: #0D3B8E;
+            color: #FFFFFF;
+            border: 1px solid #F2B705;
+            padding: var(--space-sm) 28px var(--space-sm) 12px;
+            border-radius: 8px;
+            font-family: "Montserrat", sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F2B705' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+
+        .control-bar__info {
+            color: #F2B705;
+            font-size: 10px;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: var(--header-bg);
+            padding: var(--space-md) var(--space-2xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #F2B705;
+        }
+
+        .theme-oficial .header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .header__brand {
+            font-family: "Montserrat", sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--header-text);
+            letter-spacing: 2px;
+        }
+
+        .header__brand span {
+            color: #F2B705;
+        }
+
+        .header__right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header__nav {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .header__nav a {
+            color: var(--header-text);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .theme-oficial .header__nav a {
+            position: relative;
+        }
+
+        .theme-oficial .header__nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #F2B705;
+            transition: width 0.3s;
+        }
+
+        .theme-oficial .header__nav a:hover::after,
+        .theme-oficial .header__nav a.active::after {
+            width: 100%;
+        }
+
+        .header__nav a:hover,
+        .header__nav a.active {
+            color: #F2B705;
+        }
+
+        .header__user {
+            color: var(--header-text);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ========== CONTENIDO ========== */
+        .content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-2xl) 120px;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            background: var(--hero-bg);
+            border-radius: 14px;
+            padding: var(--space-xl) var(--space-2xl);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-oficial .hero {
+            background-size: 200% 200%;
+            animation: heroShift 8s ease-in-out infinite alternate;
+        }
+
+        .theme-oficial .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            animation: heroGlow 6s linear infinite;
+        }
+
+        .theme-alternativo .hero {
+            background-size: 100% 100%;
+            animation: none;
+        }
+
+        .theme-alternativo .hero::before {
+            display: none;
+        }
+
+        @keyframes heroShift {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        @keyframes heroGlow {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero__title {
+            font-family: "Montserrat", sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--hero-text);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero__title span {
+            color: #F2B705;
+        }
+
+        .hero__subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.70);
+            margin-top: var(--space-sm);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== SECCIÓN ALTERNATIVA ========== */
+        .section-alt {
+            background: var(--bg-alt);
+            border-radius: 16px;
+            padding: var(--space-lg);
+            margin-bottom: var(--space-xl);
+            box-shadow: var(--shadow);
+        }
+
+        .theme-oficial .section-alt {
+            backdrop-filter: blur(12px);
+        }
+
+        /* ========== CARDS KPI ========== */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--border-accent);
+            border-radius: 16px;
+            padding: var(--space-lg);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .theme-oficial .kpi-card {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s ease, border-color 0.3s;
+        }
+
+        .theme-oficial .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transition: left 0.6s;
+        }
+
+        .theme-oficial .kpi-card:hover::after {
+            left: 100%;
+        }
+
+        .theme-oficial .kpi-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .theme-oficial .kpi-card:active {
+            transform: scale(0.98);
+        }
+
+        .theme-alternativo .kpi-card {
+            transition: none;
+        }
+
+        .theme-alternativo .kpi-card::after {
+            display: none;
+        }
+
+        .theme-alternativo .kpi-card:hover {
+            transform: none;
+            box-shadow: var(--shadow);
+        }
+
+        .kpi-card--disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .kpi-card--disabled .kpi-card__value {
+            color: var(--text-muted);
+        }
+
+        .kpi-card__icon {
+            font-size: 28px;
+            margin-bottom: var(--space-sm);
+        }
+
+        .kpi-card__label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--space-xs);
+        }
+
+        .kpi-card__value {
+            font-family: "Montserrat", sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--card-value);
+        }
+
+        .kpi-card__value--highlight {
+            color: var(--card-value-highlight) !important;
+        }
+
+        .kpi-card__trend {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: var(--space-xs);
+            color: var(--text-secondary);
+        }
+
+        /* ========== SKELETON (solo Oficial) ========== */
+        .theme-oficial .skeleton {
+            background: linear-gradient(90deg,
+                    var(--skeleton-base) 25%,
+                    var(--skeleton-shine) 50%,
+                    var(--skeleton-base) 75%);
+            background-size: 200% 100%;
+            animation: skeletonShine 1.5s ease-in-out infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes skeletonShine {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton--text {
+            height: 14px;
+            width: 80%;
+            margin-bottom: var(--space-sm);
+        }
+
+        .skeleton--title {
+            height: 20px;
+            width: 60%;
+            margin-bottom: 12px;
+        }
+
+        .skeleton--value {
+            height: 36px;
+            width: 50%;
+        }
+
+        .theme-alternativo .skeleton {
+            background: var(--skeleton-base);
+            animation: none;
+        }
+
+        /* ========== DIVIDER ========== */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin: var(--space-lg) 0;
+        }
+
+        .divider__line {
+            flex: 1;
+            height: 2px;
+            background: var(--divider-color);
+            opacity: 0.4;
+        }
+
+        .divider__text {
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--title);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ========== TABLA ========== */
+        .section-title {
+            font-family: "Montserrat", sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--title);
+            margin-bottom: var(--space-md);
+        }
+
+        .table-wrapper {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: var(--space-xl);
+        }
+
+        .theme-oficial .table-wrapper {
+            backdrop-filter: blur(12px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--table-header);
+            font-family: "Montserrat", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--title);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: var(--space-md) 18px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 18px;
+            border-top: 1px solid var(--table-border);
+            font-size: 13px;
+            color: var(--card-text);
+        }
+
+        .theme-oficial tr:hover td {
+            background: var(--table-header);
+        }
+
+        .rate {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            color: var(--rate-color);
+        }
+
+        .muted {
+            color: var(--text-muted);
+        }
+
+        .flag-circle {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--flag-bg);
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 15px;
+            vertical-align: middle;
+            border: 2px solid var(--flag-border);
+        }
+
+        /* ========== BADGES ========== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: var(--badge-bg);
+            color: var(--badge-text);
+        }
+
+        .badge__dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--badge-dot);
+        }
+
+        .badge--warning .badge__dot {
+            background: var(--badge-warning-dot);
+        }
+
+        /* ========== BOTONES ========== */
+        .btn {
+            font-family: "Montserrat", sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .theme-oficial .btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .theme-oficial .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.5s;
+            transform: translate(-50%, -50%);
+        }
+
+        .theme-oficial .btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .theme-oficial .btn--primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(242, 183, 5, 0.3);
+        }
+
+        .theme-oficial .btn--secondary:hover {
+            transform: translateY(-2px);
+        }
+
+        .theme-alternativo .btn {
+            transition: background 0.2s;
+        }
+
+        .theme-alternativo .btn::after {
+            display: none;
+        }
+
+        .btn--primary {
+            background: var(--btn-primary-bg);
+            color: var(--btn-primary-text);
+        }
+
+        .btn--primary:hover {
+            background: var(--btn-primary-hover);
+        }
+
+        .btn--secondary {
+            background: var(--btn-secondary-bg);
+            color: var(--btn-secondary-text);
+            border: 1px solid var(--btn-secondary-text);
+        }
+
+        .btn--secondary:hover {
+            background: var(--btn-secondary-hover);
+            color: var(--btn-secondary-bg);
+        }
+
+        .btn--disabled {
+            background: var(--btn-disabled-bg);
+            color: var(--btn-disabled-text);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .btn--small {
+            font-size: 10px;
+            padding: 6px 14px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--footer-bg);
+            padding: var(--space-md) var(--space-2xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--footer-text);
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+            z-index: 100;
+        }
+
+        .theme-oficial .footer {
+            backdrop-filter: blur(12px);
+        }
+
+        .footer__info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .footer__separator {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .footer__link {
+            color: #F2B705;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer__link:hover {
+            text-decoration: underline;
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0D3B8E;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body class="theme-oficial theme-light">
+
+    <!-- BARRA DE CONTROL -->
+    <div class="control-bar">
+        <div class="control-bar__group">
+            <span class="control-bar__label">Tema</span>
+            <select id="themeSelect">
+                <option value="oficial">Oficial</option>
+                <option value="alternativo">Alternativo</option>
+            </select>
+        </div>
+        <div class="control-bar__group">
+            <span class="control-bar__label">Modo</span>
+            <select id="modeSelect">
+                <option value="light">Claro</option>
+                <option value="dark">Oscuro</option>
+                <option value="auto">Auto</option>
+            </select>
+        </div>
+        <div class="control-bar__info" id="currentThemeLabel">Oficial · Claro</div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__brand"><span>G&S</span>ENVIOS</div>
+        <div class="header__right">
+            <ul class="header__nav">
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Envíos</a></li>
+                <li><a href="#">Divisas</a></li>
+                <li><a href="#">Reportes</a></li>
+            </ul>
+            <div class="header__user">Admin</div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="content">
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero__title">Panel de <span>Control</span></div>
+            <div class="hero__subtitle">Resumen de tasas de cambio y envíos en tiempo real</div>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-card__icon">💱</div>
+                <div class="kpi-card__label">Tasa del día (USD)</div>
+                <div class="kpi-card__value kpi-card__value--highlight">1.0512</div>
+                <div class="kpi-card__trend">+0.42% hoy</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-card__icon">🌎</div>
+                <div class="kpi-card__label">Países activos</div>
+                <div class="kpi-card__value">12</div>
+                <div class="kpi-card__trend">Todos operativos</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-card__icon">🏦</div>
+                <div class="kpi-card__label">Divisas disponibles</div>
+                <div class="kpi-card__value">12</div>
+                <div class="kpi-card__trend">4 por slide</div>
+            </div>
+            <div class="kpi-card" id="skeletonCard">
+                <div class="skeleton skeleton--title"></div>
+                <div class="skeleton skeleton--text"></div>
+                <div class="skeleton skeleton--value"></div>
+                <div class="skeleton skeleton--text" style="width:40%;"></div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN ALTERNATIVA -->
+        <div class="section-alt">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                <div class="section-title" style="margin-bottom:0;">Acciones rápidas</div>
+                <div class="btn-row">
+                    <button class="btn btn--primary">Actualizar tasas</button>
+                    <button class="btn btn--secondary">Exportar</button>
+                    <button class="btn btn--disabled">Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIVISOR -->
+        <div class="divider">
+            <div class="divider__line"></div>
+            <div class="divider__text">Envíos de Dinero</div>
+            <div class="divider__line"></div>
+        </div>
+
+        <!-- TABLA ENVÍOS -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>País</th>
+                        <th>Tasa</th>
+                        <th>Cambio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="flag-circle">🇭🇳</span>Honduras</td>
+                        <td class="rate">30.86</td>
+                        <td>+0.12%</td>
+                        <td><span class="badge"><span class="badge__dot"></span>Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="flag-circle">🇨🇴</span>Colombia</td>
+                        <td class="rate">4.136</td>
+                        <td>-0.05%</td>
+                        <td><span class="badge"><span class="badge__dot"></span>Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="flag-circle">🇩🇴</span>R. Dominicana</td>
+                        <td class="rate">68.07</td>
+                        <td>+0.33%</td>
+                        <td><span class="badge"><span class="badge__dot"></span>Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="flag-circle">🇪🇨</span>Ecuador</td>
+                        <td class="muted">No disponible</td>
+                        <td class="muted">—</td>
+                        <td><span class="badge badge--warning"><span class="badge__dot"></span>Pausado</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="flag-circle">🇧🇴</span>Bolivia</td>
+                        <td class="rate">11.36</td>
+                        <td>+0.08%</td>
+                        <td><span class="badge"><span class="badge__dot"></span>Activo</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- DIVISOR -->
+        <div class="divider">
+            <div class="divider__line"></div>
+            <div class="divider__text">Divisas Internacionales</div>
+            <div class="divider__line"></div>
+        </div>
+
+        <!-- TABLA DIVISAS -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Divisa</th>
+                        <th>Valor</th>
+                        <th>Cambio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="flag-circle">🇺🇸</span>Dólar USA</td>
+                        <td class="rate">1.0512 USD</td>
+                        <td>+0.15%</td>
+                        <td><span class="badge"><span class="badge__dot"></span>Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="flag-circle">🇬🇧</span>Libra Esterlina</td>
+                        <td class="rate">0.9421 GBP</td>
+                        <td>-0.22%</td>
+                        <td><span class="badge"><span class="badge__dot"></span>Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="flag-circle">🇨🇭</span>Franco Suizo</td>
+                        <td class="rate">1.0234 CHF</td>
+                        <td>+0.07%</td>
+                        <td><span class="badge"><span class="badge__dot"></span>Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="flag-circle">🇯🇵</span>Yen Japonés</td>
+                        <td class="rate">209.36 JPY</td>
+                        <td>-0.41%</td>
+                        <td><span class="badge"><span class="badge__dot"></span>Activo</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__info">
+            <span>Modelo: s5-tizen30</span><span class="footer__separator">|</span>
+            <span>Método: XHR</span><span class="footer__separator">|</span>
+            <span>12 envíos · 12 divisas</span>
+        </div>
+        <div>Actualizado: <span style="color:#F2B705;font-weight:600;">14:35</span></div>
+    </footer>
+
+    <script>
+        const body = document.body;
+        const themeSelect = document.getElementById('themeSelect');
+        const modeSelect = document.getElementById('modeSelect');
+        const label = document.getElementById('currentThemeLabel');
+        const themeNames = { oficial: 'Oficial', alternativo: 'Alternativo' };
+        const modeNames = { light: 'Claro', dark: 'Oscuro', auto: 'Auto' };
+
+        function getPreferredMode() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function updateTheme() {
+            const theme = themeSelect.value;
+            let mode = modeSelect.value;
+            if (mode === 'auto') mode = getPreferredMode();
+            body.className = '';
+            body.classList.add('theme-' + theme, 'theme-' + mode);
+            label.textContent = themeNames[theme] + ' · ' + modeNames[modeSelect.value];
+        }
+
+        themeSelect.addEventListener('change', updateTheme);
+        modeSelect.addEventListener('change', updateTheme);
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+            if (modeSelect.value === 'auto') updateTheme();
+        });
+
+        setTimeout(function () {
+            var skeletonCard = document.getElementById('skeletonCard');
+            if (skeletonCard) {
+                skeletonCard.innerHTML = `
+                    <div class="kpi-card__icon">🕐</div>
+                    <div class="kpi-card__label">Última actualización</div>
+                    <div class="kpi-card__value" style="font-size:20px;">14:35</div>
+                    <div class="kpi-card__trend"><span class="badge"><span class="badge__dot"></span>En línea</span></div>
+                `;
+            }
+        }, 3000);
+    </script>
+
+</body>
+
+</html>
