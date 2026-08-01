@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="refresh" content="3600000">
     <title>G&amp;SENVIOS - Tasas de Cambio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -722,7 +723,8 @@
 
             var PRODUCTION = false;
             var USE_MOCK = false;
-            var DATA_REFRESH_INTERVAL = 600000;
+            var DATA_REFRESH_INTERVAL = 30000;
+            /* var DATA_REFRESH_INTERVAL = 600000; */
             var RETRY_INTERVAL = 60000;
             var CAROUSEL_INTERVAL = 10000;
 
@@ -1243,7 +1245,6 @@
                 });
             }
 
-            /* ========== REFRESCO PRINCIPAL ========== */
             /* ========== REFRESCO PRINCIPAL ========== */
             function refreshData(silent) {
                 if (silent === undefined) silent = true;
